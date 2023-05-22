@@ -54,11 +54,11 @@
         <mapper resource="mappers/rankActorMapper.xml"/>
 
         <!--나유경-->
-        <mapper resource="mapper/bbsMapper.xml" />
-      	<mapper resource="mapper/bbsCommentMapper.xml" />
-      	<mapper resource="mapper/bbsReplyMapper.xml" />
-      	<mapper resource="mapper/NewslistMapper.xml" />
-      	<mapper resource="mapper/categoryMapper.xml" />
+        <mapper resource="mappers/bbsMapper.xml" />
+      	<mapper resource="mappers/bbsCommentMapper.xml" />
+      	<mapper resource="mappers/bbsReplyMapper.xml" />
+      	<mapper resource="mappers/NewslistMapper.xml" />
+      	<mapper resource="mappers/categoryMapper.xml" />
 
         <!--이시현-->
         <mapper resource="mappers/memberMapper.xml"/>
