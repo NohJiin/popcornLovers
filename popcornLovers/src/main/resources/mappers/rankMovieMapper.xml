@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RankMovieDAO">
+    <!-- 랭크가 rank_no인 항목 가져오기 -->
+    <select id="selectTop" parameterType="int" resultType="RankMovieVO">
+    	select *
+		from (
+		select 
+		row_number() over(order by moviePopularity desc) as rank_no, r.moviePopularity, m.*
+		from popcorn.rankmovie r, popcorn.movie m
+		where r.movieId = m.movieId) top
+		where rank_no = #{rank_no}
+    </select>
+    
+    <!-- 페이징하기 위함 -->
+	<!-- 전체 랭킹 : 순위별 페이징 -->
+    <select id="all" parameterType="RankPageVO" resultType="RankMovieVO">
+    	select * from(
+    		select 
+			row_number() over(order by moviePopularity desc) as rank_no, r.moviePopularity, m.*
+			from popcorn.rankmovie r, popcorn.movie m
+			where r.movieId = m.movieId) rank2
+		where rank2.rank_no between ${start} and ${end}
+    </select>
+    <!-- 페이지별 목록 불러오기 -->
+    <select id="list" parameterType="RankPageVO" resultType="RankMovieVO">
+    	select * from(
+    		select 
+			row_number() over(order by moviePopularity desc) as rank_no, r.moviePopularity, m.*
+			from popcorn.rankmovie r, popcorn.movie m
+			where r.movieId = m.movieId) rank2
+		where rank2.rank_no between ${start} and ${end}
+    </select>
+    
+    <select id="count" resultType="Integer">
+    	select count(*)
+    	from popcorn.movie
+    </select>
+    
+    
+    <!-- 전체 랭킹 중 일부 : 추천목록 -->
+    <select id="recoAll" resultType="RankMovieVO">
+    	select m.movieTitle, m.movieImg, m.movieOpen, m.movieGrade, m.movieGenre, m.movieLike, m.movieHits
+		from popcorn.rankmovie r, popcorn.movie m
+		where r.movieId = m.movieId
+    </select>
+</mapper>

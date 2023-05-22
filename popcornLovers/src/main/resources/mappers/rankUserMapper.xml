@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RankUserDAO">
+    <!-- 랭크가 rank_no인 항목 가져오기 -->
+    <select id="selectTop" parameterType="int" resultType="RankUserVO">
+    	select *
+		from (select
+		row_number() over(order by memberPopularity DESC) as rank_no, r.memberPopularity, m.*
+		from popcorn.rankuser r, popcorn.member m
+		where r.member_id = m.member_id) top
+		where rank_no = #{rank_no}
+    </select>
+    
+    <!-- member 테이블에서 rankUser 테이블애 없는 값 insert하기 (left outer join 사용) -->
+    <insert id="userInsert" parameterType="RankUserVO">
+    	insert into popcorn.rankuser (member_id)
+		select m.member_id
+		from popcorn.member m left outer join popcorn.rankuser r on m.member_id = r.member_id
+		where r.member_id is null
+    </insert>
+    
+<!-- 	전체 랭킹 : 순위별  
+    <select id="all" resultType="RankUserVO">
+    	select
+		row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
+		from popcorn.rankuser r, popcorn.member m 
+		where r.member_id = m.member_id 
+    </select> -->
+    
+    
+    <!-- 페이징하기 위함 -->
+	<!-- 전체 랭킹 : 순위별 페이징 -->
+    <select id="all" parameterType="RankPageVO" resultType="RankUserVO">
+    	select * from (
+    	select
+		row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
+		from popcorn.rankuser r, popcorn.member m 
+		where r.member_id = m.member_id) total
+		where total.rank_no between ${start} and ${end}
+    </select>
+    
+    <select id="list" parameterType="RankPageVO" resultType="RankUserVO">
+    	select * from (
+    	select
+		row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
+		from popcorn.rankuser r, popcorn.member m 
+		where r.member_id = m.member_id) total
+		where total.rank_no between ${start} and ${end}
+    </select>
+    
+    <select id="count" resultType="Integer">
+    	select count(*)
+    	from popcorn.member
+    </select>
+    
+    
+    <!-- 전체 랭킹 중 일부 : 추천목록 -->
+    <select id="recoAll" resultType="RankUserVO">
+    	select m.*
+		from popcorn.rankuser r, popcorn.member m 
+		where r.member_id = m.member_id 
+    </select>
+</mapper>

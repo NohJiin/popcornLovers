@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberDAO">
+	<!-- 회원가입 -->
+	<insert id="create" parameterType="memberVO">
+		<selectKey keyProperty="member_level" resultType="int"
+			order="BEFORE">
+			select 1
+		</selectKey>
+		insert into
+		popcorn.member values (#{member_id}, #{member_pw}, #{member_name},
+		#{member_knickname},
+		#{member_tel}, #{member_email}, #{member_level}, null , null , null, #{member_age},
+		#{member_gender})
+	</insert>
+
+	<!-- 로그인 -->
+	<select id="login" parameterType="memberVO" resultType="String">
+		select
+		member_knickname from popcorn.member
+		where member_id = #{member_id} and
+		member_pw = #{member_pw}
+	</select>
+
+	<!-- 아이디 중복 체크 -->
+	<select id="idCheck" parameterType="String"
+		resultType="MemberVO">
+		select * from popcorn.member where member_id = #{member_id}
+		<!-- dao에서 가져온 member_id 가 #{member_id}에 입력 -->
+	</select>
+
+	<!-- 회원 정보 수정 -->
+	<update id="update" parameterType="memberVO">
+		update popcorn.member
+		set
+		member_knickname= #{member_knickname} , member_pw =#{member_pw} ,
+		member_tel = #{member_tel} where member_id = #{member_id}
+	</update>
+
+	<!-- 회원 탈퇴 -->
+	<delete id="remove" parameterType="memberVO">
+		delete from popcorn.member
+		where member_id= #{member_id} and member_pw = #{member_pw}
+	</delete>
+
+	<!-- 회원 전체 리스트 -->
+	<select id="all" resultType="memberVO">
+		select * from popcorn.member
+	</select>
+
+	<!-- member 하나만 검색 -->
+	<select id="selectOne" parameterType="String"
+		resultType="MemberVO">
+		select *
+		from popcorn.member
+		where member_id = #{member_id}
+	</select>
+
+	<!-- member 죄회수 증가 -->
+	<update id="viewCount" parameterType="String">
+		update popcorn.member
+		set member_view = member_view + 1
+		where member_id = #{member_id}
+	</update>
+</mapper>

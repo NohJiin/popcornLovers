@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MypageDAO">
+    
+	
+    <!-- 회원의 모든 bbs list 페이징 서브쿼리 -->
+    <select id="myBbsAll" resultType="mypageVO" parameterType="MemberPageVO">
+	select * from (
+	select
+	row_number() over(order by member_id) as mybbs_no,
+	b.bbs_id, m.member_id, b.bbs_title, b.bbs_create
+	from member m
+	inner join bbs b 
+	on m.member_id = b.bbs_writer_id
+	where m.member_id = #{member_id}) mb2
+	where mb2.mybbs_no between #{start} and #{end}
+	</select>
+	
+	<!-- 회원의 모든 review list 페이징 서브쿼리 -->
+	    <select id="myReviewAll" resultType="mypageVO" parameterType="MemberPageVO">
+	select * from(
+	select
+	row_number() over(order by member_id) as mr_no,
+	m2.movieTitle, mr.reviewContent, m.member_id
+	from member m
+	inner join movie_review mr
+	on m.member_id = mr.memberId 
+	inner join movie m2 
+	on m2.movieId = mr.movieId 
+	where m.member_id = #{member_id}) mr2
+	where mr2.mr_no between #{start} and #{end}
+	</select>
+	
+    <!-- 회원이 쓴 bbs 카운트 -->
+    <select id="myBbsCount" resultType="Integer">
+    select count(*)
+	from member m
+	inner join bbs b on m.member_id = b.bbs_writer_id
+	where m.member_id = #{member_id}
+    </select>
+    
+    <!-- 회원이 쓴 review 카운트 -->
+    <select id="myReviewCount" resultType="Integer">
+   select count(*)
+	from member m
+	inner join movie_review mr on m.member_id = mr.memberId 
+	inner join movie m2 on m2.movieId = mr.movieId 
+	where m.member_id = #{member_id}
+	</select>
+	
+	
+	<!-- 회원의 영화 찜 목록 추가  -->
+	<insert id ="myMovieJjim">
+		insert into moviejjim values(#{movie_id}, #{member_id}, #{movie_like})
+	</insert>
+	
+	<!-- 회원의 영화 찜 목록 삭제 -->
+		<delete id ="myMovieDeleteJjim">
+		delete from moviejjim 
+		where movie_like = #{movie_like}
+	</delete>
+	
+</mapper>
