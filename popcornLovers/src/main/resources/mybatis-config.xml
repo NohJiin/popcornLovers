@@ -16,7 +16,9 @@
     <!--   </environments>-->
     <typeAliases>
         <!--노지인-->
-        <typeAlias type="com.java4.popcorn.rankUser.PageVO" alias="RankPageVO"/>
+        <typeAlias type="com.java4.popcorn.rankUser.PageVO" alias="RankUserPageVO"/>
+        <typeAlias type="com.java4.popcorn.rankMovie.PageVO" alias="RankMoviePageVO"/>
+        <typeAlias type="com.java4.popcorn.rankActor.PageVO" alias="RankActorPageVO"/>
         <typeAlias type="com.java4.popcorn.rankUser.RankUserVO" alias="RankUserVO"/>
         <typeAlias type="com.java4.popcorn.rankMovie.RankMovieVO" alias="RankMovieVO"/>
         <typeAlias type="com.java4.popcorn.rankActor.RankActorVO" alias="RankActorVO"/>

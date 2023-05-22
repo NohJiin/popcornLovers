@@ -32,7 +32,7 @@
     
     <!-- 페이징하기 위함 -->
 	<!-- 전체 랭킹 : 순위별 페이징 -->
-    <select id="all" parameterType="RankPageVO" resultType="RankUserVO">
+    <select id="all" parameterType="RankUserPageVO" resultType="RankUserVO">
     	select * from (
     	select
 		row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
@@ -41,7 +41,7 @@
 		where total.rank_no between ${start} and ${end}
     </select>
     
-    <select id="list" parameterType="RankPageVO" resultType="RankUserVO">
+    <select id="list" parameterType="RankUserPageVO" resultType="RankUserVO">
     	select * from (
     	select
 		row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*

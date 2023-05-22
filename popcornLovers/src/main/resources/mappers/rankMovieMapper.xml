@@ -16,7 +16,7 @@
     
     <!-- 페이징하기 위함 -->
 	<!-- 전체 랭킹 : 순위별 페이징 -->
-    <select id="all" parameterType="RankPageVO" resultType="RankMovieVO">
+    <select id="all" parameterType="RankMoviePageVO" resultType="RankMovieVO">
     	select * from(
     		select 
 			row_number() over(order by moviePopularity desc) as rank_no, r.moviePopularity, m.*
@@ -25,7 +25,7 @@
 		where rank2.rank_no between ${start} and ${end}
     </select>
     <!-- 페이지별 목록 불러오기 -->
-    <select id="list" parameterType="RankPageVO" resultType="RankMovieVO">
+    <select id="list" parameterType="RankMoviePageVO" resultType="RankMovieVO">
     	select * from(
     		select 
 			row_number() over(order by moviePopularity desc) as rank_no, r.moviePopularity, m.*

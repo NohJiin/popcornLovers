@@ -16,7 +16,7 @@
     
     <!-- 페이징하기 위함 -->
 	<!-- 전체 랭킹 : 순위별 페이징 -->
-    <select id="all" parameterType="RankPageVO" resultType="RankActorVO">
+    <select id="all" parameterType="RankActorPageVO" resultType="RankActorVO">
     	select * from(
     	select
 		row_number() over(order by actorPopularity desc) as rank_no, r.actorPopularity, a.*
@@ -25,7 +25,7 @@
 		where total.rank_no between ${start} and ${end}
     </select>
     <!-- 페이지별 목록 불러오기 -->
-    <select id="list" parameterType="RankPageVO" resultType="RankActorVO">
+    <select id="list" parameterType="RankActorPageVO" resultType="RankActorVO">
     	select * from(
     	select
 		row_number() over(order by actorPopularity desc) as rank_no, r.actorPopularity, a.*
