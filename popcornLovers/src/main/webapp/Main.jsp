@@ -1,100 +1,11 @@
+<%@ page import="java.util.Arrays"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.6.4.js"></script>
-<style type="text/css">
-#main{
-	width : 100%;
-	height : 100%;
-	margin : 0px auto;	/* 가운데 정렬 */
-}
-
-.category{
-	/* dispaly : inlin-block; */
-}
-
-#menu {
-	width : 100%;
-	height : 40px;
-	float: left;
-	margin-bottom: 5px;
-	text-align: center;
-	background: #fff5a6;
-}
-
-#menu button{
-	background-color: transparent;
-	border: none;
-}
-
-#rank {
-	width : 70%;
-	height : 100%;
-	float: left;
-}
-
-#rankList {
-	width : 100%;
-	height : 100%;
-	float: left;
-}
-
-#recoList {
-	width : 29%;
-	height : 100%;
-	float: left;
-	margin-left: 5px;
-}
-</style>
-<script type="text/javascript">
-$(function() {
-	// 시작과 동시에 UseRank가 띄워짐
-	$("#rankList").empty()
-	$("#top3").empty()
-	$.ajax({
-		url: "rankUser/userRankAll",
-		data: {
-			page : 1
-		},
-		success: function(x) {
-			$("#rankList").append(x)
-		},
-		error: function() {
-			alert("오류발생")
-		}
-	})
-	// 시작과 동시에 User추천 항목 띄워줌
-	$.ajax({
-		url: "rankMovie/recoMovie",
-		success: function(x) {
-			$("#recoList").append(x)
-		},
-		error: function() {
-			alert("오류발생")
-		}
-	})
-	// 시작과 동시에 User Top3 불러오기
-	$.ajax({
-		url: "rankUser/userTop3",
-		success: function(x) {
-			$("#top3").append(x)
-		},
-		error: function() {
-			alert("오류발생")
-		}
-	})	// ajax
-	
-})	// $func
-</script>
-<style type="text/css">
-button {
-	font-size: 15px;
-}
-</style>
+ <title>팝콘 먹는 사람들</title>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -102,7 +13,7 @@ button {
 
 </head>
 <body>
-<div class="header">
+	<div class="header">
 		<div class="header_content">
 			<div class="nav">
 				<div class="logo">
@@ -128,12 +39,12 @@ button {
 						</ul>
 						</div>
                     </li><!--
-					--><li class="li_menu"><a href="rankMain.jsp"><span class="main_menu">랭킹</span></a><!--
+					--><li class="li_menu"><a href="rankUser/rankUserMain.jsp"><span class="main_menu">랭킹</span></a><!--
 					--><div class="menu_sub">
 						<ul>
-							<li><a href="rankUserMain.jsp"><span>유저랭킹</span></a></li> <!--
-							--><li><a href="rankMovieMain.jsp"><span>영화랭킹</span></a></li><!--
-							--><li><a href="rankActorMain.jsp"><span>배우랭킹</span></a></li><!--
+							<li><a href="rankUser/rankUserMain.jsp"><span>유저랭킹</span></a></li><!--
+							--><li><a href="rankMovie/rankMovieMain.jsp"><span>영화랭킹</span></a></li><!--
+							--><li><a href="rankActor/rankActorMain.jsp"><span>배우랭킹</span></a></li><!--
 							--></ul>
 						</div>
 					</li><!--
@@ -172,26 +83,6 @@ button {
 			</div>
 		</div>
     </div>
-<!-- <div id="menu" class="menu_sub">
-	<ul>
-		<li><button class="category" id="user"><span>유저</span></button></li>
-		<li><button class="category" id="movie"><span>영화</span></button></li>
-		<li><button class="category" id="actor"><span>배우</span></button></li>
-	</ul>
-</div>
-<hr>  -->
-<div id="main">
-	<div id="rank">					<!--  style="background: yellow;" -->
-		Rank
-		<div id="top3">Top3</div>	<!--  style="background: violet;" -->
-		
-		<div id="rankList">			<!--  style="background: pink;" -->
-			랭킹이 들어갈 곳
-		</div>
-	</div>
-	<div id="recoList">				<!--  style="background: orange;" -->
-		추천 항목이 들어갈 곳
-	</div>
-</div>
+
 </body>
 </html>

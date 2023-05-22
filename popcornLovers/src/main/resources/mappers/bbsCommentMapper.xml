@@ -8,7 +8,7 @@
         values(#{bCommentId}, #{bCommentContent}, #{bCommentWriterId}, #{bCommentCreate}, #{bCommentUpdate}, #{bCommentDelete}, #{bCommentIsDeleted})
     </insert>
 
-    <select id="selectOne" resultType="BbsCommentVO">
+    <select id="selectOne" resultType="commentVO">
         select * from popcorn.b_comment
         where b_comment_id = #{bCommentId}
     </select>
