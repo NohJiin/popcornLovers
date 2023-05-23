@@ -1,9 +1,5 @@
 package com.java4.popcorn.rankUser;
 
-
-import com.java4.popcorn.rankActor.RankActorVO;
-import com.java4.popcorn.rankMovie.RankMovieVO;
-
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;

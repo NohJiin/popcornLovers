@@ -11,6 +11,12 @@ public class RankActorDAO {
     
     @Autowired
     SqlSessionTemplate my;
+    
+ // rankActor 테이블에 없는 값 actor 테이블에서 가져와 insert
+    public int actorInsert() {
+		int result = my.insert("RankActorDAO.actorInsert");
+		return result;
+	}
 
     /* 페이징 */
 	// 전체 목록 : 순위별

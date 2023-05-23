@@ -15,6 +15,10 @@ public class RankActorController {
 	// 배우 전체 랭크 리스트 : 순위별
 	@RequestMapping("rankActor/actorRankAll")
 	public void actorRank(PageVO vo, Model model) {
+		// actor에 회원이 추가되면 rankactor 테이블에도 추가되도록 함
+		int result = dao.actorInsert();
+		System.out.println(result + "개 추가됨");
+		
 		vo.setStartEnd(vo.getPage());
 		System.out.println("actorRank list실행");
 		List<RankActorVO> list = dao.all(vo);

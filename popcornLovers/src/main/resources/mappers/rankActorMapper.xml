@@ -14,6 +14,14 @@
 		where rank_no = #{rank_no}
     </select>
     
+    <!-- actor 테이블에서 rankActor 테이블에 없는 값 insert하기 (left outer join 사용) -->
+    <insert id="actorInsert" parameterType="RankActorVO">
+    	insert into popcorn.rankactor (actorId)
+		select a.actorId
+		from popcorn.actor a left outer join popcorn.rankactor r on a.actorId = r.actorId
+		where r.actorId is null
+    </insert>
+    
     <!-- 페이징하기 위함 -->
 	<!-- 전체 랭킹 : 순위별 페이징 -->
     <select id="all" parameterType="RankActorPageVO" resultType="RankActorVO">

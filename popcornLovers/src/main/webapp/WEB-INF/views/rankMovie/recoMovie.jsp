@@ -12,7 +12,7 @@
 <table style="font-size: 10px;">
 	<c:forEach items="${list}" var="vo" begin="0" end="2">
 		<tr>
-			<td rowspan="3"><img alt="영화 이미지" src="resources/n_img/${vo.movieImg}" width="100px" height="120px"> </td>
+			<td rowspan="3"><img alt="영화 이미지" src="../resources/n_img/${vo.movieImg}" width="100px" height="120px"> </td>
 			<td>${vo.movieTitle} / ${vo.movieOpen}</td>
 		</tr>
 		<tr>

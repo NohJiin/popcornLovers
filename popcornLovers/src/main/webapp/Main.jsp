@@ -39,12 +39,12 @@
 						</ul>
 						</div>
                     </li><!--
-					--><li class="li_menu"><a href="rankUser/rankUserMain.jsp"><span class="main_menu">랭킹</span></a><!--
+					--><li class="li_menu"><a href="rank/rankUserMain.jsp"><span class="main_menu">랭킹</span></a><!--
 					--><div class="menu_sub">
 						<ul>
-							<li><a href="rankUser/rankUserMain.jsp"><span>유저랭킹</span></a></li><!--
-							--><li><a href="rankMovie/rankMovieMain.jsp"><span>영화랭킹</span></a></li><!--
-							--><li><a href="rankActor/rankActorMain.jsp"><span>배우랭킹</span></a></li><!--
+							<li><a href="rank/rankUserMain.jsp"><span>유저랭킹</span></a></li><!--
+							--><li><a href="rank/rankMovieMain.jsp"><span>영화랭킹</span></a></li><!--
+							--><li><a href="rank/rankActorMain.jsp"><span>배우랭킹</span></a></li><!--
 							--></ul>
 						</div>
 					</li><!--

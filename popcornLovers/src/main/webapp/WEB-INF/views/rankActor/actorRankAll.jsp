@@ -11,7 +11,7 @@
 		$('.pages').click(function() {
 			// alert($(this).text())
 			$.ajax({
-				url : "rankActor/actorRankList", //views/actorRankList.jsp가 결과!
+				url : "../rankActor/actorRankList", //views/actorRankList.jsp가 결과!
 				data : {
 					page : $(this).text()
 				},
@@ -64,8 +64,8 @@ a:hover {
 		<tr>
 			<td>Rank</td>
 			<td>Actor Name</td>
-			<td><img alt="조회수 눈 이미지" src="resources/n_img/eye.png" width="10px" height="10px"></td>
-			<td><img alt="좋아요 하트 이미지" src="resources/n_img/pink.png" width="10px" height="10px"></td>
+			<td><img alt="조회수 눈 이미지" src="../resources/n_img/eye.png" width="10px" height="10px"></td>
+			<td><img alt="좋아요 하트 이미지" src="../resources/n_img/pink.png" width="10px" height="10px"></td>
 			<td>버튼</td>	<!-- 버튼 항목도 테이블의 컬럼으로 저장 -->
 		</tr>
 		<c:forEach items="${list}" var="bag">
@@ -74,7 +74,7 @@ a:hover {
 				<td>${bag.actorName}</td>
 				<td>${bag.actorHits}</td>
 				<td>${bag.actorLike}</td>
-				<td> <button style="background-color: transparent; border: none;"><img alt="좋아요 버튼" src="resources/n_img/blackEmpty.png" width="20px" height="20px"></button> </td>
+				<td> <button style="background-color: transparent; border: none;"><img alt="좋아요 버튼" src="../resources/n_img/blackEmpty.png" width="20px" height="20px"></button> </td>
 			</tr>
 		</c:forEach>
 	</table>

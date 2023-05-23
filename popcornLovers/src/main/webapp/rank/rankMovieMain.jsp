@@ -14,15 +14,21 @@
 }
 
 .category{
-	dispaly : inlin-block;
+	/* dispaly : inlin-block; */
 }
 
 #menu {
 	width : 100%;
-	height : 20%;
+	height : 40px;
 	float: left;
 	margin-bottom: 5px;
 	text-align: center;
+	background: #fff5a6;
+}
+
+#menu button{
+	background-color: transparent;
+	border: none;
 }
 
 #rank {
@@ -50,7 +56,7 @@ $(function() {
 	$("#rankList").empty()
 	$("#top3").empty()
 	$.ajax({
-		url: "rankUser/userRankAll",
+		url: "../rankMovie/movieRankAll",
 		data: {
 			page : 1
 		},
@@ -63,7 +69,7 @@ $(function() {
 	})
 	// 시작과 동시에 User추천 항목 띄워줌
 	$.ajax({
-		url: "rankMovie/recoMovie",
+		url: "../rankMovie/recoMovie",
 		success: function(x) {
 			$("#recoList").append(x)
 		},
@@ -73,7 +79,7 @@ $(function() {
 	})
 	// 시작과 동시에 User Top3 불러오기
 	$.ajax({
-		url: "rankUser/userTop3",
+		url: "../rankMovie/movieTop3",
 		success: function(x) {
 			$("#top3").append(x)
 		},
@@ -81,33 +87,7 @@ $(function() {
 			alert("오류발생")
 		}
 	})	// ajax
-	
-	// let status = false;
-	let like = "resources/n_img/likeHeart.png"
-	let dislike = "resources/n_img/dislikeHeart.png"
-	$(document).on("click", ".btn", function(){
-		value = $(this).attr('value')
-		idvalue = $(this).attr('id')
-		// var imgSrc = jQuery('.btnImg').attr("src");
-		alert("성공>> " + value + "<br>" + "btn의 id>> " + idvalue)
-		
-		
-		if (imgSrc == dislike) {
-			jQuery('.btnImg').attr("src", "resources/n_img/likeHeart.png");
-		} else if (imgSrc == like) {
-			jQuery('.btnImg').attr("src", "resources/n_img/dislikeHeart.png");
-		}
-		//DB에 UPDATE(+)
-		//FALSEytui  ikuyg                        
-		
-		
-		//DB에 UPDATE(-)
-		//TRUE
-		
-		
-	})
-	
-	
+
 })	// $func
 </script>
 <style type="text/css">
@@ -126,7 +106,7 @@ button {
 		<div class="header_content">
 			<div class="nav">
 				<div class="logo">
-					<a href="링크주소"><img src="resources/img/logo5.png" alt="로고 이미지"></a>
+					<a href="../Main.jsp"><img src="../resources/img/logo5.png" alt="로고 이미지"></a>
 				        </div>
                             <nav>
 				                <ul class="header_menu"><!--
@@ -148,7 +128,7 @@ button {
 						</ul>
 						</div>
                     </li><!--
-					--><li class="li_menu"><a href="rankMain.jsp"><span class="main_menu">랭킹</span></a><!--
+					--><li class="li_menu"><a href="rankUserMain.jsp"><span class="main_menu">랭킹</span></a><!--
 					--><div class="menu_sub">
 						<ul>
 							<li><a href="rankUserMain.jsp"><span>유저랭킹</span></a></li> <!--
@@ -192,9 +172,10 @@ button {
 			</div>
 		</div>
     </div>
+    
 <div id="main">
 	<div id="rank">					<!--  style="background: yellow;" -->
-		Rank
+		Movie Rank
 		<div id="top3">Top3</div>	<!--  style="background: violet;" -->
 		
 		<div id="rankList">			<!--  style="background: pink;" -->

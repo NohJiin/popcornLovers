@@ -21,9 +21,9 @@ th, td {
 <body>
 <table>
 	<tr>
-		<td><img alt="멤버 Top1 이미지" src="resources/n_img/profil.png" width="150" height="150"></td>
-		<td><img alt="멤버 Top2 이미지" src="resources/n_img/profil.png" width="150" height="150"></td>
-		<td><img alt="멤버 Top3 이미지" src="resources/n_img/profil.png" width="150" height="150"></td>
+		<td><img alt="멤버 Top1 이미지" src="../resources/n_img/profil.png" width="150" height="150"></td>
+		<td><img alt="멤버 Top2 이미지" src="../resources/n_img/profil.png" width="150" height="150"></td>
+		<td><img alt="멤버 Top3 이미지" src="../resources/n_img/profil.png" width="150" height="150"></td>
 	</tr>
 	<tr>
 		<td>LV. ${top1.member_level} ㆍ ${top1.member_knickname}</td>

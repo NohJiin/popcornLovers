@@ -56,7 +56,7 @@ $(function() {
 	$("#rankList").empty()
 	$("#top3").empty()
 	$.ajax({
-		url: "rankActor/actorRankAll",
+		url: "../rankActor/actorRankAll",
 		data: {
 			page : 1
 		},
@@ -69,7 +69,7 @@ $(function() {
 	})
 	// 시작과 동시에 actor추천 항목 띄워줌
 	$.ajax({
-		url: "rankMovie/recoMovie",
+		url: "../rankMovie/recoMovie",
 		success: function(x) {
 			$("#recoList").append(x)
 		},
@@ -79,7 +79,7 @@ $(function() {
 	})
 	// 시작과 동시에 User Top3 불러오기
 	$.ajax({
-		url: "rankActor/actorTop3",
+		url: "../rankActor/actorTop3",
 		success: function(x) {
 			$("#top3").append(x)
 		},
@@ -106,7 +106,7 @@ button {
 		<div class="header_content">
 			<div class="nav">
 				<div class="logo">
-					<a href="링크주소"><img src="resources/img/logo5.png" alt="로고 이미지"></a>
+					<a href="../Main.jsp"><img src="../resources/img/logo5.png" alt="로고 이미지"></a>
 				        </div>
                             <nav>
 				                <ul class="header_menu"><!--
@@ -128,7 +128,7 @@ button {
 						</ul>
 						</div>
                     </li><!--
-					--><li class="li_menu"><a href="rankMain.jsp"><span class="main_menu">랭킹</span></a><!--
+					--><li class="li_menu"><a href="rankUserMain.jsp"><span class="main_menu">랭킹</span></a><!--
 					--><div class="menu_sub">
 						<ul>
 							<li><a href="rankUserMain.jsp"><span>유저랭킹</span></a></li> <!--
@@ -182,7 +182,7 @@ button {
 <hr>  -->
 <div id="main">
 	<div id="rank">					<!--  style="background: yellow;" -->
-		Rank
+		Actor Rank
 		<div id="top3">Top3</div>	<!--  style="background: violet;" -->
 		
 		<div id="rankList">			<!--  style="background: pink;" -->

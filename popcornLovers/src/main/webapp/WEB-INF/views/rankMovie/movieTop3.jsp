@@ -25,9 +25,9 @@ tr {
 <body>
 <table>
 	<tr>
-		<td><img alt="영화 Top1 이미지" src="resources/n_img/${top1.movieImg}" width="150" height="180"></td>
-		<td><img alt="영화 Top2 이미지" src="resources/n_img/${top2.movieImg}" width="150" height="180"></td>
-		<td><img alt="영화 Top3 이미지" src="resources/n_img/${top3.movieImg}" width="150" height="180"></td>
+		<td><img alt="영화 Top1 이미지" src="../resources/n_img/${top1.movieImg}" width="150" height="180"></td>
+		<td><img alt="영화 Top2 이미지" src="../resources/n_img/${top2.movieImg}" width="150" height="180"></td>
+		<td><img alt="영화 Top3 이미지" src="../resources/n_img/${top3.movieImg}" width="150" height="180"></td>
 	</tr>
 	<tr>
 		<td>${top1.movieTitle}</td>

@@ -11,10 +11,17 @@ public class RankMovieDAO {
 	@Autowired
 	SqlSessionTemplate my;
 	
+	// rankUser 테이블에 없는 값 member 테이블에서 가져와 insert
+    public int movieInsert() {
+		int result = my.insert("RankMovieDAO.movieInsert");
+		return result;
+	}
+	
 	/* 페이징 */
 	// 전체 목록 : 순위별
 	public List<RankMovieVO> all(PageVO vo) {
 		List<RankMovieVO> list = my.selectList("RankMovieDAO.all", vo);
+		System.out.println(list.size());
 		return list;
 	}
 	

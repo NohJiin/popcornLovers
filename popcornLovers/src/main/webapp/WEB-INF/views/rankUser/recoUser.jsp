@@ -18,7 +18,7 @@ table {
 <table style="font-size: 10px;">
 	<c:forEach items="${list}" var="vo" begin="0" end="2">
 		<tr>
-			<td rowspan="3"><img alt="유저 이미지" src="resources/n_img/${vo.member_img}" width="50px" height="80px"> </td>
+			<td rowspan="3"><img alt="유저 이미지" src="../resources/n_img/${vo.member_img}" width="50px" height="80px"> </td>
 			<td>${vo.member_name} / Lv.${vo.member_level}</td>
 		</tr>
 		<tr>
