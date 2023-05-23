@@ -3,7 +3,7 @@ package com.java4.popcorn.movieInfo;
 import lombok.Data;
 
 @Data
-public class MovieVO {
+public class MovieInfoVO {
     private int movieid;
     private String movieTitle;
     private String movieGenre;

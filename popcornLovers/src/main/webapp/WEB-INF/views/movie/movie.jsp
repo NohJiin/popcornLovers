@@ -47,8 +47,8 @@ $(function() {
     	  for (let i in movieList) {
     	    let movieNm = encodeURIComponent(movieList[i].movieNm);
     	    let openDt = movieList[i].openDt.replaceAll("-", "");
-    	    let postersUrl = 'https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=' + movieNm + '&releaseDts=' + openDt + '&ServiceKey=KV1CZ288PZ05JB1CRNFW';
-
+    	    //let postersUrl = 'https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=' + movieNm + '&releaseDts=' + openDt + '&ServiceKey=KV1CZ288PZ05JB1CRNFW';
+		 	let postersUrl = 'http://file.koreafilm.or.kr/thm/02/00/01/46/tn_DPK004440.JPG'
     	    let posterRequest = $.getJSON(postersUrl);
     	    posterRequests.push(posterRequest);
     	  }

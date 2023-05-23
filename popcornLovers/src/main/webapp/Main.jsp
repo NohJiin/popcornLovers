@@ -24,7 +24,7 @@
 				                --><li class="li_menu"><a href="링크주소"><span class="main_menu">영화정보</span></a><!--
 					--><div class="menu_sub">
 						<ul>
-							<li><a href="링크주소"><span>영화 목록</span></a></li>
+							<li><a href="movie"><span>영화 목록</span></a></li>
                         </ul>
 					</div>
 					</li><!--

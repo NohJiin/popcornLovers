@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="MovieDAO">
+<mapper namespace="MovieInfoDAO">
     <insert id="insertOne">
         insert into popcorn.movie
         values(#{movieid}, #{movieTitle}, #{movieGenre}, #{movieGrade}, #{movieOpen}, #{movieLast}, #{movieStory}, #{movieTime}, #{movieimg}, #{movieActor}, #{movieDirector}, #{movieLike})
     </insert>
 
-    <select id="selectOne" resultType="MovieVO">
+    <select id="selectOne" resultType="MovieInfoVO">
         select * from popcorn.movie
         where movieid = #{movieid}
     </select>

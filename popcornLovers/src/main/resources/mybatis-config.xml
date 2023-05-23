@@ -38,7 +38,7 @@
         <typeAlias type="com.java4.popcorn.mypage.PageVO" alias="MemberPageVO"/>
 
         <!--김준명-->
-        <typeAlias type="com.java4.popcorn.movieInfo.MovieVO" alias="MovieVO"/>
+        <typeAlias type="com.java4.popcorn.movieInfo.MovieInfoVO" alias="MovieInfoVO"/>
         <typeAlias type="com.java4.popcorn.actor.ActorVO" alias="ActorVO"/>
 
         <!--박근우-->
