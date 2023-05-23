@@ -17,7 +17,7 @@
 		<div class="header_content">
 			<div class="nav">
 				<div class="logo">
-					<a href="링크주소"><img src="resources/img/logo5.png" alt="로고 이미지"></a>
+					<a href="Main.jsp"><img src="resources/img/logo5.png" alt="로고 이미지"></a>
 				        </div>
                             <nav>
 				                <ul class="header_menu"><!--
