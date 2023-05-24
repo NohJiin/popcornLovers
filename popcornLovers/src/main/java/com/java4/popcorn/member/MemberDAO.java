@@ -58,6 +58,17 @@ public class MemberDAO {
 		return list;
 	}
     
+    //회원하나 리스트
+    public MemberVO selectOne(String member_id) {
+		MemberVO bag = my.selectOne("MemberDAO.selectOne",member_id);
+		return bag;
+	}
+    
+    //회원 조회수
+    public int viewCount(String member_id) {
+		int result = my.update("MemberDAO.viewCount", member_id);
+		return result;
+	}
     
 	}
 

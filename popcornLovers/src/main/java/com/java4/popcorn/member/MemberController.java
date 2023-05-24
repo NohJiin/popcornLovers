@@ -16,11 +16,6 @@ public class MemberController {
 
 	@Autowired
 	MemberDAO dao;
-
-	public boolean isKoreanInput(String input) {
-	    String koreanRegex = ".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*";
-	    return input.matches(koreanRegex);
-	}
 	
 	
 	// 회원가입
@@ -43,7 +38,8 @@ public class MemberController {
 		if (result != null) {
 			// 로그인 성공
 			session.setAttribute("member_id", vo.getMember_id());// ★세션잡아둔것
-			session.setAttribute("member_knickname", result);// list를 불러오려면 view 아래에 파일이 있어야함으로 닉네임 값을 넣어주기			
+			session.setAttribute("member_knickname", result);// list를 불러오려면 view 아래에 파일이 있어야함으로 닉네임 값을 넣어주기	
+			session.setAttribute("bag", vo);
 			return "redirect:main.jsp"; // views 아래 파일 이름.jsp
 		} else {
 			// 로그인 실패
@@ -99,6 +95,15 @@ public class MemberController {
 		List<MemberVO> list = dao.list();
 		System.out.println("list요청");
 		model.addAttribute("list", list);
+	}
+	
+	//회원 한명 리스트
+	@RequestMapping("member/one")
+	public void selectOne(String member_id, Model model) {
+		int result = dao.viewCount(member_id);
+		System.out.println("조회수 +" + result + "회 증가");
+		MemberVO bag = dao.selectOne(member_id);
+		model.addAttribute("bag", bag);
 	}
 
 }
