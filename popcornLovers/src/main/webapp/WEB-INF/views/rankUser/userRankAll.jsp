@@ -82,7 +82,7 @@ a:hover {
 		<c:forEach items="${list}" var="bag">
 			<tr>
 				<td>${bag.rank_no}</td>
-				<td><a href="lsh/one?member_id=${bag.member_id}">${bag.member_knickname}</a></td>
+				<td><a href="../member/one?member_id=${bag.member_id}">${bag.member_knickname}</a></td>
 				<td><img alt="등급 이미지" src="../resources/n_img/${bag.member_img}" width="20px" height="20px"> ${bag.member_level}</td>
 				<td>리뷰 수</td>
 				<td>${bag.member_view}</td>
