@@ -93,7 +93,7 @@ $(function() {
     $(document).on("click", ".boxoffice", function(){
         let movieCd = $(this).attr("id");
         let contextPath = "${pageContext.request.contextPath}";
-        window.open(contextPath + "/movieDetails?movieCd=" + movieCd, "_self");
+        window.open(contextPath + "/movie/movieDetails?movieCd=" + movieCd, "_self");
     });
 });
 </script>
