@@ -1,5 +1,6 @@
 package com.java4.popcorn.api.kmdb;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class KmdbMovieSimpleInfoResponseVO {
     @JsonProperty("Query")
     private String query;
@@ -20,6 +22,7 @@ public class KmdbMovieSimpleInfoResponseVO {
     private List<Collection> data;
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Collection {
         @JsonProperty("CollName")
         private String collName;
@@ -31,6 +34,7 @@ public class KmdbMovieSimpleInfoResponseVO {
         private List<Movie> result;
 
         @Data
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class Movie {
             @JsonProperty("DOCID")
             private String DOCID;
@@ -50,12 +54,15 @@ public class KmdbMovieSimpleInfoResponseVO {
             private String rating;
             private String genre;
             private String kmdbUrl;
+            private String posters;
 
             @Data
+            @JsonIgnoreProperties(ignoreUnknown = true)
             public static class Directors {
                 private List<Director> director;
 
                 @Data
+                @JsonIgnoreProperties(ignoreUnknown = true)
                 public static class Director {
                     private String directorNm;
                     private String directorEnNm;
@@ -64,10 +71,12 @@ public class KmdbMovieSimpleInfoResponseVO {
             }
 
             @Data
+            @JsonIgnoreProperties(ignoreUnknown = true)
             public static class Actors {
                 private List<Actor> actor;
 
                 @Data
+                @JsonIgnoreProperties(ignoreUnknown = true)
                 public static class Actor {
                     private String actorNm;
                     private String actorEnNm;
@@ -76,13 +85,16 @@ public class KmdbMovieSimpleInfoResponseVO {
             }
 
             @Data
+            @JsonIgnoreProperties(ignoreUnknown = true)
             public static class Plots {
                 private List<Plot> plot;
 
                 @Data
+                @JsonIgnoreProperties(ignoreUnknown = true)
                 public static class Plot {
                     private String plotLang;
                     private String plotText;
+                   
                 }
             }
         }

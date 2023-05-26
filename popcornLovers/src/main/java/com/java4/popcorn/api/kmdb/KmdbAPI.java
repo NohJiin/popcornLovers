@@ -7,6 +7,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Component
 public class KmdbAPI {
@@ -48,7 +50,8 @@ public class KmdbAPI {
 
     public KmdbMovieSimpleInfoResponseVO getMovieInfoByTitle(String title){
         try {
-            HttpURLConnection connection = (HttpURLConnection) new URL(str+key+"&title="+title).openConnection();
+            String encodedTitle = URLEncoder.encode(title, StandardCharsets.UTF_8.toString());
+            HttpURLConnection connection = (HttpURLConnection) new URL(str+key+"&title="+encodedTitle).openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type", "application/json");
             ObjectMapper om = new ObjectMapper();
@@ -58,7 +61,7 @@ public class KmdbAPI {
         }
         return null;
     }
-
+    
     public static void main(String[] args) {
         KmdbAPI kmdbAPI = new KmdbAPI();
 //        for(int i=0;i<100;i++) {
