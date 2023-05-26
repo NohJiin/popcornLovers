@@ -39,7 +39,7 @@
 						</ul>
 						</div>
                     </li><!--
-					--><li class="li_menu"><a href="../rank/rankUserMain.jsp"><span class="main_menu">랭킹</span></a><!--
+					--><li class="li_menu"><a href="${pageContext.request.contextPath}/rank/rankUserMain.jsp"><span class="main_menu">랭킹</span></a><!--
 					--><div class="menu_sub">
 						<ul>
 							<li><a href="../rank/rankUserMain.jsp"><span>유저랭킹</span></a></li><!--
@@ -77,11 +77,11 @@
 				<div class="login">
 					<ul>
 					 <% if(session.getAttribute("member_id") == null ) { %>
-						<li><a href="../member/login.jsp"><span>로그인</span></a></li><!--
-						--><li><a href="../member/join.jsp"><span>회원가입</span></a></li>
+						<li><a href="${pageContext.request.contextPath}/member/login.jsp"><span>로그인</span></a></li><!--
+						--><li><a href="${pageContext.request.contextPath}/member/join.jsp"><span>회원가입</span></a></li>
 						<%} else { %>
 						<li><a href="${pageContext.request.contextPath}/mypage/mypage?page=1"><span>${member_knickname}님</span></a></li><!--
-						--><li><a href="../member/join.jsp"><span>로그아웃</span></a></li>
+						--><li><a href="${pageContext.request.contextPath}/member/join.jsp"><span>로그아웃</span></a></li>
 						 <%} %>
 					</ul>
 				</div>
