@@ -6,7 +6,7 @@ import lombok.Data;
 public class RankActorVO {
 	private int rank_no;
 	private Integer actorPopularity;
-    private int actorId;
+    private String actorId;
     private String actorName;
     private String actorFilmo;
     private Integer actorLike;

@@ -6,7 +6,7 @@ import lombok.Data;
 public class RankMovieVO {
 	private int rank_no;	// 영화 순위
 	private double moviePopularity;	// 영화 인기도
-	private int movieId;	// 영화 아이디
+	private String movieId;	// 영화 아이디
 	private String movieTitle;	// 영화 제목
 	private String movieGenre;	// 영화 장르
 	private String movieGrade;	// 영화 평점

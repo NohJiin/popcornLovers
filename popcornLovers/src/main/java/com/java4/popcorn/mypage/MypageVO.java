@@ -5,22 +5,47 @@ import java.util.Date;
 
 public class MypageVO {
 	
-	 //?šŒ?›?´ ?“´ ê²Œì‹œê¸? ëª©ë¡	
-	  private int bbs_id;
+	 //íšŒì›ì´ ì“´ ê²Œì‹œê¸€ ëª©ë¡	
+	  private int bbs_no;
 	  private String member_id;
+	  private String member_knickname;
 	  private String bbs_title;
-	  private Date bbs_create;
+	  private Date bbs_date;
 	  
-	  //?šŒ?›?´ ?“´ ë¦¬ë·° ëª©ë¡
+	//íšŒì›ì´ ì“´ ë¦¬ë·° ëª©ë¡
 	  private String movieTitle;
 	  private String reviewContent;
 	  private String movieId;
 	  private String memberId;
 	  
-	  //?šŒ?›?˜ ?˜?™” ì°? ëª©ë¡
+	//íšŒì›ì˜ ì˜í™” ì°œ ëª©ë¡
 	  private Integer movie_like;
 	  
+	  //íšŒì› í”„ë¡œí•„ì˜ ì¡°íšŒìˆ˜ì™€ ì¢‹ì•„ìš”
+	  private Integer memberHits;
+	  private Integer memberLike;
+	  
+	  
 	  //getter setter
+	 public Integer getMemberHits() {
+		return memberHits;
+	}
+	 public void setMemberHits(Integer memberHits) {
+		this.memberHits = memberHits;
+	}
+	 public Integer getMemberLike() {
+		return memberLike;
+	}
+	 public void setMemberLike(Integer memberLike) {
+		this.memberLike = memberLike;
+	}
+	  public String getMember_knickname() {
+		return member_knickname;
+	}
+	 public void setMember_knickname(String member_knickname) {
+		this.member_knickname = member_knickname;
+	}
+	  
 	  public Integer getMovie_like() {
 		return movie_like;
 	}
@@ -57,10 +82,10 @@ public class MypageVO {
 	}
 	
 	public int getBbs_id() {
-		return bbs_id;
+		return bbs_no;
 	}
-	public void setBbs_id(int bbs_id) {
-		this.bbs_id = bbs_id;
+	public void setBbs_no(int bbs_no) {
+		this.bbs_no = bbs_no;
 	}
 	public String getMember_id() {
 		return member_id;
@@ -74,11 +99,11 @@ public class MypageVO {
 	public void setBbs_title(String bbs_title) {
 		this.bbs_title = bbs_title;
 	}
-	public Date getBbs_create() {
-		return bbs_create;
+	public Date getBbs_date() {
+		return bbs_date;
 	}
-	public void setBbs_create(Date bbs_create) {
-		this.bbs_create = bbs_create;
+	public void setBbs_date(Date bbs_date) {
+		this.bbs_date = bbs_date;
 	}
 	   
 	   
