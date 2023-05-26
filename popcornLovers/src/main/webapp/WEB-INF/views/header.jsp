@@ -17,14 +17,14 @@
 		<div class="header_content">
 			<div class="nav">
 				<div class="logo">
-					<a href="Main.jsp"><img src="../resources/img/logo5.png" alt="로고 이미지"></a>
+					<a href="${pageContext.request.contextPath}/Main.jsp"><img src="${pageContext.request.contextPath}/resources/img/logo5.png" alt="로고 이미지"></a>
 				        </div>
                             <nav>
 				                <ul class="header_menu"><!--
-				                --><li class="li_menu"><a href="링크주소"><span class="main_menu">영화정보</span></a><!--
+				                --><li class="li_menu"><a href="${pageContext.request.contextPath}/movie/movie"><span class="main_menu">영화정보</span></a><!--
 					--><div class="menu_sub">
 						<ul>
-							<li><a href="movie"><span>영화 목록</span></a></li>
+							<li><a href="${pageContext.request.contextPath}/movie/movie"><span>영화 목록</span></a></li>
                         </ul>
 					</div>
 					</li><!--
@@ -39,7 +39,7 @@
 						</ul>
 						</div>
                     </li><!--
-					--><li class="li_menu"><a href="rank/rankUserMain.jsp"><span class="main_menu">랭킹</span></a><!--
+					--><li class="li_menu"><a href="../rank/rankUserMain.jsp"><span class="main_menu">랭킹</span></a><!--
 					--><div class="menu_sub">
 						<ul>
 							<li><a href="../rank/rankUserMain.jsp"><span>유저랭킹</span></a></li><!--
@@ -77,11 +77,11 @@
 				<div class="login">
 					<ul>
 					 <% if(session.getAttribute("member_id") == null ) { %>
-						<li><a href="member/login.jsp"><span>로그인</span></a></li><!--
-						--><li><a href="member/join.jsp"><span>회원가입</span></a></li>
+						<li><a href="../member/login.jsp"><span>로그인</span></a></li><!--
+						--><li><a href="../member/join.jsp"><span>회원가입</span></a></li>
 						<%} else { %>
-						<li><a href="mypage/mypage?page=1"><span>${member_knickname}님</span></a></li><!--
-						--><li><a href="member/join.jsp"><span>로그아웃</span></a></li>
+						<li><a href="${pageContext.request.contextPath}/mypage/mypage?page=1"><span>${member_knickname}님</span></a></li><!--
+						--><li><a href="../member/join.jsp"><span>로그아웃</span></a></li>
 						 <%} %>
 					</ul>
 				</div>

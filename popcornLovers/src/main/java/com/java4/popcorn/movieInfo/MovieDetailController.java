@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/movie") // 컨트롤러의 기본 경로 설정
 public class MovieDetailController {
 
-    @RequestMapping("/movie-details") // 수정된 경로 설정
+    @RequestMapping("/movieDetails") // 수정된 경로 설정
     public String movieDetail(@RequestParam("movieCd") String movieCd, Model model) {
         // movieCd를 사용하여 필요한 작업 수행
         // 예를 들어, movieCd로 영화 정보를 조회하거나 다른 데이터를 가져오는 등의 작업 수행 가능

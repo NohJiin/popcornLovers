@@ -97,6 +97,7 @@ $(function(){
 
 </head>
 <body>
+<%@ include file="/WEB-INF/views/header.jsp" %>
 <h3>회원가입 화면</h3>
 <form action="join" method="get">
 아이디: <input name = "member_id" id ="id"  maxlength="20">

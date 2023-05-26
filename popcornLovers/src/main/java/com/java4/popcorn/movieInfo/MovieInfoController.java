@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 
 public class MovieInfoController {
-	@RequestMapping("movie")
+	@RequestMapping("movie/movie")
 	public String movie() {
 		return "movie/movie";
 	

@@ -1,7 +1,9 @@
 package com.java4.popcorn.mypage;
 
+import java.io.File;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,103 +11,174 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.java4.popcorn.member.MemberVO;
 
 @Controller
 public class MypageController {
 
 	@Autowired
 	MypageDAO dao;
+
 	
-	//?šŒ?›?´ ?‘?„±?•œ ê²Œì‹œê¸?
+	//í”„ë¡œí•„ ì´ë¯¸ì§€ ì¶”ê°€ í´ë¦­ ì‹œ popup í˜ì´ì§€ë¡œ ì´ë™
+	@RequestMapping("mypage/popupGO")
+	public String openPopup() {
+	return "mypage/popup";
+	}
+	
+
+	//íšŒì› í”„ë¡œí•„ ì„¤ì •
+	@RequestMapping("mypage/popup/profileUp")
+	public void profileUpload(MemberVO vo, String member_id, HttpSession session,
+			HttpServletRequest request, //ê²½ë¡œ ìë™ìœ¼ë¡œ êµ¬í•˜ê¸°
+			MultipartFile file,//ì´ë¯¸ì§€ ë°›ëŠ” ê²ƒ
+			Model model) throws Exception {
+		session.setAttribute("member_id", vo.getMember_id()); //id ì„¸ì…˜ ìœ ì§€í•´ì•¼í•¨
+		String savedName = file.getOriginalFilename(); //íŒŒì¼ì˜ ì´ë¦„ì„ ê°€ì ¸ë‹¤ ì¤Œ = savedname ì— ì§‘ì–´ë„£ìŒ
+		String uploadPath
+					= request.getSession().getServletContext().getRealPath("resources/profile_img"); //ê²½ë¡œë¥¼ ìë™ìœ¼ë¡œ êµ¬í•´ì£¼ê¸°
+		
+		File target = new File(uploadPath + "/" + savedName); //íŒŒì¼ ê°ì²´ë¡œ ë§Œë“¤ì–´ì£¼ê¸°
+		file.transferTo(target); 
+		
+		System.out.println("ì´ë¯¸ì§€ ì—…ë¡œë“œ ìš”ì²­");
+		
+		model.addAttribute("savedName", savedName);
+		System.out.println("imgë„£ê¸° ì „>> " + vo);
+		vo.setMember_img(savedName);
+		System.out.println("imgë„£ì€ í›„>> " + vo);
+	}
+	
+	// íšŒì›ì´ ì‘ì„±í•œ ê²Œì‹œê¸€
 	@RequestMapping("mypage/mybbsAll")
-	public void bbsList2(PageVO vo,Model model, HttpSession session) { 
-		String member_id = (String)session.getAttribute("member_id"); //member_id ?„¸?…˜ ê°? ?¡?•„?‘ê¸? - String?œ¼ë¡? id ?¡ê¸?!
+	public void bbsList2(PageVO vo, Model model, HttpSession session) {
+		String member_id = (String) session.getAttribute("member_id"); // member_id ì„¸ì…˜ ê°’ ì¡ì•„ë‘ê¸° - Stringìœ¼ë¡œ id ì¡ê¸°!
 		vo.setStartEnd(vo.getPage());
 		vo.setMember_id(member_id);
-		
-		List<MypageVO> bbsAllList = dao.bbsAllList(vo);//member_idë¡? ?•´?‹¹ list?“¤ ?“¤ê³ ì˜¤ê¸?
-		System.out.println("bbsList: "+bbsAllList);
-		model.addAttribute("bbsAllList",bbsAllList);
+
+		List<MypageVO> bbsAllList = dao.bbsAllList(vo);// member_idë¡œ í•´ë‹¹ listë“¤ ë“¤ê³ ì˜¤ê¸°
+		model.addAttribute("bbsAllList", bbsAllList);
 	}
-	
-	//?šŒ?›?´ ?‘?„±?•œ ê²Œì‹œê¸?(ì²? ?˜?´ì§?) + ë¦¬ë·°(ì²? ?˜?´ì§?)
-	//mypage ë²„íŠ¼ ?´ë¦??‹œ ë°”ë¡œ ì¶œë ¥?˜?Š” controller
+
+	// íšŒì›ì´ ì‘ì„±í•œ ê²Œì‹œê¸€(ì²« í˜ì´ì§€) + ë¦¬ë·°(ì²« í˜ì´ì§€)
+	// mypage ë²„íŠ¼ í´ë¦­ì‹œ ë°”ë¡œ ì¶œë ¥ë˜ëŠ” controller
 	@RequestMapping("mypage/mypage")
-	public void bbsListFirst(PageVO vo,Model model, HttpSession session) {  
-		String member_id = (String)session.getAttribute("member_id"); //member_id ?„¸?…˜ ê°? ?¡?•„?‘ê¸? - String?œ¼ë¡? id ?¡ê¸?!
-		vo.setStartEnd(vo.getPage()); 
+	public void bbsListFirst(PageVO vo, Model model, HttpSession session) {
+		String member_id = (String) session.getAttribute("member_id"); // member_id ì„¸ì…˜ ê°’ ì¡ì•„ë‘ê¸° - Stringìœ¼ë¡œ id ì¡ê¸°!
+		vo.setStartEnd(vo.getPage());
 		vo.setMember_id(member_id);
-		System.out.println(vo);
-		
-		//bbs
-		int bbsCount = dao.bbsCount(vo);//?‘?„±?•œ bbs ëª‡ê°œ?¸ì§? ?•Œê¸?
-		System.out.println("bbs all count: " + bbsCount);
-		
-		int bbsPages = bbsCount / 10 + 1; // bbs 10ê°œì”© ?„£?? ?˜?´ì§? ê°??ˆ˜
-		System.out.println("bbs all pages: " + bbsPages);
-		
-		List<MypageVO> bbsAllList = dao.bbsAllList(vo);//member_idë¡? ?•´?‹¹ list?“¤ ?“¤ê³ ì˜¤ê¸?
-		System.out.println("bbsList: "+bbsAllList);
-		
-		//review
-		int reviewCount = dao.reviewCount(vo);//?‘?„±?•œ review ëª‡ê°œ?¸ì§? ?•Œê¸?
-		System.out.println("review all count: " + reviewCount);
-		
-		int reviewPages = reviewCount / 10 + 1; // bbs 10ê°œì”© ?„£?? ?˜?´ì§? ê°??ˆ˜
-		System.out.println("review all pages: " + reviewPages);
-		
-		List<MypageVO> reviewAllList = dao.reviewAllList(vo);//member_idë¡? ?•´?‹¹ list?“¤ ?“¤ê³ ì˜¤ê¸?
-		System.out.println("reviewList: "+ reviewAllList);
-		
-		//model?— ?„£?–´ì£¼ì
-		model.addAttribute("bbsAllList",bbsAllList);
-		model.addAttribute("bbsCount",bbsCount);
-		model.addAttribute("bbsPages",bbsPages);
-		
-		model.addAttribute("reviewAllList",reviewAllList);
-		model.addAttribute("reviewCount",reviewCount);
-		model.addAttribute("reviewPages",reviewPages);
+
+		// bbs
+		int bbsCount = dao.bbsCount(vo);// ì‘ì„±í•œ bbs ëª‡ê°œì¸ì§€ ì•Œê¸°
+		int bbsPages = bbsCount / 10 + 1; // bbs 10ê°œì”© ë„£ì€ í˜ì´ì§€ ê°¯ìˆ˜
+
+		List<MypageVO> bbsAllList = dao.bbsAllList(vo);// member_idë¡œ í•´ë‹¹ listë“¤ ë“¤ê³ ì˜¤ê¸°
+
+		// review
+		int reviewCount = dao.reviewCount(vo);// ì‘ì„±í•œ review ëª‡ê°œì¸ì§€ ì•Œê¸°
+		int reviewPages = reviewCount / 10 + 1; // bbs 10ê°œì”© ë„£ì€ í˜ì´ì§€ ê°¯ìˆ˜
+		List<MypageVO> reviewAllList = dao.reviewAllList(vo);// member_idë¡œ í•´ë‹¹ listë“¤ ë“¤ê³ ì˜¤ê¸°
+
+		// modelì— ë„£ì–´ì£¼ì
+		model.addAttribute("bbsAllList", bbsAllList);
+		model.addAttribute("bbsCount", bbsCount);
+		model.addAttribute("bbsPages", bbsPages);
+
+		model.addAttribute("reviewAllList", reviewAllList);
+		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("reviewPages", reviewPages);
 	}
-	
-	
-	//?šŒ?›?´ ?‘?„±?•œ ê²Œì‹œê¸?(?‚˜ë¨¸ì? ?˜?´ì§?ë¥? ì²˜ë¦¬)
+
+	// íšŒì›ì´ ì‘ì„±í•œ ê²Œì‹œê¸€(ë‚˜ë¨¸ì§€ í˜ì´ì§€ë¥¼ ì²˜ë¦¬)
 	@RequestMapping("mypage/mybbs2")
-	public void bbsListOther(PageVO vo,Model model, HttpSession session) {  
-		String member_id = (String)session.getAttribute("member_id"); //member_id ?„¸?…˜ ê°? ?¡?•„?‘ê¸? - String?œ¼ë¡? id ?¡ê¸?!
-		vo.setStartEnd(vo.getPage()); 
+	public void bbsListOther(PageVO vo, Model model, HttpSession session) {
+		String member_id = (String) session.getAttribute("member_id"); // member_id ì„¸ì…˜ ê°’ ì¡ì•„ë‘ê¸° - Stringìœ¼ë¡œ id ì¡ê¸°!
+		vo.setStartEnd(vo.getPage());
 		vo.setMember_id(member_id);
-		System.out.println(vo);
-		
-		List<MypageVO> bbsAllList = dao.bbsAllList(vo);//member_idë¡? ?•´?‹¹ list?“¤ ?“¤ê³ ì˜¤ê¸?
-		System.out.println("bbsList: "+bbsAllList);
-		
-		model.addAttribute("bbsAllList",bbsAllList);//model?— ?„£?–´ì£¼ì
+
+		List<MypageVO> bbsAllList = dao.bbsAllList(vo);// member_idë¡œ í•´ë‹¹ listë“¤ ë“¤ê³ ì˜¤ê¸°
+
+		model.addAttribute("bbsAllList", bbsAllList);// modelì— ë„£ì–´ì£¼ì
 	}
-	
-	
-	//?šŒ?›?´ ?‘?„±?•œ ë¦¬ë·°(?‚˜ë¨¸ì? ?˜?´ì§?ë¥? ì²˜ë¦¬)
+
+	// íšŒì›ì´ ì‘ì„±í•œ ë¦¬ë·°(ë‚˜ë¨¸ì§€ í˜ì´ì§€ë¥¼ ì²˜ë¦¬)
 	@RequestMapping("mypage/myreview2")
-	public void reviewListOther(PageVO vo,Model model, HttpSession session) {  
-		String member_id = (String)session.getAttribute("member_id"); //member_id ?„¸?…˜ ê°? ?¡?•„?‘ê¸? - String?œ¼ë¡? id ?¡ê¸?!
-		vo.setStartEnd(vo.getPage()); 
+	public void reviewListOther(PageVO vo, Model model, HttpSession session) {
+		String member_id = (String) session.getAttribute("member_id"); // member_id ì„¸ì…˜ ê°’ ì¡ì•„ë‘ê¸° - Stringìœ¼ë¡œ id ì¡ê¸°!
+		vo.setStartEnd(vo.getPage());
 		vo.setMember_id(member_id);
-		System.out.println(vo);
-		
-		List<MypageVO> reviewAllList = dao.reviewAllList(vo);//member_idë¡? ?•´?‹¹ list?“¤ ?“¤ê³ ì˜¤ê¸?
-		System.out.println("reviewList: "+reviewAllList);
-		
-		model.addAttribute("reviewAllList",reviewAllList);//model?— ?„£?–´ì£¼ì
+
+		List<MypageVO> reviewAllList = dao.reviewAllList(vo);// member_idë¡œ í•´ë‹¹ listë“¤ ë“¤ê³ ì˜¤ê¸°
+
+		model.addAttribute("reviewAllList", reviewAllList);// modelì— ë„£ì–´ì£¼ì
 	}
+
 	
-	//?šŒ?›?˜ ?˜?™” ì°œëª©ë¡?
-	public void movieJjim() {
+	// ì°œ ì¶”ê°€ í•˜ê¸°(ë¹ˆ í•˜íŠ¸ >> ê½‰ì°¬ í•˜íŠ¸)
+	@RequestMapping("mypage/addmoviejjim")
+	public void addMovieJjim(MypageVO vo,  HttpSession session) {
+		String member_id = (String)session.getAttribute("member_id"); //member_id ì„¸ì…˜ ê°’ ì¡ì•„ë‘ê¸°
+		String  movieId = vo.getMovieId(); //ì„ íƒí•  movieId ê°’ë„ ë“¤ê³ ì˜¨ë‹¤
+		vo.setMovieId(movieId);
+		vo.setMember_id(member_id);
 		
-	}
+		int result = dao.addMovieJjim(vo);
+		if(member_id == null) {
+			 
+		} else {
+			 if (result > 0) { //moviejjimì„ ëˆ„ë¥´ê²Œ ë˜ë©´ movie_likeì— 1ì„ ë„£ì–´ì£¼ê¸°
+			        vo.setMovie_like(1); }		
+				}
+		}
+
 	
-//	//ë§ˆì´?˜?´ì§?ë¡? ?´?™?•˜ê¸?
+	// ì°œ ì¶”ê°€ í•˜ê¸°(ë¹ˆ í•˜íŠ¸ >> ê½‰ì°¬ í•˜íŠ¸)
+//	@RequestMapping("mypage/addmoviejjim")
+//	public void addMovieJjim(MypageVO vo, HttpSession session) {
+//		try {
+//			String member_id = (String) session.getAttribute("member_id"); // member_id ì„¸ì…˜ ê°’ ì¡ì•„ë‘ê¸°
+//			String movieId = vo.getMovieId(); // ì„ íƒí•  movieId ê°’ë„ ë“¤ê³ ì˜¨ë‹¤
+//			vo.setMovieId(movieId);
+//			vo.setMember_id(member_id);
+//
+//			if (member_id == null) {
+//				throw new IllegalStateException("ë¡œê·¸ì¸ì´ í•„ìš”í•œ ì‘ì—…ì…ë‹ˆë‹¤.");
+//			}
+//
+//			int result = dao.addMovieJjim(vo);
+//			if (result > 0) { // moviejjimì„ ëˆ„ë¥´ê²Œ ë˜ë©´ movie_likeì— 1ì„ ë„£ì–´ì£¼ê¸°
+//				vo.setMovie_like(1);
+//			}
+//		} catch (IllegalStateException e) {
+//
+//		}
+//	}
+
+	
+	// ì°œ ì‚­ì œí•˜ê¸°(ê½‰ì°¬ í•˜íŠ¸ >> ë¹ˆ í•˜íŠ¸)
+	@RequestMapping("mypage/removemoviejjim")
+	public void removeMovieJjim(MypageVO vo, HttpSession session) {
+		String member_id = (String) session.getAttribute("member_id");
+		String movieId = vo.getMovieId();
+		vo.setMovieId(movieId);
+		vo.setMember_id(member_id);
+		dao.removeMovieJjim(vo);
+	}
+
+	// íšŒì›ì˜ ì˜í™” ì°œëª©ë¡
+//	@RequestMapping("mypage/mypage")
+//	public void mymovieJjim(HttpSession session, Model model , MypageVO vo) {
+//		
+//	}
+
+	//ë§ˆì´í˜ì´ì§€ë¡œ ì´ë™í•˜ê¸°
 //	@RequestMapping("mypage/mypageGO")
-//	public String mypage() {
+//	public String mypage(Model model) {
+//		System.out.println("dd");
+//		model.addAttribute("page",1);
 //		return "mypage/mypage";
 //	}
-	
+
 }
