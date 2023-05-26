@@ -14,28 +14,38 @@ public class MypageDAO {
 
 
 	
-	//?šŒ?›?´ ?‘?„±?•œ ëª¨ë“  ê²Œì‹œê¸?
-	public List<MypageVO> bbsAllList(PageVO vo) { //member_idë¡? ?¡?•„?˜¤ê¸?
-		List<MypageVO> bbsAllList = my.selectList("MypageDAO.myBbsAll", vo); //pageVO?— ?„£?—ˆ?œ¼?‹ˆ vo?—?„œ êº¼ë‚´ê¸?
-		System.out.println("?˜?´ì§??— ë³´ì´?Š” bbs ê°??ˆ˜ : " + bbsAllList.size()); //bbs ê°??ˆ˜
+	//íšŒì›ì´ ì‘ì„±í•œ ëª¨ë“  ê²Œì‹œê¸€
+	public List<MypageVO> bbsAllList(PageVO vo) {//member_idë¡œ ì¡ì•„ì˜¤ê¸°
+		List<MypageVO> bbsAllList = my.selectList("MypageDAO.myBbsAll", vo); //pageVOì— ë„£ì—ˆìœ¼ë‹ˆ voì—ì„œ êº¼ë‚´ê¸°
+		System.out.println("í˜ì´ì§€ì— ë³´ì´ëŠ” bbs ê°¯ìˆ˜ : " + bbsAllList.size()); 
 		return  bbsAllList;
 	}
 
-	//?šŒ?›?´ ?‘?„±?•œ ëª¨ë“  ë¦¬ë·°
-	public List<MypageVO> reviewAllList(PageVO vo) { //member_idë¡? ?¡?•„?˜¤ê¸?
-		List<MypageVO> reviewAllList = my.selectList("MypageDAO.myReviewAll", vo); //pageVO?— ?„£?—ˆ?œ¼?‹ˆ vo?—?„œ êº¼ë‚´ê¸?
-		System.out.println("?˜?´ì§??— ë³´ì´?Š” review ê°??ˆ˜ : " + reviewAllList.size()); //bbs ê°??ˆ˜
+	//íšŒì›ì´ ì‘ì„±í•œ ëª¨ë“  ë¦¬ë·°
+	public List<MypageVO> reviewAllList(PageVO vo) { //member_idë¡œ ì¡ì•„ì˜¤ê¸°
+		List<MypageVO> reviewAllList = my.selectList("MypageDAO.myReviewAll", vo);//pageVOì— ë„£ì—ˆìœ¼ë‹ˆ voì—ì„œ êº¼ë‚´ê¸°
+		System.out.println("í˜ì´ì§€ì— ë³´ì´ëŠ” review ê°¯ìˆ˜ : " + reviewAllList.size()); 
 		return  reviewAllList;
 	}
 	
-	//?šŒ?›?´ ?‘?„±?•œ ê²Œì‹œê¸? ê°??ˆ˜
+	//íšŒì›ì´ ì‘ì„±í•œ ê²Œì‹œê¸€ ê°¯ìˆ˜
 	public int bbsCount(PageVO vo) {
 		return my.selectOne("MypageDAO.myBbsCount",vo);
 	}
 
-	//?šŒ?›?´ ?‘?„±?•œ ë¦¬ë·° ê°??ˆ˜
+	//íšŒì›ì´ ì‘ì„±í•œ ë¦¬ë·° ê°¯ìˆ˜
 	public int reviewCount(PageVO vo) {
 		return my.selectOne("MypageDAO.myReviewCount",vo);
 	}
 	
+	
+	//ì°œ ì¶”ê°€í•˜ê¸°
+	public int addMovieJjim(MypageVO vo) {
+		return my.insert("MypageDAO.addMovieJjim", vo);
+	}
+	
+	//ì°œ ì‚­ì œí•˜ê¸°
+	public int removeMovieJjim(MypageVO vo) {
+		return my.delete("MypageDAO.removeMovieJjim",vo);
+	}
 }
