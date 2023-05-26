@@ -7,23 +7,33 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript">
-	$(function() {
-		$('.pages').click(function() {
-			// alert($(this).text())
-			$.ajax({
-				url : "../rankUser/userRankList", //views/userRankList.jsp가 결과!
-				data : {
-					page : $(this).text()
-				},
-				success : function(result) { //결과가 담겨진 table부분코드
-					$('#d1').html(result)
-				},
-				error : function() {
-					alert('실패')
-				}
-			}) //ajax
-		})
+$(function() {
+	$('.pages').click(function() {
+		// alert($(this).text())
+		$.ajax({
+			url : "../rankUser/userRankList", //views/userRankList.jsp가 결과!
+			data : {
+				page : $(this).text()
+			},
+			success : function(result) { //결과가 담겨진 table부분코드
+				$('#d1').html(result)
+			},
+			error : function() {
+				alert('실패')
+			}
+		}) //ajax
 	})
+	
+	let like = "../resources/n_img/likeHeart.png"
+	let dislike = "../resources/n_img/dislikeHeart.png"
+	$(".btn").click(function() {
+		idText = $(this).attr('id')
+		imgSrc = document.getElementById($(this).attr('id')).value
+		alert("id : " + idText + " src : " + imgSrc)
+	
+	})
+		
+})
 </script>
 <style type="text/css">
 table.rank {

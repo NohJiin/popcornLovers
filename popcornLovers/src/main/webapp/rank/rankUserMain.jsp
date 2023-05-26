@@ -43,6 +43,18 @@
 	float: left;
 	margin-left: 5px;
 }
+
+img.imgLike {
+	background: url("../resources/n_img/likeHeart.png") no-repeat;
+  	width: 20px;
+  	height: 20px;
+}
+
+img.imgDislike {
+	background: url("../resources/n_img/dislikeHeart.png") no-repeat;
+  	width: 50px;
+  	height: 50px;
+}
 </style>
 <script type="text/javascript">
 $(function() {
@@ -82,7 +94,7 @@ $(function() {
 		}
 	})	// ajax
 	
-	// let status = false;
+/* 	// let status = false;
 	let like = "resources/n_img/likeHeart.png"
 	let dislike = "resources/n_img/dislikeHeart.png"
 	$(document).on("click", ".btn", function(){
@@ -105,8 +117,14 @@ $(function() {
 		//TRUE
 		
 		
-	})
+	}) */
 	
+/* 	$(document).on("click", ".btn", function(){
+		value = $(this).attr('value')
+		idvalue = $(this).attr('id')
+		alert("클릭됨")
+		
+	}) */
 	
 })	// $func
 </script>

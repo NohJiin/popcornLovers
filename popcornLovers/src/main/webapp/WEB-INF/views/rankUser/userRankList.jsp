@@ -2,6 +2,15 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <table class="rank">
+	<colgroup>
+		<col width="5%">
+		<col width="10%">
+		<col width="5%">
+		<col width="5%">
+		<col width="5%">
+		<col width="5%">
+		<col width="2%">
+	</colgroup>
 	<tr>
 		<td>Rank</td>
 		<td>User Name</td>
@@ -14,7 +23,7 @@
 	<c:forEach items="${list}" var="bag">
 		<tr>
 			<td>${bag.rank_no}</td>
-			<td><a href="lsh/one?member_id=${bag.member_id}">${bag.member_knickname}</a></td>
+			<td><a href="../member/one?member_id=${bag.member_id}">${bag.member_knickname}</a></td>
 			<td><img alt="등급 이미지" src="../resources/n_img/${bag.member_img}" width="20px" height="20px"> ${bag.member_level}</td>
 			<td>리뷰 수</td>
 			<td>${bag.member_view}</td>
