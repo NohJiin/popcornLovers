@@ -9,11 +9,11 @@
     <select id="myBbsAll" resultType="mypageVO" parameterType="MemberPageVO">
 	select * from (
 	select
-	row_number() over(order by member_id) as mybbs_no,
-	b.bbs_id, m.member_id, b.bbs_title, b.bbs_create
+	row_number() over(order by member_id desc) as mybbs_no,
+	b.bbs_no, m.member_id, m.member_knickname , b.bbs_title, b.bbs_date
 	from member m
 	inner join bbs b 
-	on m.member_id = b.bbs_writer_id
+	on m.member_id = b.member_id 
 	where m.member_id = #{member_id}) mb2
 	where mb2.mybbs_no between #{start} and #{end}
 	</select>
@@ -23,7 +23,7 @@
 	select * from(
 	select
 	row_number() over(order by member_id) as mr_no,
-	m2.movieTitle, mr.reviewContent, m.member_id
+	m2.movieTitle, mr.reviewContent, m.member_knickname 
 	from member m
 	inner join movie_review mr
 	on m.member_id = mr.memberId 
@@ -37,7 +37,7 @@
     <select id="myBbsCount" resultType="Integer">
     select count(*)
 	from member m
-	inner join bbs b on m.member_id = b.bbs_writer_id
+	inner join bbs b on m.member_id = b.member_id
 	where m.member_id = #{member_id}
     </select>
     
@@ -52,14 +52,15 @@
 	
 	
 	<!-- 회원의 영화 찜 목록 추가  -->
-	<insert id ="myMovieJjim">
+	<insert id ="addMovieJjim" parameterType="mypageVO">
 		insert into moviejjim values(#{movie_id}, #{member_id}, #{movie_like})
 	</insert>
 	
 	<!-- 회원의 영화 찜 목록 삭제 -->
-		<delete id ="myMovieDeleteJjim">
+		<delete id ="removeMovieJjim" parameterType="mypageVO">
 		delete from moviejjim 
-		where movie_like = #{movie_like}
+		where movie_id=#{movie_id} and member_id=#{member_id}
 	</delete>
+	
 	
 </mapper>
