@@ -26,10 +26,15 @@ $(function() {
 	
 	let like = "../resources/n_img/likeHeart.png"
 	let dislike = "../resources/n_img/dislikeHeart.png"
-	$(".btn").click(function() {
-		idText = $(this).attr('id')
-		imgSrc = document.getElementById($(this).attr('id')).value
-		alert("id : " + idText + " src : " + imgSrc)
+	$(document).on("click", ".btn", function() {
+		const idText = $(this).attr('id')
+		// const btnId = document.getElementById($(this).attr('id')).innnerHTML = "<img class='btnImg' alt='좋아요 버튼 이미지' src='../resources/n_img/dislikeHeart.png' width='20px' height='20px'>"
+		let html = document.getElementById($(this).attr('id')).innnerHTML
+		document.getElementById($(this).attr('id')).innnerHTML = "<img class='btnImg' alt='좋아요 버튼 이미지' src='../resources/n_img/likeHeart.png' width='20px' height='20px'>"
+		// inText = btnId.innerText
+		// btnId.innerHTML = "<img class='btnImg' alt='좋아요 버튼 이미지' src='../resources/n_img/dislikeHeart.png' width='20px' height='20px'>"
+		// imgSrc = document.getElementById($(this).attr('id')).value
+		alert("id : " + idText + " innerText 값 : " + html)
 	
 	})
 		
