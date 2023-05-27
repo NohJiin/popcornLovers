@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -12,6 +13,7 @@ $(function() {
 
     $.getJSON(movieInfoUrl, function(res){
         let movie = res.movieInfoResult.movieInfo;
+        let title = movie.title
         let actors = movie.actors;
         let director = movie.directors[0].peopleNm;
         let openDt = movie.openDt;
@@ -19,9 +21,9 @@ $(function() {
         let directorText = director ? "감독: " + director : "감독 정보 없음";
         let actorsText = "";
         if (actors && actors.length > 0) {
-            for (let i = 0; i < Math.min(actors.length, 3); i++) {
+            for (let i = 0; i < Math.min(actors.length, 4); i++) {
                 actorsText += actors[i].peopleNm;
-                if (i < Math.min(actors.length, 3) - 1) {
+                if (i < Math.min(actors.length, 4) - 1) {
                     actorsText += ", ";
                 }
             }
@@ -42,8 +44,10 @@ $(function() {
 </script>
 </head>
 <body>
+<%@ include file="../header.jsp" %>
+
 <div id="movieDetail">
-    <!-- 영화 정보가 여기에 동적으로 표시됨 -->
+   
 </div>
 </body>
 </html>
