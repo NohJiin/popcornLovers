@@ -4,6 +4,21 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MypageDAO">
     
+    	<!-- member 하나만 검색 -->
+	<select id="selectOne" parameterType="String"
+		resultType="MemberVO">
+		select *
+		from popcorn.member
+		where member_id = #{member_id}
+	</select>
+
+	<!-- member 죄회수 증가 -->
+	<update id="viewCount" parameterType="String">
+		update popcorn.member
+		set member_view = member_view + 1
+		where member_id = #{member_id}
+	</update>
+    
 	
     <!-- 회원의 모든 bbs list 페이징 서브쿼리 -->
     <select id="myBbsAll" resultType="mypageVO" parameterType="MemberPageVO">

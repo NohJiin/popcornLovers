@@ -91,6 +91,7 @@ public class MypageController {
 		model.addAttribute("reviewPages", reviewPages);
 	}
 
+
 	// 회원이 작성한 게시글(나머지 페이지를 처리)
 	@RequestMapping("mypage/mybbs2")
 	public void bbsListOther(PageVO vo, Model model, HttpSession session) {
@@ -115,6 +116,40 @@ public class MypageController {
 		model.addAttribute("reviewAllList", reviewAllList);// model에 넣어주자
 	}
 
+	
+	
+	//mypage 각자 프로필+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	@RequestMapping("mypage/mypageOne")
+	public void mypageOne(PageVO vo, Model model, String member_id) {
+		vo.setStartEnd(vo.getPage());
+		MemberVO bag = dao.selectOne(member_id);
+
+		// bbs
+		int bbsCount = dao.bbsCount(vo);// 작성한 bbs 몇개인지 알기
+		int bbsPages = bbsCount / 10 + 1; // bbs 10개씩 넣은 페이지 갯수
+
+		List<MypageVO> bbsAllList = dao.bbsAllList(vo);// member_id로 해당 list들 들고오기
+
+		// review
+		int reviewCount = dao.reviewCount(vo);// 작성한 review 몇개인지 알기
+		int reviewPages = reviewCount / 10 + 1; // bbs 10개씩 넣은 페이지 갯수
+		List<MypageVO> reviewAllList = dao.reviewAllList(vo);// member_id로 해당 list들 들고오기
+
+		// model에 넣어주자
+		model.addAttribute("bbsAllList", bbsAllList);
+		model.addAttribute("bbsCount", bbsCount);
+		model.addAttribute("bbsPages", bbsPages);
+
+		model.addAttribute("reviewAllList", reviewAllList);
+		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("reviewPages", reviewPages);
+		
+		model.addAttribute("bag", bag);
+	}
+	
+	
+	
+	
 	
 	// 찜 추가 하기(빈 하트 >> 꽉찬 하트)
 	@RequestMapping("mypage/addmoviejjim")

@@ -6,13 +6,19 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.java4.popcorn.member.MemberVO;
+
 @Component
 public class MypageDAO {
 
 	@Autowired
 	SqlSessionTemplate my;
 
-
+	//회원 프로필 하나씩
+    public MemberVO selectOne(String member_id) {
+		MemberVO bag = my.selectOne("MemberDAO.selectOne",member_id);
+		return bag;
+	}
 	
 	//회원이 작성한 모든 게시글
 	public List<MypageVO> bbsAllList(PageVO vo) {//member_id로 잡아오기
