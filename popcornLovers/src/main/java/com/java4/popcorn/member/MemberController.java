@@ -1,7 +1,9 @@
 package com.java4.popcorn.member;
 
+import java.io.File;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
@@ -18,43 +21,45 @@ public class MemberController {
 	MemberDAO dao;
 	
 	
-	// �쉶�썝媛��엯
+	// 회원가입
 	@RequestMapping("member/join")
 	public String insert(MemberVO vo) {
 		System.out.println(vo);
 		int result = dao.insert(vo);
-		if (result == 1) { // �쉶�썝媛��엯 �꽦怨�
+		if (result == 1) { // 회원가입 성공
 			return "redirect:login.jsp";
-		} else { // �쉶�썝媛��엯 �떎�뙣
+		} else { // 회원가입 실패
 			return "redirect:join.jsp";
 		}
 	}
 
-
-	// 濡쒓렇�씤
+	// 로그인
 	@RequestMapping("member/login")
-	public String login(MemberVO vo, HttpSession session, Model model) {
+	public String login(String member_id, MemberVO vo, HttpSession session, Model model) {
 		String result = dao.login(vo);
+		//member_id 값으로 불러온 데이터들 vo2에 넣어주기
+		//-> 해당하는 member의 다른 vo값들을 EL로 쓰려고
+		MemberVO vo2 = dao.selectOne(member_id); 
 		if (result != null) {
-			// 濡쒓렇�씤 �꽦怨�
-			session.setAttribute("member_id", vo.getMember_id());// �쁾�꽭�뀡�옟�븘�몦寃�
-			session.setAttribute("member_knickname", result);// list瑜� 遺덈윭�삤�젮硫� view �븘�옒�뿉 �뙆�씪�씠 �엳�뼱�빞�븿�쑝濡� �땳�꽕�엫 媛믪쓣 �꽔�뼱二쇨린	
-			session.setAttribute("bag", vo);
-			return "redirect:main.jsp"; // views �븘�옒 �뙆�씪 �씠由�.jsp
+			// 로그인 성공
+			session.setAttribute("member_id", vo.getMember_id());// ★세션잡아둔것
+			session.setAttribute("member_knickname", result);// list를 불러오려면 view 아래에 파일이 있어야함으로 닉네임 값을 넣어주기		
+			session.setAttribute("bag", vo2);
+			return "redirect:../Main.jsp"; // views 아래 파일 이름.jsp
 		} else {
-			// 濡쒓렇�씤 �떎�뙣
-			return "redirect:login.jsp"; // redirect : 諛⑺뼢�쓣 �떎�떆 諛붽씀�떎
+			// 로그인 실패
+			return "redirect:login.jsp"; // redirect : 방향을 다시 바꾸다
 		}
 	}
 
-	// 濡쒓렇�븘�썐
-	@RequestMapping("logout")
+	// 로그아웃
+	@RequestMapping("member/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:login.jsp";
+		return "redirect:../Main.jsp";
 	}
 
-	// �븘�씠�뵒 以묐났 �솗�씤
+	// 아이디 중복 확인
 	@RequestMapping("member/idCheck")
 	@ResponseBody
 	public int idCheck(String member_id) {
@@ -63,45 +68,45 @@ public class MemberController {
 		System.out.println(vo2);
 
 		int result = 1;
-		if (vo2 == null) { // 媛숈� �븘�씠�뵒媛� �뾾�떎硫�
-			result = 0; // �궗�슜 媛��뒫 �븘�씠�뵒
+		if (vo2 == null) { // 같은 아이디가 없다면
+			result = 0; // 사용 가능 아이디
 		}
 	
 		System.out.println("result : "+result);
 		return result;
 	}
 
-	// �쉶�썝�젙蹂� �닔�젙
+	// 회원정보 수정
 	@RequestMapping("member/update")
 	public void update(MemberVO vo) {
-		System.out.println("update�슂泥�");
+		System.out.println("update요청");
 		System.out.println(vo);
 		dao.update(vo);
 	}
 //
-//	// �쉶�썝 �깉�눜
+//	// 회원 탈퇴
 //	@RequestMapping("member/remove")
 //	public String name(MemberVO vo, HttpSession session) {
-//		System.out.println("delete �슂泥��맖");
+//		System.out.println("delete 요청됨");
 //		String result = dao.remove(vo);
 //		if (result) {
 //
 //		}
 //	}
 
-	// �쉶�썝�쟾泥� 由ъ뒪�듃
+	// 회원전체 리스트
 	@RequestMapping("member/list")
 	public void list(Model model) {
 		List<MemberVO> list = dao.list();
-		System.out.println("list�슂泥�");
+		System.out.println("list요청");
 		model.addAttribute("list", list);
 	}
 	
-	//�쉶�썝 �븳紐� 由ъ뒪�듃
+	//회원 한명 리스트
 	@RequestMapping("member/one")
 	public void selectOne(String member_id, Model model) {
 		int result = dao.viewCount(member_id);
-		System.out.println("議고쉶�닔 +" + result + "�쉶 利앷�");
+		System.out.println("조회수 +" + result + "회 증가");
 		MemberVO bag = dao.selectOne(member_id);
 		model.addAttribute("bag", bag);
 	}

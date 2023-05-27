@@ -42,9 +42,9 @@
 					--><li class="li_menu"><a href="${pageContext.request.contextPath}/rank/rankUserMain.jsp"><span class="main_menu">랭킹</span></a><!--
 					--><div class="menu_sub">
 						<ul>
-							<li><a href="../rank/rankUserMain.jsp"><span>유저랭킹</span></a></li><!--
-							--><li><a href="../rank/rankMovieMain.jsp"><span>영화랭킹</span></a></li><!--
-							--><li><a href="../rank/rankActorMain.jsp"><span>배우랭킹</span></a></li><!--
+							<li><a href="${pageContext.request.contextPath}/rank/rankUserMain.jsp"><span>유저랭킹</span></a></li><!--
+							--><li><a href="${pageContext.request.contextPath}/rank/rankMovieMain.jsp"><span>영화랭킹</span></a></li><!--
+							--><li><a href="${pageContext.request.contextPath}/rank/rankActorMain.jsp"><span>배우랭킹</span></a></li><!--
 							--></ul>
 						</div>
 					</li><!--
@@ -81,7 +81,7 @@
 						--><li><a href="${pageContext.request.contextPath}/member/join.jsp"><span>회원가입</span></a></li>
 						<%} else { %>
 						<li><a href="${pageContext.request.contextPath}/mypage/mypage?page=1"><span>${member_knickname}님</span></a></li><!--
-						--><li><a href="${pageContext.request.contextPath}/member/join.jsp"><span>로그아웃</span></a></li>
+						--><li><a href="${pageContext.request.contextPath}/member/logout.jsp"><span>로그아웃</span></a></li>
 						 <%} %>
 					</ul>
 				</div>
