@@ -18,7 +18,7 @@ table {
 <table style="font-size: 10px;">
 	<c:forEach items="${list}" var="vo" begin="0" end="2">
 		<tr>
-			<td rowspan="3"><a href="../member/one?member_id=${vo.member_id}"><img alt="유저 이미지" src="../resources/n_img/${vo.member_img}" width="50px" height="80px"></a></td>
+			<td rowspan="3"><a href="../mypage/mypageOne?member_id=${vo.member_id}"><img alt="유저 이미지" src="../resources/n_img/${vo.member_img}" width="50px" height="80px"></a></td>
 			<td><a href="../member/one?member_id=${vo.member_id}">${vo.member_name}</a> / Lv.${vo.member_level}</td>
 		</tr>
 		<tr>
