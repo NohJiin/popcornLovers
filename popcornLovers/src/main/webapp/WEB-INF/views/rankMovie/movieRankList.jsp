@@ -28,9 +28,7 @@
 			<td>${bag.movieReviews}</td>
 			<td>${bag.movieHits}</td>
 			<td>${bag.movieLike}</td>
-			<td><button class="btn" id="${bag.member_id}" style="background-color: transparent; border: none;" value="${bag.member_id}">
-					<img class="btnImg" alt="좋아요 버튼 이미지" src="../resources/n_img/dislikeHeart.png" width="20px" height="20px">
-				</button>
+			<td><button class="btn" style="background-color: transparent; border: none;"><img class="btnImg" alt="좋아요 버튼 이미지" src="../resources/n_img/dislikeHeart.png" width="20px" height="20px"></button>
 			</td>
 		</tr>
 	</c:forEach>
