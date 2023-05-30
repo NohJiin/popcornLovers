@@ -53,12 +53,13 @@ public class MemberController {
 	}
 
 	// 로그아웃
-	@RequestMapping("member/logout")
+	@RequestMapping("../member/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:../Main.jsp";
 	}
 
+	
 	// 아이디 중복 확인
 	@RequestMapping("member/idCheck")
 	@ResponseBody
@@ -105,10 +106,9 @@ public class MemberController {
 	//회원 한명 리스트
 	@RequestMapping("member/one")
 	public void selectOne(String member_id, Model model) {
-		int result = dao.viewCount(member_id);
-		System.out.println("조회수 +" + result + "회 증가");
 		MemberVO bag = dao.selectOne(member_id);
 		model.addAttribute("bag", bag);
 	}
+	
 
 }
