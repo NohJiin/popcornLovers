@@ -12,4 +12,5 @@
         select * from popcorn.movie
         where movieid = #{movieid}
     </select>
+
 </mapper>
