@@ -30,7 +30,7 @@ public class MypageController {
 	
 
 	//회원 프로필 설정
-	@RequestMapping("mypage/popup/profileUp")
+	@RequestMapping("mypage/profileUp")
 	public void profileUpload(MemberVO vo, String member_id, HttpSession session,
 			HttpServletRequest request, //경로 자동으로 구하기
 			MultipartFile file,//이미지 받는 것
@@ -51,6 +51,7 @@ public class MypageController {
 		System.out.println("img넣은 후>> " + vo);
 	}
 	
+	
 	// 회원이 작성한 게시글
 	@RequestMapping("mypage/mybbsAll")
 	public void bbsList2(PageVO vo, Model model, HttpSession session) {
@@ -62,6 +63,7 @@ public class MypageController {
 		model.addAttribute("bbsAllList", bbsAllList);
 	}
 
+	
 	// 회원이 작성한 게시글(첫 페이지) + 리뷰(첫 페이지)
 	// mypage 버튼 클릭시 바로 출력되는 controller
 	@RequestMapping("mypage/mypage")
@@ -81,6 +83,8 @@ public class MypageController {
 		int reviewPages = reviewCount / 10 + 1; // bbs 10개씩 넣은 페이지 갯수
 		List<MypageVO> reviewAllList = dao.reviewAllList(vo);// member_id로 해당 list들 들고오기
 
+		dao.viewCount(member_id); //프로필 조회수
+		
 		// model에 넣어주자
 		model.addAttribute("bbsAllList", bbsAllList);
 		model.addAttribute("bbsCount", bbsCount);
@@ -116,8 +120,6 @@ public class MypageController {
 		model.addAttribute("reviewAllList", reviewAllList);// model에 넣어주자
 	}
 
-	
-	
 	//mypage 각자 프로필+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	@RequestMapping("mypage/mypageOne")
 	public void mypageOne(PageVO vo, Model model, String member_id) {
@@ -135,6 +137,8 @@ public class MypageController {
 		int reviewPages = reviewCount / 10 + 1; // bbs 10개씩 넣은 페이지 갯수
 		List<MypageVO> reviewAllList = dao.reviewAllList(vo);// member_id로 해당 list들 들고오기
 
+		dao.viewCount(member_id); //프로필 조회수
+		
 		// model에 넣어주자
 		model.addAttribute("bbsAllList", bbsAllList);
 		model.addAttribute("bbsCount", bbsCount);

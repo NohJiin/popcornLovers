@@ -64,11 +64,6 @@ public class MemberDAO {
 		return bag;
 	}
     
-    //회원 조회수
-    public int viewCount(String member_id) {
-		int result = my.update("MemberDAO.viewCount", member_id);
-		return result;
-	}
     
 	}
 

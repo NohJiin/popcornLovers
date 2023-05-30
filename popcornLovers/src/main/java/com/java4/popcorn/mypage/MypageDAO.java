@@ -54,4 +54,10 @@ public class MypageDAO {
 	public int removeMovieJjim(MypageVO vo) {
 		return my.delete("MypageDAO.removeMovieJjim",vo);
 	}
+	
+    //회원 조회수
+    public int viewCount(String member_id) {
+		return my.update("MemberDAO.viewCount", member_id);
+	}
+	
 }
