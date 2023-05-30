@@ -144,15 +144,15 @@ button {
 
 <div id="main">
 	<div id="rank">					<!--  style="background: yellow;" -->
-		User Rank
-		<div id="top3">Top3</div>	<!--  style="background: violet;" -->
+		<!-- User Rank -->
+		<div id="top3"><!-- Top3 --></div>	<!--  style="background: violet;" -->
 		
 		<div id="rankList">			<!--  style="background: pink;" -->
-			랭킹이 들어갈 곳
+			<!-- 랭킹이 들어갈 곳 -->
 		</div>
 	</div>
 	<div id="recoList">				<!--  style="background: orange;" -->
-		추천 항목이 들어갈 곳
+		<!-- 추천 항목이 들어갈 곳 -->
 	</div>
 </div>
 </body>

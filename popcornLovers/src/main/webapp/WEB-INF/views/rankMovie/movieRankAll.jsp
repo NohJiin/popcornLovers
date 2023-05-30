@@ -56,6 +56,11 @@ a {
 a:hover {
 	color: gray;
 }
+
+.pBtn {
+	dispaly : inlin-block;
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -68,13 +73,15 @@ a:hover {
 			<col width="5%">
 			<col width="5%">
 			<col width="5%">
+			<col width="5%">
 			<!-- <col width="2%"> -->
 		</colgroup>
 		<tr>
-			<td>Rank</td>
-			<td>Movie Title</td>
-			<td>Genre</td>
-			<td>Reviews</td>
+			<td>순위</td>
+			<td>제목</td>
+			<td>별점</td>
+			<td>장르</td>
+			<td>리뷰 수</td>
 			<td><img alt="조회수 눈 이미지" src="../resources/n_img/eye.png" width="10px" height="10px"></td>
 			<td><img alt="좋아요 하트 이미지" src="../resources/n_img/pink.png" width="10px" height="10px"></td>
 			<!-- <td>버튼</td> -->
@@ -83,6 +90,7 @@ a:hover {
 			<tr>
 				<td>${bag.rank_no}</td>
 				<td>${bag.movieTitle}</td>
+				<td>⭐ ${bag.movieGrade}</td>
 				<td>${bag.movieGenre}</td>
 				<td>${bag.movieReviews}</td>
 				<td>${bag.movieHits}</td>
@@ -92,13 +100,15 @@ a:hover {
 		</c:forEach>
 	</table>
 </div>
-<%
-	int pages = (int)request.getAttribute("pages");
-	for(int p = 1; p <= pages; p++){
-%>
-	<button style="background: lime; color: red; width: 50px;" class="pages"><%= p %></button>
-<%		
-	}
-%>
+<div class="pBtn">
+	<%
+		int pages = (int)request.getAttribute("pages");
+		for(int p = 1; p <= pages; p++){
+	%>
+		<button style="background: #FFF4A6; color: black; width: 25px;" class="pages" id="<%= p %>"><%= p %></button>
+	<%		
+		}
+	%>
+</div>
 </body>
 </html>

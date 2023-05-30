@@ -13,7 +13,6 @@ table {
 </style>
 </head>
 <body>
-유저 추천 목록
 <!-- 유저이름, 좋아요 수, 리뷰 수 -->
 <table style="font-size: 10px;">
 	<c:forEach items="${list}" var="vo" begin="0" end="2">

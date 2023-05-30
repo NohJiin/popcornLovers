@@ -14,8 +14,10 @@ $(function() {
 			url : "../rankUser/userRankList", //views/userRankList.jsp가 결과!
 			data : {
 				page : $(this).text()
+				/* id : $(this).attr('id') */
 			},
 			success : function(result) { //결과가 담겨진 table부분코드
+				/* id에 해당하는 버튼의 색으 노란색으로 변경 하도록~ */
 				$('#d1').html(result)
 			},
 			error : function() {
@@ -71,6 +73,11 @@ a {
 a:hover {
 	color: gray;
 }
+
+.pBtn {
+	dispaly : inlin-block;
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -86,10 +93,10 @@ a:hover {
 			<!-- <col width="2%"> -->
 		</colgroup>
 		<tr>
-			<td>Rank</td>
-			<td>User Name</td>
-			<td>User Level</td>
-			<td>Reviews</td>
+			<td>순위</td>
+			<td>닉네임</td>
+			<td>레벨</td>
+			<td>작성수</td>
 			<td><img alt="조회수 눈 이미지" src="../resources/n_img/eye.png" width="10px" height="10px"></td>
 			<td><img alt="좋아요 하트 이미지" src="../resources/n_img/pink.png" width="10px" height="10px"></td>
 			<!-- <td>버튼</td> -->
@@ -110,13 +117,15 @@ a:hover {
 		</c:forEach>
 	</table>
 </div>
-<%
-	int pages = (int)request.getAttribute("pages");
-	for(int p = 1; p <= pages; p++){
-%>
-	<button style="background: lime; color: red; width: 50px;" class="pages"><%= p %></button>
-<%		
-	}
-%>
+<div class="pBtn">
+	<%
+		int pages = (int)request.getAttribute("pages");
+		for(int p = 1; p <= pages; p++){
+	%>
+		<button style="background: #FFF4A6; color: black; width: 25px;" class="pages" id="<%= p %>"><%= p %></button>
+	<%		
+		}
+	%>
+</div>
 </body>
 </html>

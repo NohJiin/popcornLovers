@@ -12,10 +12,10 @@
 		<!-- <col width="2%"> -->
 	</colgroup>
 	<tr>
-		<td>Rank</td>
-		<td>User Name</td>
-		<td>User Level</td>
-		<td>Reviews</td>
+		<td>순위</td>
+		<td>닉네임</td>
+		<td>레벨</td>
+		<td>작성수</td>
 		<td><img alt="조회수 눈 이미지" src="../resources/n_img/eye.png" width="10px" height="10px"></td>
 		<td><img alt="좋아요 하트 이미지" src="../resources/n_img/pink.png" width="10px" height="10px"></td>
 		<!-- <td>버튼</td> -->

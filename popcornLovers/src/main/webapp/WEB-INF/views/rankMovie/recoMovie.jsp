@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-영화 추천 목록
 <table style="font-size: 10px;">
 	<c:forEach items="${list}" var="vo" begin="0" end="2">
 		<tr>
