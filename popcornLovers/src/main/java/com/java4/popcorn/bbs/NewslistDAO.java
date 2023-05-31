@@ -16,14 +16,20 @@ public class NewslistDAO { //CRUD
 		
 		//controller에서 리스트에 있는 vo 값을 하나씩 커내서 dao에 insert 함.
 		 public int insertMovieNewsCroll(NewslistVO NewslistVO) {
-			 int result = my.insert("news_list.create", NewslistVO);
-			 System.out.println("완료!!!");
+			 int result = my.insert("NewslistDAO.create", NewslistVO);
+			 //System.out.println("완료!!!");
 			 return result;
 		    }
 
 		 public List<NewslistVO> getNewsList() {
-			 List<NewslistVO> result = my.selectList("news_list.getNewsList");
-			 System.out.println("완료!!!");
+			 List<NewslistVO> result = my.selectList("NewslistDAO.getNewsList");
+			 //System.out.println("완료!!!");
+			 return result;
+		    }
+		 
+		 public List<NewslistVO> getNewsAllList() {
+			 List<NewslistVO> result = my.selectList("NewslistDAO.getNewsAllList");
+			 //System.out.println("완료!!!");
 			 return result;
 		    }
 		 

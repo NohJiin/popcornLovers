@@ -1,14 +1,299 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="BbsDAO">
-    <insert id="insertOne">
-        insert into popcorn.bbs
-        values(#{bbs_Id}, #{bbs_Title}, #{bbs_Content}, #{bbs_WriterId}, #{bbs_Create}, #{bbs_Update}, #{bbs_Delete}, #{bbs_IsDeleted}, #{bbs_ViewCnt}, #{bbs_CateNum})
-    </insert>
-    <select id="selectOne" resultType="BbsVO">
-        select * from popcorn.bbs
-        where bbs_id = #{bbs_Id}
-    </select>
+
+	<!-- insert, delete, update는 무조건 resultType="int"이므로 프로그래머가 써주지 않아도 이미 resultType="int"가 
+		있는 것으로 본다.! -->
+		
+	<resultMap type="bbsVO" id="bbs">
+		<result column="bbs_no" property="bbs_no"/>
+		<result column="member_id" property="member_id"/>
+		<result column="bbs_title" property="bbs_title"/>
+		<result column="bbs_content" property="bbs_content"/>
+		<result column="bbs_hit" property="bbs_hit"/>
+		<result column="bbs_date" property="bbs_date"/>
+		<result column="bbs_like" property="bbs_like"/>
+		<result column="bbs_cate_num" property="bbs_cate_num"/>
+		<result column="bbs_update" property="bbs_update"/>
+		<result column="bbs_delete" property="bbs_delete"/>
+	</resultMap>	
+		
+	<resultMap type="bbsVO" id="viewArticle" extends="bbs" >
+		<collection property="fileInfos" column="bbs_no" javaType="list" ofType="bbsfileVO" select="fileInfoList"/>
+	</resultMap>
+
+
+	<select id="all" resultType="bbsVO">
+		select *
+		from ( 
+		select ROW_NUMBER() over(order by bbs_no) as bbs_row_no,
+		popcorn.bbs
+		WHERE bbs_delete is null) bbs
+		order by bbs_row_no desc;
+	</select>
+
+	<select id="paging" resultType="bbsVO" parameterType="bbspageVO">
+		select *
+		from (
+		select ROW_NUMBER() over(order by bbs_no) as bbs_row_no,
+		bbs. *
+		from popcorn.bbs
+		WHERE bbs_delete is null) bbs
+		where bbs.bbs_row_no between
+		${start} and ${end}
+		order by bbs_row_no desc;
+	</select>
+
+	<select id="all_list" resultType="bbsVO" parameterType="bbspageVO">
+		select *
+		from (
+		select ROW_NUMBER() over(order by bbs_no) as bbs_row_no,
+		bbs. *
+		from popcorn.bbs 
+		WHERE bbs_delete is null) bbs
+		where bbs.bbs_row_no between
+		${start} and
+		${end}
+		order by bbs_row_no desc;
+	</select>
+
+	<select id="category_paging" resultType="bbsVO"
+		parameterType="categoryVO">
+		select *
+		from (
+		select ROW_NUMBER() over(order by bbs_no)
+		as bbs_row_no, bbs.*
+		from popcorn.bbs
+		WHERE bbs_cate_num =
+		#{bbs_cate_num} and bbs_delete is null
+		) AS t
+		WHERE bbs_row_no BETWEEN #{start} and #{end}
+		order by bbs_row_no desc;
+	</select>
+
+	<!-- <select id="category_list" resultType="bbsVO" parameterType="categoryVO"> 
+		select * from ( select ROW_NUMBER() over(order by talk_no desc) as cate_bbs_no, 
+		bombom_talk.* from popcorn.bombom_talk INNER JOIN popcorn.bbs_category ON 
+		bombom_talk.bbs_cate_num = bbs_category.bbs_cate_num WHERE bbs_cate_name 
+		= #{bbs_cate_name} ) AS t WHERE cate_bbs_no BETWEEN #{start} and #{end} </select> -->
+
+
+	<select id="category_list" resultType="bbsVO"
+		parameterType="categoryVO">
+		select *
+		from (
+		select ROW_NUMBER() over(order by bbs_no)
+		as bbs_row_no, bbs.*
+		from popcorn.bbs
+		WHERE bbs_cate_num =
+		#{bbs_cate_num} and bbs_delete is null
+		) AS t
+		WHERE bbs_row_no BETWEEN #{start} and #{end}
+		order by bbs_row_no desc;
+	</select>
+
+	<!-- 삭제된 게시물 제외하고 총 게시물 개수 카운트 -->
+	<select id="count" resultType="Integer">
+		select count(*) from
+		popcorn.bbs
+		where bbs_delete is null
+	</select>
+
+	<!-- (카테고리별) 삭제된 게시물 제외하고 총 게시물 개수 카운트 -->
+	<select id="count_category" resultType="Integer"
+		parameterType="int">
+		select count(*) from
+		popcorn.bbs
+		WHERE bbs_cate_num =
+		#{bbs_cate_num} and bbs_delete is null
+	</select>
+
+	<select id="detail_post" resultMap="viewArticle" parameterType="int">
+		SELECT *
+		FROM (
+   		SELECT ROW_NUMBER() OVER (ORDER BY bbs.bbs_no) AS bbs_row_no, popcorn.bbs.*
+    	FROM popcorn.bbs WHERE bbs_delete is null
+		) AS bbs_row
+		where bbs_no = #{bbs_no}
+	</select>
+
+<!-- 	<select id="detail_cate_post" resultType="bbsVO" parameterType="bbsVO">
+		SELECT *
+		FROM (
+   		SELECT ROW_NUMBER() OVER (ORDER BY bbs.bbs_no) AS bbs_row_no, bbs.*
+    	FROM popcorn.bbs WHERE bbs_cate_num = #{bbs_cate_num} and bbs_delete is null
+		) AS bbs_row_no
+		WHERE bbs_no = #{bbs_no};
+	</select> -->
+	
+	<!-- 어떤 유저가 어떤 게시물을 좋아요를 누른 정보가 db에 있는지 확인 -->
+	<select id="like_db_check" parameterType="bbslikesVO" resultType="Integer">
+	select count(*)
+	from
+	popcorn.bbslikes
+	where member_id = #{member_id} AND bbs_no= #{bbs_no};
+	</select>
+	
+	<!-- 유저가 게시물 좋아요 누른 적이 없으면 db 추가해줄거임 -->
+	<insert id="create_like_db" parameterType="bbslikesVO">
+	INSERT INTO popcorn.bbslikes (member_id, bbs_no, like_check) VALUES (#{member_id}, #{bbs_no}, 1);
+	</insert>
+
+	<!-- 좋아요 체크 -->
+	<update id="like_check" parameterType="bbslikesVO">
+    UPDATE popcorn.bbslikes
+    SET like_check = like_check + 1 
+    WHERE member_id=#{member_id} AND bbs_no= #{bbs_no};
+	</update>
+	
+	<!-- 게시물 좋아요 증가 -->
+	<update id="bbs_like_plus" parameterType="int">
+	UPDATE popcorn.bbs
+	SET bbs.bbs_like  = bbs_like + 1 
+	WHERE bbs_no= #{bbs_no}
+	</update>
+	 
+	<!-- 좋아요 체크 취소 -->
+	<update id="like_check_cancel" parameterType="HashMap">
+    UPDATE popcorn.bbslikes
+    SET like_check = 0 
+    WHERE member_id=#{member_id} AND bbs_no= #{bbs_no};
+	</update>
+	
+	<!-- 게시물 좋아요 감소 -->
+	<update id="bbs_like_minus" parameterType="int">
+	UPDATE popcorn.bbs
+	SET bbs.bbs_like  = bbs_like - 1
+	WHERE bbs_no= #{bbs_no}
+	</update>
+	
+	<!-- 	유저가 게시물에 좋아요를 눌렀는지, 안 눌렀는지 값 반환 -->
+	<select id="member_like_yesno" resultType="Integer" parameterType="bbsVO">
+		SELECT like_check
+		FROM popcorn.bbslikes
+    	WHERE member_id=#{member_id} AND bbs_no= #{bbs_no};
+	</select>
+	
+	<!-- 게시물을 삭제하면 데이터를 날리지 않고 삭제 날짜를 update하여 남겨둠 -->
+	<update id="bbs_delete"  parameterType="bbsVO">
+		update popcorn.bbs set bbs_delete = #{bbs_delete} where bbs_no = #{bbs_no}
+	</update>
+	
+	<!-- 상세 페이지 조회시 접속 유저 프로필 가져옴 -->
+	<select id="get_member_profile" parameterType="String" resultType="memberVO">
+		select member_id, member_knickname, member_img
+		from
+		popcorn.member
+		where member_id = #{member_id}
+	</select>
+	
+	<!-- 게시물 좋아요 개수 가져옴 -->
+	<select id="bbs_like_sum" parameterType="int" resultType="Integer">
+		select bbs_like
+		from
+		popcorn.bbs
+		where bbs_no = #{bbs_no}
+	</select>
+	
+	<select id="search" resultType="bbsVO" parameterType="bbspageVO">
+		SELECT *
+		FROM (
+		select ROW_NUMBER() over(order by bbs_no desc) as bbs_row_no,
+		bbs. *
+		from popcorn.bbs WHERE bbs_title like CONCAT('%', #{searchContent}, '%') or bbs_content like CONCAT('%', #{searchContent}, '%')) bbs
+		WHERE bbs.bbs_row_no between
+		${start} and
+		${end}
+	</select>
+	
+	<select id="searchAll" resultType="bbsVO" parameterType="bbspageVO">
+		SELECT *
+		FROM popcorn.bbs
+		WHERE bbs_title like CONCAT('%', #{searchContent}, '%') or bbs_content like CONCAT('%', #{searchContent}, '%')
+	</select>
+	
+	<insert id="writeArticle" parameterType="bbsVO">
+		insert into popcorn.bbs (member_id, bbs_title, bbs_content, bbs_hit, bbs_report, bbs_date, bbs_like, bbs_cate_num, bbs_update, bbs_delete)
+		values (#{member_id}, #{bbs_title}, #{bbs_content}, 0, 0, now(), 0, #{bbs_cate_num}, null, null)
+		<selectKey resultType="int" keyProperty="bbs_no" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<insert id="registerFile" parameterType="bbsVO">
+		insert into file_info (bbs_no, save_folder, original_file, save_file)
+		values
+		<foreach collection="fileInfos" item="fileinfo" separator=" , ">
+			(#{bbs_no}, #{fileinfo.save_folder}, #{fileinfo.original_file}, #{fileinfo.save_file})
+		</foreach>
+	</insert>
+	
+	<select id="fileInfoList" resultType="bbsfileVO">
+		select file_id, save_folder, original_file, save_file
+		from file_info
+		where bbs_no = #{bbs_no}
+	</select>
+	
+	<delete id="deleteFile" parameterType="int">
+		delete from file_info where file_id = #{file_id}
+	</delete>
+	
+	<delete id="deleteFiles" parameterType="java.util.List">
+	    delete from file_info
+	    <where>
+		    <foreach collection="array" item="item" open="" close="" separator="OR">
+		        (file_id = #{item})
+		    </foreach>
+	    </where>
+	</delete>
+	
+	<update id="modifyBbs" parameterType="bbsVO">
+		update popcorn.bbs set bbs_title = #{bbs_title}, bbs_content = #{bbs_content}, bbs_update = NOW()
+		where bbs_no = #{bbs_no}
+	</update>
+	
+	<!-- 조회수 증가 -->
+	<update id="bbsview_cnt" parameterType="int">
+    UPDATE popcorn.bbs
+    SET bbs_hit = bbs_hit + 1 
+    WHERE bbs_no = #{bbs_no}
+	</update>
+	
+	<!-- 인기 좋아요 리스트 -->
+	<select id="best_bbslike" resultType="bbsVO">
+   		SELECT *
+		FROM popcorn.bbs
+		ORDER BY bbs_like DESC
+		LIMIT 5;
+	</select>
+	
+	<!-- 인기 조회수 리스트 -->
+	<select id="best_bbsview_cnt" resultType="bbsVO">
+    	SELECT *
+		FROM popcorn.bbs
+		ORDER BY bbs_hit DESC
+		LIMIT 5;
+	</select>
+	
+	<!-- 최신 게시물 리스트 -->
+	<select id="newest_bbs" resultType="bbsVO">
+    	SELECT *
+		FROM popcorn.bbs
+		where bbs_delete is null
+		ORDER BY bbs_no DESC
+		LIMIT 5;
+	</select>
+	
+	<!-- 최신 리뷰 리스트 -->
+	<select id="newest_review">
+    	SELECT *
+		FROM popcorn.movie_review
+		ORDER BY reviewId DESC
+		LIMIT 5;
+	</select>
+	
 </mapper>

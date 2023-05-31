@@ -1,15 +1,50 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="BbsCommentDAO">
-    <insert id="insertOne">
-        insert into popcorn.b_comment
-        values(#{bCommentId}, #{bCommentContent}, #{bCommentWriterId}, #{bCommentCreate}, #{bCommentUpdate}, #{bCommentDelete}, #{bCommentIsDeleted})
-    </insert>
+<?xml version="1.0" encoding="UTF-8"?>
 
-    <select id="selectOne" resultType="commentVO">
-        select * from popcorn.b_comment
-        where b_comment_id = #{bCommentId}
-    </select>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommentDAO">
+
+	<!-- insert, delete, update는 무조건 resultType="int"이므로 프로그래머가 써주지 않아도 이미 resultType="int"가 
+		있는 것으로 본다.! -->
+
+	<select id="comment_list" parameterType="int" resultType="commentVO">
+		select b_comment.*, member_id, member.member_knickname, member_img
+		from popcorn.b_comment 
+		INNER join popcorn.member
+		on b_comment_writer_id = member_id
+		where bbs_no = #{bbs_no}
+	</select>
+	
+	<!-- 게시판 번호에 해당되는 댓글 개수 세기 -->
+	<select id="comment_count" parameterType="int" resultType="Integer">
+		select count(*) from
+		popcorn.b_comment
+		where bbs_no = #{bbs_no}
+	</select>
+	
+	<!-- 댓글 작성하기 -->
+	<insert id="comment_insert" parameterType="commentVO">
+		insert into popcorn.b_comment values (null, #{bbs_no}, #{b_comment_content}, 
+		#{b_comment_writer_id}, #{b_comment_create}, null, null)
+	</insert>
+	
+	<select id="comment_bbsno" parameterType="int" resultType="commentVO">
+		select b_comment_id
+		from
+		popcorn.b_comment
+		where bbs_no = #{bbs_no}
+	</select>
+	
+	<!-- 댓글 삭제하면 데이터를 날리지 않고 삭제 날짜를 update하여 남겨둠 -->
+	<update id="comment_delete"  parameterType="CommentVO">
+		update popcorn.b_comment set b_comment_delete = #{b_comment_delete} where b_comment_id = #{b_comment_id}
+	</update>
+	
+	<!-- 댓글 수정하기 -->
+	<update id="comment_update"  parameterType="CommentVO">
+		update popcorn.b_comment set b_comment_update = #{b_comment_update}, b_comment_content = #{b_comment_content} where b_comment_id = #{b_comment_id}
+	</update>
+	
 </mapper>

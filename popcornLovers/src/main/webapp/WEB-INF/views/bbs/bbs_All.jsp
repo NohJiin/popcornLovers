@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="root" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-<script type="text/javascript" src="resources/js/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="../resources/js/jquery-3.4.1.js"></script>
 <script type="text/javascript">
  $(function() {
 		$('.num').click(function() {
 			//alert($(this).text())
 			$.ajax({
-				url : "bbs_all_List", //views/bbs_all_List.jsp가 결과!
+				url : "../bbs/bbs_all_List", //views/bbs_all_List.jsp가 결과!
 				data : {
 					page : $(this).text()
 				},
@@ -22,6 +23,16 @@
 			}) //ajax
 		})
 	}) 
+	
+	//로그인 안 되어 있을 경우 글작성 불가
+	$(function() {
+			$('.bt_wrap a').click(function(event) {
+				if (${(Scope=member_id) == null}){ 
+				event.preventDefault();
+				alert('로그인 후 글작성이 가능합니다.');
+				}
+			})
+		}) 
 		
 	/* $(function() {
 		   $('.title a').click(function(event) {
@@ -71,7 +82,7 @@ td {
 	border-radius: 45px 45px 45px 45px;
 }
 </style>
-<link rel="stylesheet" href="resources/css/css.css">
+<link rel="stylesheet" href="../resources/css/bbscss.css?k">
 
 </head>
 <body>
@@ -96,18 +107,21 @@ td {
 							<div class="count">조회</div>
 						</div>
 						<c:forEach items="${list}" var="one">
-							<div>
-								<div class="num">${one.bbs_no}</div>
+							<div class="bottom">
+								<div class="num">${one.bbs_row_no}</div>
 								<div class="title">
-									<a href="detail_post?bbs_no=${one.bbs_no}">${one.bbs_title}</a>
+								<input type="hidden" name="member_id" value="${Scope=member_id}">
+								<a href="detail_post?bbs_no=${one.bbs_no}&bbs_cate_num=${one.bbs_cate_num}">${one.bbs_title}</a>
 								</div>
-								<div class="writer">${one.user_id}</div>
-								<div class="date">${one.bbs_date}</div>
+								<div class="writer">${one.member_id}</div>
+								<div class="date">${one.formattedBbs_date}</div>
 								<div class="count">${one.bbs_hit}</div>
 							</div>
 						</c:forEach>
 					</div>
-
+					<div class="bt_wrap" style="height: 40px;">
+					<a href="${root}/bbs/write/0" class="on" style="background-color: orange; border: none;  float: right;">글쓰기</a>
+					</div>
 					<div class="board_page">
 						<a href="#" class="bt first"><<</a> <a href="#" class="bt prev"><</a>
 						<%
@@ -120,10 +134,7 @@ td {
 						%>
 						<a href="#" class="bt next">></a> <a href="#" class="bt last">>></a>
 					</div>
-					<div class="bt_wrap">
-						<a href="write.html" class="on">등록</a>
-						<!--<a href="#">수정</a>-->
-					</div>
+					
 				</div>
 			</div>
 		</div>

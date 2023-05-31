@@ -11,8 +11,8 @@
                         <div class="comment_list_first_line">
                         <div class="comment_list_first_line_item1">
                         <span>${one.b_comment_writer_id}</span>
-                        <a class="comment_list_date">${one.b_comment_create}</a>
-                        <% String sessionId = (String) session.getAttribute("id");
+                        <a class="comment_list_date">${one.formattedB_comment_create}</a>
+                        <% String sessionId = (String) session.getAttribute("member_id");
                         String commentWriterId = (String) request.getAttribute("list.b_comment_writer_id");
                         if (sessionId != null && sessionId.equals(commentWriterId)) { %>
                         <a class="comment_list_update_a">수정</a>

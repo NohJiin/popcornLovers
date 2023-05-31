@@ -1,13 +1,47 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="BbsReplyDAO">
-    <select id="selectAll" resultType="com.java4.popcorn.crawling.MovieScreenVO">
-        select * from multi.movie_screen
-    </select>
-    <insert id="insertOne">
-        insert into multi.movie_screen
-        values(#{title}, #{theater}, #{screen}, #{time}, #{date}, #{theater_id})
-    </insert>
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ReplyDAO">
+
+	<!-- 대댓글을 조회한다 -->
+	<select id="reply_list" parameterType="int" resultType="replyVO">
+		select b_reply.*, member_id, member_knickname, member_img
+		from popcorn.b_reply 
+		INNER join popcorn.member
+		on b_reply_writer_id = member_id
+		where b_reply.b_comment_id = #{b_comment_id}
+	</select>
+	
+	<select id="reply_comment_same" parameterType="int" resultType="replyVO">
+		SELECT b_reply.*
+		FROM b_reply
+	    INNER JOIN popcorn.b_comment
+	    ON b_comment.b_comment_id = b_reply.b_comment_id
+		WHERE b_comment.bbs_no = 72 and b_reply.b_comment_id = 2
+	</select>
+	
+	<!-- 대댓글을 입력한다 -->
+	<insert id="reply_insert" parameterType="replyVO">
+		insert into popcorn.b_reply values (null, #{bbs_no}, #{b_comment_id}, #{b_reply_content}, 
+		#{b_reply_writer_id}, #{b_reply_create}, null, null)
+	</insert>
+	
+	<!-- 대댓글 삭제하면 데이터를 날리지 않고 삭제 날짜를 update하여 남겨둠 -->
+	<update id="reply_delete"  parameterType="replyVO">
+		update popcorn.b_reply set b_reply_delete = #{b_reply_delete} where b_reply_id = #{b_reply_id}
+	</update>
+	
+	<!-- 대댓글 수정하기 -->
+	<update id="reply_update"  parameterType="replyVO">
+		update popcorn.b_reply set b_reply_update = #{b_reply_update}, b_reply_content = #{b_reply_content} where b_reply_id = #{b_reply_id}
+	</update>	
+	
+	<!-- 대댓글 개수 구하기 -->
+	<select id="reply_count"  parameterType="int">
+		select count(*) from popcorn.b_reply where b_comment_id = #{b_comment_id}
+	</select>		
+	
 </mapper>

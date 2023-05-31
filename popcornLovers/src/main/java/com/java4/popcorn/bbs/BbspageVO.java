@@ -4,6 +4,7 @@ public class BbspageVO {
 	private int start;
 	private int end;
 	private int page;
+	private String searchContent;
 
 	public void setStartEnd(int page) {
 		//page별로 start, end값만 구해주면 됨.
@@ -40,4 +41,11 @@ public class BbspageVO {
 		this.end = end;
 	}
 
+	public String getSearchContent() {
+		return searchContent;
+	}
+
+	public void setSearchContent(String searchContent) {
+		this.searchContent = searchContent;
+	}
 }
