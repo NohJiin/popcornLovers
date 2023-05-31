@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MypageDAO">
-    
+
     	<!-- member 하나만 검색 -->
 	<select id="selectOne" parameterType="String"
 		resultType="MemberVO">
@@ -12,13 +12,12 @@
 		where member_id = #{member_id}
 	</select>
 
-	<!-- member 죄회수 증가 -->
+	<!-- member 조회수 증가 -->
 	<update id="viewCount" parameterType="String">
 		update popcorn.member
 		set member_view = member_view + 1
 		where member_id = #{member_id}
 	</update>
-    
 	
     <!-- 회원의 모든 bbs list 페이징 서브쿼리 -->
     <select id="myBbsAll" resultType="mypageVO" parameterType="MemberPageVO">
@@ -64,17 +63,32 @@
 	inner join movie m2 on m2.movieId = mr.movieId 
 	where m.member_id = #{member_id}
 	</select>
-	
+
+<!-- 회원이 쓴 댓글 카운트 -->
+	<select id="myReplyCount" resultType="Integer">
+	select count(*)
+	from member m
+	inner join b_comment bc ON m.member_id = bc.b_comment_writer_id 
+	where m.member_id = #{member_id}
+	</select>
+		
+	<!-- 회원이 쓴 대댓글 카운트 -->
+		<select id="myReplyCount2" resultType="Integer">
+	select count(*)
+	from member m
+	inner join b_reply br on m.member_id =br.b_reply_writer_id 
+	where m.member_id = #{member_id}
+	</select>
 	
 	<!-- 회원의 영화 찜 목록 추가  -->
 	<insert id ="addMovieJjim" parameterType="mypageVO">
-		insert into moviejjim values(#{movie_id}, #{member_id}, #{movie_like})
+		insert into moviejjim values(#{movie_id}, #{member_id}, 1)
 	</insert>
 	
 	<!-- 회원의 영화 찜 목록 삭제 -->
 		<delete id ="removeMovieJjim" parameterType="mypageVO">
-		delete from moviejjim 
-		where movie_id=#{movie_id} and member_id=#{member_id}
+		delete from moviejjim
+		where movie_id = #{movie_id} and member_id = #{member_id}
 	</delete>
 	
 	

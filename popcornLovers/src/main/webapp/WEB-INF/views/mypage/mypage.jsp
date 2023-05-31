@@ -19,18 +19,6 @@
 <script type="text/javascript">
 $(function(){
 
-	 
-	 $('.profile_img').click(function() {
-		 var popupWidth = 500;
-		    var popupHeight = 300;
-		    var left = (window.screen.width - popupWidth) / 2;
-		    var top = (window.screen.height - popupHeight) / 2;
-		    var popupOptions = 'width=' + popupWidth + ', height=' + popupHeight + ', left=' + left + ', top=' + top;
-
-		    // 팝업 창을 열기
-		    window.open('popupGO', '프로필 이미지 업로드', popupOptions);
-		  });
-	
 	
 	 $('#btntest').click(function() {
 		    if ($(this).hasClass('jjim')) {
@@ -57,6 +45,7 @@ $(function(){
 		    }
 		  });
 	
+	 /* 작성한 게시글 목록 버튼*/ 
 	$('.bbspages').click(function() {
 		$.ajax({
 			url : "../mypage/mybbs2" , //views/mybbsAll.jsp가 결과!
@@ -72,6 +61,7 @@ $(function(){
 		}) //ajax
 	})//bbspages
 	
+	/* 작성한 리뷰 목록 버튼 */
 	$('.reviewpages').click(function() {
 		$.ajax({
 			url : "../mypage/myreview2" , //views/mybbsAll.jsp가 결과!
@@ -94,121 +84,10 @@ $(function(){
 <%@ include file="/WEB-INF/views/header.jsp" %>
 
 
-<%-- <div class="test"></div>
-
-<button id="btntest" class="jjim"></button>
-
-<h3> 마이페이지 화면입니다.</h3>
- <br>
- <% if(session.getAttribute("member_id") == null ) { %>
- 로그인 하세요
-<%} else { %>
- <%} %>
- 
- <div class="profile2"></div>
- <button class="profile_img">프로필 이미지 넣기</button> <br>
-
- 
-<b>${member_knickname}</b>님
-<button id="jjim1" style="border :0" class="notlove"><i class="fa-sharp fa-regular fa-heart fa-heart" style="color: #ff3d3d;"></i></button><br>
-
-
-
-<i class="fa-sharp fa-solid fa-medal" style="color: #916a55;"></i>
-<i class="fa-sharp fa-solid fa-medal" style="color: #a1a1a1;"></i>
-<i class="fa-sharp fa-solid fa-medal" style="color: #f0c424;"></i>
-<i class="fa-sharp fa-solid fa-medal" style="color: #0ad8db;"></i>
-<i class="fa-sharp fa-solid fa-medal" style="color: #ec46a7;"></i><br>
-<img alt="조회수 눈 이미지" src="../resources/n_img/eye.png" width="10px" height="10px">${bag.member_view} 
-<img alt="좋아요 하트 이미지" src="../resources/n_img/pink.png" width="10px" height="10px"> ${bag.member_fav}
-
- <a href="../member/update.jsp">
- <button type="button">회원정보 수정</button>
- </a>
-  <a href="../member/remove.jsp">
- <button type="button">탈퇴하기</button>
- </a>
- <div>
-<b>영화 찜 목록</b>
- </div>
-
- <!-- 게시글 목록 -->
- <div>
-<b>게시글 목록</b><br>
- 전체 bbs 글 count : ${bbsCount}
- <hr> --%>
- 
-<%--   <%
-	int pages = (int)request.getAttribute("bbsPages");
-	for(int p = 1; p <= pages; p++){
-%>
-		<button class="bbspages"><%= p %></button>
-<%		
-	}
-%> 
-
-<div id="mybbsResult">
- <table class="table table-hover">
- <thead>
-   <tr>
-      <th>번호</th>
-      <th>작성자</th>
-      <th>제목</th>
-      <th>시간</th>
-   </tr>
-   </thead>
-   <c:forEach items="${bbsAllList}" var="my"> 
-      <tbody>
-   <tr>
-      <td>${my.bbs_id}</td> 
-      <td>${my.member_knickname}</td> 
-      <td>${my.bbs_title}</td>
-      <td>${my.bbs_date}</td>     
-   </tr>
-   </tbody>
-   </c:forEach>
-</table>
-</div>
- </div> --%>
- 
- 
- <%-- <hr color="red">
- <b>리뷰 목록</b><br>
- 전체 review 글 count : ${reviewCount}
- <hr>
- <%
-	int pages2 = (int)request.getAttribute("reviewPages");
-	for(int p2 = 1; p2 <= pages2; p2++){
-%>
-		<button class="reviewpages"><%= p2 %></button>
-<%		
-	}
-%> 
-<div id="myreviewResult">
- <table>
-   <tr>
-      <td>영화제목</td>
-      <td>내용</td>
-      <td>작성자</td>
-   </tr>
-   <c:forEach items="${reviewAllList}" var="my"> 
-   <tr>
-      <td>${my.movieTitle}</td> 
-      <td>${my.reviewContent}</td>
-      <td>${my.member_knickname}</td>     
-   </tr>
-   </c:forEach>
-</table>
-</div> --%>
-
-
-
 <div class="resume">
   <div class="base">
     <div class="profile">
-      <div class="photo"><img src="../resources/n_img/profil.png" width="210px" height="210px"/></div>
-       <button class="profile_img">프로필 이미지 넣기</button> <br>
-      
+      <div class="photo"><img src="../resources/profile_img/${memberVO.member_img}" width="210px" height="210px"/></div>  
       <div class="info">
         <p class="name">${member_knickname}</p>
 

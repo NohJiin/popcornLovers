@@ -58,10 +58,17 @@
 		where member_id = #{member_id}
 	</select>
 
-	<!-- member 죄회수 증가 -->
+	<!-- member 조회수 증가 -->
 	<update id="viewCount" parameterType="String">
 		update popcorn.member
 		set member_view = member_view + 1
 		where member_id = #{member_id}
 	</update>
+	
+	          <!-- 회원 프로필 이미지 수정 -->
+    <update id="profileUp" parameterType="MemberVO">
+    	update popcorn.member
+    	set
+    	member_img = #{member_img} where member_id = #{member_id}
+    </update>
 </mapper>

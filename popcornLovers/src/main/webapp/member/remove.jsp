@@ -10,7 +10,7 @@
 <%@ include file="../WEB-INF/views/header.jsp" %>
 <form action="remove" method="get">
  		아이디: ${member_id} <br>
- 		비밀번호:<input type="password" name = "member_pw" value ="1234">
+ 		비밀번호:<input type="password" name = "member_pw" value ="${bag.member_pw}">
  	<br>
  			<button type="submit">취소</button> <button type="submit">회원탈퇴</button> 	
 </form>

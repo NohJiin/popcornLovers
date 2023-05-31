@@ -3,6 +3,7 @@ package com.java4.popcorn.mypage;
 import java.io.File;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.java4.popcorn.member.MemberDAO;
 import com.java4.popcorn.member.MemberVO;
 
 @Controller
@@ -21,48 +24,24 @@ public class MypageController {
 	@Autowired
 	MypageDAO dao;
 
-	
-	//프로필 이미지 추가 클릭 시 popup 페이지로 이동
-	@RequestMapping("mypage/popupGO")
-	public String openPopup() {
-	return "mypage/popup";
-	}
-	
-
-	//회원 프로필 설정
-	@RequestMapping("mypage/profileUp")
-	public void profileUpload(MemberVO vo, String member_id, HttpSession session,
-			HttpServletRequest request, //경로 자동으로 구하기
-			MultipartFile file,//이미지 받는 것
-			Model model) throws Exception {
-		session.setAttribute("member_id", vo.getMember_id()); //id 세션 유지해야함
-		String savedName = file.getOriginalFilename(); //파일의 이름을 가져다 줌 = savedname 에 집어넣음
-		String uploadPath
-					= request.getSession().getServletContext().getRealPath("resources/profile_img"); //경로를 자동으로 구해주기
-		
-		File target = new File(uploadPath + "/" + savedName); //파일 객체로 만들어주기
-		file.transferTo(target); 
-		
-		System.out.println("이미지 업로드 요청");
-		
-		model.addAttribute("savedName", savedName);
-		System.out.println("img넣기 전>> " + vo);
-		vo.setMember_img(savedName);
-		System.out.println("img넣은 후>> " + vo);
-	}
-	
-	
-	// 회원이 작성한 게시글
-	@RequestMapping("mypage/mybbsAll")
-	public void bbsList2(PageVO vo, Model model, HttpSession session) {
-		String member_id = (String) session.getAttribute("member_id"); // member_id 세션 값 잡아두기 - String으로 id 잡기!
-		vo.setStartEnd(vo.getPage());
+	//회원 활동 내역 레벨 값 가져오기
+	//@RequestMapping("")
+	public void memberLevel(PageVO vo, Model model, HttpSession session) {
+		String member_id = (String) session.getAttribute("member_id");
 		vo.setMember_id(member_id);
-
-		List<MypageVO> bbsAllList = dao.bbsAllList(vo);// member_id로 해당 list들 들고오기
-		model.addAttribute("bbsAllList", bbsAllList);
+		int bbsCount = dao.bbsCount(vo);
+		int reviewCount = dao.reviewCount(vo);
+		int replyCount = dao.replyCount(vo);
+		int replyCount2 = dao.replyCount2(vo);
+		
+		model.addAttribute("bbsCount", bbsCount);
+		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("replyCount", replyCount);
+		model.addAttribute("replyCount2", replyCount2);
+		
+		System.out.println(bbsCount);
 	}
-
+	
 	
 	// 회원이 작성한 게시글(첫 페이지) + 리뷰(첫 페이지)
 	// mypage 버튼 클릭시 바로 출력되는 controller
@@ -93,6 +72,9 @@ public class MypageController {
 		model.addAttribute("reviewAllList", reviewAllList);
 		model.addAttribute("reviewCount", reviewCount);
 		model.addAttribute("reviewPages", reviewPages);
+		
+		MemberVO memberVO  = dao.selectOne(member_id);
+		model.addAttribute("memberVO", memberVO);
 	}
 
 
@@ -108,6 +90,7 @@ public class MypageController {
 		model.addAttribute("bbsAllList", bbsAllList);// model에 넣어주자
 	}
 
+	
 	// 회원이 작성한 리뷰(나머지 페이지를 처리)
 	@RequestMapping("mypage/myreview2")
 	public void reviewListOther(PageVO vo, Model model, HttpSession session) {
@@ -120,6 +103,7 @@ public class MypageController {
 		model.addAttribute("reviewAllList", reviewAllList);// model에 넣어주자
 	}
 
+	
 	//mypage 각자 프로필+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	@RequestMapping("mypage/mypageOne")
 	public void mypageOne(PageVO vo, Model model, String member_id) {
@@ -150,10 +134,7 @@ public class MypageController {
 		
 		model.addAttribute("bag", bag);
 	}
-	
-	
-	
-	
+
 	
 	// 찜 추가 하기(빈 하트 >> 꽉찬 하트)
 	@RequestMapping("mypage/addmoviejjim")
@@ -163,13 +144,17 @@ public class MypageController {
 		vo.setMovieId(movieId);
 		vo.setMember_id(member_id);
 		
-		int result = dao.addMovieJjim(vo);
-		if(member_id == null) {
-			 
-		} else {
-			 if (result > 0) { //moviejjim을 누르게 되면 movie_like에 1을 넣어주기
-			        vo.setMovie_like(1); }		
-				}
+		if(member_id != null) { //로그인이 되었을 때
+			 int result = dao.addMovieJjim(vo); // 찜 추가 실행
+			 if (result > 0) { //찜 추가가 성공 
+			       System.out.println("추가 성공" +result);
+				} else { //찜 추가가 실패
+					System.out.println("추가 실패" +result);
+					}
+		       }else {
+		    	 //로그인이 되지 않았을 때
+		    	 System.out.println("로그인 여부 확인");
+		       }
 		}
 
 	
@@ -205,12 +190,6 @@ public class MypageController {
 		vo.setMember_id(member_id);
 		dao.removeMovieJjim(vo);
 	}
-
-	// 회원의 영화 찜목록
-//	@RequestMapping("mypage/mypage")
-//	public void mymovieJjim(HttpSession session, Model model , MypageVO vo) {
-//		
-//	}
 
 	//마이페이지로 이동하기
 //	@RequestMapping("mypage/mypageGO")

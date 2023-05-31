@@ -64,6 +64,11 @@ public class MemberDAO {
 		return bag;
 	}
     
+	//회원 프로필 사진 수정
+	public int profileUp(MemberVO vo) {
+		return my.update("MemberDAO.profileUp", vo);
+	}
+    
     
 	}
 

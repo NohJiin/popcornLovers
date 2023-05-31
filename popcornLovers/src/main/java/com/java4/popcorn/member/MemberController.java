@@ -81,8 +81,8 @@ public class MemberController {
 	@RequestMapping("member/update")
 	public void update(MemberVO vo) {
 		System.out.println("update요청");
-		System.out.println(vo);
 		dao.update(vo);
+		System.out.println(vo);
 	}
 //
 //	// 회원 탈퇴
@@ -110,5 +110,34 @@ public class MemberController {
 		model.addAttribute("bag", bag);
 	}
 	
-
+	//회원 프로필 설정
+		@RequestMapping("member/profileUp")
+		public String profileUp(MemberVO vo, HttpSession session,
+				HttpServletRequest request, //경로 자동으로 구하기
+				MultipartFile file,//이미지 받는 것
+				Model model) throws Exception {
+			String member_id = (String) session.getAttribute("member_id"); //id 값 들고오기
+			String savedName = file.getOriginalFilename(); //파일의 이름을 가져다 줌 = savedname 에 집어넣음
+			String uploadPath
+						= request.getSession().getServletContext().getRealPath("resources/profile_img"); //경로를 자동으로 구해주기
+			System.out.println(uploadPath);
+			
+			File target = new File(uploadPath + "/" + savedName); //파일 객체로 만들어주기
+			file.transferTo(target); //파일을 해당 위치에 넣어라
+			
+			System.out.println("이미지 업로드 요청 :" + target);
+			
+			model.addAttribute("savedName", savedName);
+			vo.setMember_img(savedName);
+			vo.setMember_id(member_id); //아이디 값도 읽어서 넘겨줘야함
+			
+			System.out.println("img넣은 후>> " + vo);
+			model.addAttribute("vo",vo);
+			dao.profileUp(vo);
+			
+			return "redirect:../mypage/mypage";
+		}
+	
+	
+	
 }

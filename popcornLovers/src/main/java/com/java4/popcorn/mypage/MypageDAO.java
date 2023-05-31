@@ -14,6 +14,8 @@ public class MypageDAO {
 	@Autowired
 	SqlSessionTemplate my;
 
+
+	
 	//회원 프로필 하나씩
     public MemberVO selectOne(String member_id) {
 		MemberVO bag = my.selectOne("MemberDAO.selectOne",member_id);
@@ -44,6 +46,15 @@ public class MypageDAO {
 		return my.selectOne("MypageDAO.myReviewCount",vo);
 	}
 	
+	//회원이 작성한 댓글 갯수
+	public int replyCount(PageVO vo) {
+		return my.selectOne("MypageDAO.myReplyCount",vo);
+	}
+
+	//회원이 작성한 대댓글 갯수
+	public int replyCount2(PageVO vo) {
+		return my.selectOne("MypageDAO.myReplyCount2",vo);
+	}
 	
 	//찜 추가하기
 	public int addMovieJjim(MypageVO vo) {

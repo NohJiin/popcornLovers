@@ -73,8 +73,7 @@ $(function(){
   <div class="base">
     <div class="profile">
       <div class="photo"><img src="../resources/n_img/profil.png" width="210px" height="210px"/></div>
-       <button class="profile_img">프로필 이미지 넣기</button> <br>
-      
+       
       <div class="info">
         <p class="name">${bag.member_knickname}</p>
 
