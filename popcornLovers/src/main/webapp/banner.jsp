@@ -22,19 +22,19 @@
 		  </div>
 		  <div class="carousel-inner banner">
 		    <div class="carousel-item active">
-		      <img src="./resources/image/banner1.png" class="d-block w-100" alt="영화포스터1" height="300px">
+		      <img src="./resources/img/bbs/banner1.png" class="d-block w-100" alt="영화포스터1" height="300px">
 		    </div>
 		    <div class="carousel-item">
-		      <img src="./resources/image/banner2.jpg" class="d-block w-100" alt="영화포스터2"  height="300px">
+		      <img src="./resources/img/bbs/banner2.jpg" class="d-block w-100" alt="영화포스터2"  height="300px">
 		    </div>
 		    <div class="carousel-item">
-		      <img src="./resources/image/banner3.jpg" class="d-block w-100" alt="영화포스터3"  height="300px">
+		      <img src="./resources/img/bbs/banner3.jpg" class="d-block w-100" alt="영화포스터3"  height="300px">
 		    </div>
 		    <div class="carousel-item">
-		      <img src="./resources/image/banner4.jpg" class="d-block w-100" alt="영화포스터4" height="300px">
+		      <img src="./resources/img/bbs/banner4.jpg" class="d-block w-100" alt="영화포스터4" height="300px">
 		    </div>
 		    <div class="carousel-item">
-		      <img src="./resources/image/banner5.png" class="d-block w-100" alt="영화포스터5"  height="300px" style="object-fit: cover;" >
+		      <img src="./resources/img/bbs/banner5.png" class="d-block w-100" alt="영화포스터5"  height="300px" style="object-fit: cover;" >
 		    </div>
 		  </div>
 		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
