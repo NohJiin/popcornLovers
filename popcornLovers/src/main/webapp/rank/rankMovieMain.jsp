@@ -64,7 +64,7 @@ $(function() {
 			$("#rankList").append(x)
 		},
 		error: function() {
-			alert("오류발생")
+			alert("오류발생mra")
 		}
 	})
 	// 시작과 동시에 User추천 항목 띄워줌
@@ -74,7 +74,7 @@ $(function() {
 			$("#recoList").append(x)
 		},
 		error: function() {
-			alert("오류발생")
+			alert("오류발생rm")
 		}
 	})
 	// 시작과 동시에 User Top3 불러오기
@@ -84,7 +84,7 @@ $(function() {
 			$("#top3").append(x)
 		},
 		error: function() {
-			alert("오류발생")
+			alert("오류발생mt3")
 		}
 	})	// ajax
 

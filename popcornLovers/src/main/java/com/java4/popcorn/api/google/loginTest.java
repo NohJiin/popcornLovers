@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class loginTest {
 
-    GoogleIdTokenVerifier verifier;
     @RequestMapping(method = RequestMethod.POST, value = "/test")
     public String test(@RequestBody String body,
                        Model model) {
