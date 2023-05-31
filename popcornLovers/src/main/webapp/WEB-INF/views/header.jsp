@@ -48,12 +48,12 @@
 							--></ul>
 						</div>
 					</li><!--
-					--><li class="li_menu"><a href="${pageContext.request.contextPath}/alarm"><span class="main_menu">영화관 찾기</span></a><!--
+					--><li class="li_menu"><a href="${pageContext.request.contextPath}/alarm/"><span class="main_menu">영화관 찾기</span></a><!--
 					--><div class="menu_sub">
 						<ul>
-                            <li><a href="${pageContext.request.contextPath}/alarm/movie"><span>영화 찾기</span></a></li><!--
-							--><li><a href="${pageContext.request.contextPath}/alarm/theater"><span>극장 찾기</span></a></li><!--
-							--><li><a href="${pageContext.request.contextPath}/alarm/alarm"><span>알림</span></a></li>
+                            <li><a href="${pageContext.request.contextPath}/alarm/movie/"><span>영화 찾기</span></a></li><!--
+							--><li><a href="${pageContext.request.contextPath}/alarm/theater/"><span>극장 찾기</span></a></li><!--
+							--><li><a href="${pageContext.request.contextPath}/alarm/alarm/"><span>알림</span></a></li>
                         </ul>
 						</div>
 					</li><!--

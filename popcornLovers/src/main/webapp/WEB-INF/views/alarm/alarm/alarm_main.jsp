@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,28 +14,19 @@
     <!-- jquery -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.4.js"></script>
 
-    <script>
-        $.ajax({
-            url: "${pageContext.request.contextPath}/alarm/navbar/",
-            type: "GET",
-            success: function (data) {
-                $('#navbar-container').html(data);
-            },
-            error: function (e) {
-                console.log("error while getting navbar")
-                console.log(e);
-            }
-        });
-        <%--let screenMapStr = '${screenMap}';--%>
-        <%--let screenMap = JSON.parse(screenMapStr);--%>
-        <%--let favoriteTheaterListStr = '${listTheaterFavorites}';--%>
-        <%--let favoriteTheaterList = JSON.parse(favoriteTheaterListStr);--%>
-        <%--let movieIdToTitleMapStr = '${movieIdToTitleMap}';--%>
-        <%--let movieIdToTitleMap = JSON.parse(movieIdToTitleMapStr);--%>
-        <%--let theaterIdToNameMapStr = '${theaterIdToNameMap}';--%>
-        <%--let theaterIdToNameMap = JSON.parse(theaterIdToNameMapStr);--%>
-        //console.log(screenMap);
-    </script>
+<%--    <script>--%>
+<%--        $.ajax({--%>
+<%--            url: "${pageContext.request.contextPath}/alarm/navbar/",--%>
+<%--            type: "GET",--%>
+<%--            success: function (data) {--%>
+<%--                $('#navbar-container').html(data);--%>
+<%--            },--%>
+<%--            error: function (e) {--%>
+<%--                console.log("error while getting navbar")--%>
+<%--                console.log(e);--%>
+<%--            }--%>
+<%--        });--%>
+<%--    </script>--%>
 
     <script>
         let moviesNotOnScreen = [];
@@ -54,9 +45,10 @@
 </head>
 
 <body>
-<div id="navbar-container">
-    error while loading navbar
-</div>
+<%@ include file="/WEB-INF/views/header.jsp" %>
+<%--<div id="navbar-container">--%>
+<%--    error while loading navbar--%>
+<%--</div>--%>
 <h3>20230527-20230530까지의 결과</h3>
 *실제 크롤링 및 kmdb 데이터입니다.<br>
 *서울이랑 경기만 크롤링 되어있음.<br>

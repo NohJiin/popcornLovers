@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,25 +14,27 @@
     <!-- jquery -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.4.js"></script>
 
-    <script>
-        $.ajax({
-            url: "${pageContext.request.contextPath}/alarm/navbar/",
-            type: "GET",
-            success: function (data) {
-                $('#navbar-container').html(data);
-            },
-            error: function (e) {
-                console.log("error while getting navbar")
-                console.log(e);
-            }
-        });
-    </script>
+<%--    <script>--%>
+<%--        $.ajax({--%>
+<%--            url: "${pageContext.request.contextPath}/alarm/navbar/",--%>
+<%--            type: "GET",--%>
+<%--            success: function (data) {--%>
+<%--                $('#navbar-container').html(data);--%>
+<%--            },--%>
+<%--            error: function (e) {--%>
+<%--                console.log("error while getting navbar")--%>
+<%--                console.log(e);--%>
+<%--            }--%>
+<%--        });--%>
+<%--    </script>--%>
 </head>
 
 <body>
-<div id="navbar-container">
-    error while loading navbar
-</div>
+<%--<div id="navbar-container">--%>
+<%--    error while loading navbar--%>
+<%--</div>--%>
+<%@ include file="/WEB-INF/views/header.jsp" %>
+
 
 <div id="daily">
 <%--가장 상영수가 적은 영화는?--%>

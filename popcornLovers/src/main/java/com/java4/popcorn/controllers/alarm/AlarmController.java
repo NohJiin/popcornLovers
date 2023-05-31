@@ -31,7 +31,7 @@ public class AlarmController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String temporarySlashMapper(){
-        return "redirect:http://localhost:8887/popcorn/alarm";
+        return "redirect:http://localhost:8887/popcornLovers_war_exploded/Main.jsp";
     }
     @RequestMapping(method = RequestMethod.GET, value = "/alarm")
     public String home(HttpServletRequest request,
@@ -49,20 +49,24 @@ public class AlarmController {
         List<MovieMappingVO> movieOnScreenMapList = store.getMovieOnScreenMapList();
         Map<String, String> movieToIdMap = store.getMovieIdToTitleMap();
 
-        model.addAttribute("movieOnScreenMap", movieOnScreenMap);
+        try {
+            model.addAttribute("movieOnScreenMap", movieOnScreenMap);
 
-        model.addAttribute("movie1_poster", movieOnScreenMapList.get(0).getPosterList().get(0));
-        model.addAttribute("movie1_name", movieToIdMap.get(movieOnScreenMapList.get(0).getDocid()));
-        model.addAttribute("movie1_number", movieOnScreenMap.get(movieOnScreenMapList.get(0).getDocid()).size());
+            model.addAttribute("movie1_poster", movieOnScreenMapList.get(0).getPosterList().get(0));
+            model.addAttribute("movie1_name", movieToIdMap.get(movieOnScreenMapList.get(0).getDocid()));
+            model.addAttribute("movie1_number", movieOnScreenMap.get(movieOnScreenMapList.get(0).getDocid()).size());
 
-        model.addAttribute("movie2_poster", movieOnScreenMapList.get(1).getPosterList().get(0));
-        model.addAttribute("movie2_name", movieToIdMap.get(movieOnScreenMapList.get(1).getDocid()));
-        model.addAttribute("movie2_number", movieOnScreenMap.get(movieOnScreenMapList.get(1).getDocid()).size());
+            model.addAttribute("movie2_poster", movieOnScreenMapList.get(1).getPosterList().get(0));
+            model.addAttribute("movie2_name", movieToIdMap.get(movieOnScreenMapList.get(1).getDocid()));
+            model.addAttribute("movie2_number", movieOnScreenMap.get(movieOnScreenMapList.get(1).getDocid()).size());
 
-        model.addAttribute("movie3_poster", movieOnScreenMapList.get(2).getPosterList().get(0));
-        model.addAttribute("movie3_name", movieToIdMap.get(movieOnScreenMapList.get(2).getDocid()));
-        model.addAttribute("movie3_number", movieOnScreenMap.get(movieOnScreenMapList.get(2).getDocid()).size());
-
+            model.addAttribute("movie3_poster", movieOnScreenMapList.get(2).getPosterList().get(0));
+            model.addAttribute("movie3_name", movieToIdMap.get(movieOnScreenMapList.get(2).getDocid()));
+            model.addAttribute("movie3_number", movieOnScreenMap.get(movieOnScreenMapList.get(2).getDocid()).size());
+        }catch (NullPointerException e){
+            model.addAttribute("eMessage", e.getMessage());
+            return "alarm/dbFail";
+        }
         return "alarm/home";
     }
 
@@ -78,7 +82,7 @@ public class AlarmController {
             System.out.println("kakaoId is " + session.getAttribute("kakaoId"));
         }
 
-        return "login";
+        return "notused_login";
     }
     @RequestMapping(method = RequestMethod.GET, value = "alarm/alarm")
     public String alarm_main(HttpServletRequest request,
