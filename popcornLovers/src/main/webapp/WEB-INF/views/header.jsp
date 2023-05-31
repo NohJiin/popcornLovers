@@ -28,14 +28,14 @@
                         </ul>
 					</div>
 					</li><!--
-					--><li class="li_menu"><a href="링크주소"><span class="main_menu">커뮤니티</span></a><!--
+					--><li class="li_menu"><a href="${pageContext.request.contextPath}/bbs/post.jsp"><span class="main_menu">커뮤니티</span></a><!--
 					--><div class="menu_sub">
 						<ul>
-							<li><a href="링크주소"><span>공지사항</span></a></li><!--
-							--><li><a href="링크주소"><span>자유게시판</span></a></li><!--
-							--><li><a href="링크주소"><span>영화수다</span></a></li><!--
-							--><li><a href="링크주소"><span>찾아주세요</span></a></li><!--
-							--><li><a href="링크주소"><span>번개</span></a></li>
+							<li><a href="${pageContext.request.contextPath}/bbs/notice?bbs_cate_num=1&page=1"><span>명당자리</span></a></li><!--
+							--><li><a href="${pageContext.request.contextPath}/bbs/free?bbs_cate_num=2&page=1"><span>자유수다</span></a></li><!--
+							--><li><a href="${pageContext.request.contextPath}/bbs/movietalk?bbs_cate_num=3&page=1"><span>영화수다</span></a></li><!--
+							--><li><a href="${pageContext.request.contextPath}/bbs/find?bbs_cate_num=4&page=1"><span>찾아주세요</span></a></li><!--
+							--><li><a href="${pageContext.request.contextPath}/bbs/bungae?bbs_cate_num=5&page=1"><span>번개</span></a></li>
 						</ul>
 						</div>
                     </li><!--

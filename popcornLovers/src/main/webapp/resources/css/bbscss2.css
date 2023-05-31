@@ -1,0 +1,535 @@
+
+* {
+	font-family: 'Noto Sans KR', 'CJONLYONENEW', '맑은 고딕', '돋움', Dotum,
+		sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+ul, li{
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.board_wrap {
+    width: 1000px;
+    margin: 62px auto;
+}
+
+.board_title {
+	padding-top: 30px;
+	 margin-bottom: 30px;
+    align-items: center;
+	text-align: center;
+	align-content: center;
+}
+
+.board_title strong {
+	align-items: center;
+	text-align: center;
+    font-size: 2rem;
+}
+
+.board_title p {
+	text-align: center;
+    margin-top: 5px;
+    font-size: 1.2rem;
+}
+
+.board_list_cnt p {
+	text-align: right;
+	font-size: 1.1rem;
+	padding-bottom: 10px;
+	padding-right: 28px;
+	font-weight: 700;
+}
+
+.board_list_cnt_highlight {
+	color: orange;
+}
+
+.bt_wrap {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0;
+}
+
+.bbs_list_btn {
+    display: inline-block;
+    min-width: 80px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    font-size: 1.4rem;
+}
+
+.bbs_delete_btn {
+    display: inline-block;
+    min-width: 80px;
+    margin-left: 10px;
+    padding: 10px;
+    background-color: #dd3737;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    border: none;
+}
+
+.bbs_update_btn {
+    display: inline-block;
+    min-width: 80px;
+    margin-left: 10px;
+    padding: 10px;
+    background-color: rgb(235, 177, 28);
+    border-radius: 2px;
+    font-size: 1.4rem;
+    border: none;
+}
+
+.bt_wrap a:first-child {
+    margin-left: 0;
+}
+
+.bt-wrap a.on {
+    background: #000;
+    color: #fff;
+}
+
+.board_list {
+    width: 100%;
+    border-top: 2px solid #000;
+}
+
+.board_list > div {
+    border-bottom:1px solid #ddd;
+    font-size: 0;
+}
+
+.board_list > div.top {
+    border-bottom:1px solid #999;
+}
+
+.board_list > div:last-child {
+    border-bottom: 1px solid #000;
+}
+
+.board_list > div > div {
+    display: inline-block;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 1.1rem;
+}
+.board_list > div.top > div {
+  font-weight: 600;
+}
+
+.board_list .num {
+    width: 10%;
+}
+
+.board_list .title {
+    width: 55%;
+    text-align: left;
+}
+
+.board_list .top .title {
+    text-align: center;
+}
+
+.board_list .bottom .title a:hover{
+	text-decoration: underline;
+}
+
+.board_list .writer {
+    width: 10%;
+}
+
+.board_list .date {
+    width: 15%;
+}
+
+.board_list .count {
+    width: 10%;
+}
+
+.board_page {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0;
+}
+
+.board_page a {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+    border-left: 0;
+    line-height: 100%;
+}
+
+.board_page a.bt {
+    padding: 10px;
+    font-size: 1.2rem;
+    letter-spacing: -1px;
+}
+
+.board_page a.num{
+    font-size: 1.4rem;
+}
+
+.board_page a.num.on{
+    border-color: #000;
+    background: #000;
+    color: #fff;
+}
+
+
+.board_page a:first-child {
+    border-left: 1px solid #ddd;
+}
+
+
+.board_view {
+	width: 100%;
+	border-top: 2px solid #000;
+	margin-bottom: 20px;
+}
+
+.board_view .title {
+    padding: 20px 15px;
+    border-bottom: 1px dashed #ddd;
+    font-size: 1.5rem;
+}
+
+.board_view .info {
+    padding: 15px;
+    border-bottom: 1px solid #999;
+    font-size: 0;
+
+}
+
+.board_view .info dl{
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.board_view .info dl:first-child {
+    padding-left: 0;
+}
+
+.board_view .info dl::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 13px;
+    background-color: #ddd;
+}
+
+.board_view .info dl:first-child::before {
+    display: none;
+}
+
+.board_view .info dl dt,
+.board_view .info dl dd {
+    display: inline-block;
+    font-size: 1.3rem;
+}
+
+
+.board_view .info dl dd {
+    margin-left: 10px;
+    color: #777;
+}
+
+.board_view .cont {
+    padding: 15px;
+    border-bottom: 1px solid #000;
+    line-height: 160%;
+    font-size: 1.3rem;
+}
+
+
+.comment_headline {
+	font-size: 1.2rem;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	font-weight: 700;
+	border-bottom: 2px solid rgb(225, 225, 225);
+	display: flex;
+	vertical-align: middle;
+}
+
+.comment_headline img {
+	width: 23px;
+	height: 23px;
+}
+
+.comment_headline p {
+	padding-right: 3px;
+}
+
+.comment_headline span {
+	padding-left: 5px;
+	padding-right: 20px;
+}
+
+.none_comment {
+	padding-left: 10px;
+	font-size: 1.1rem;
+	font-style: italic;
+	font-weight: 800;
+	color: orange;
+}
+
+.comment_box {
+	margin-top: 20px;
+	width: 100%;
+}
+
+.comment_box strong {
+	font-size: 1.4rem;
+	padding-left: 10px;
+}
+
+.comment_content {
+	padding: 10px 10px 5px 10px;
+	width: 980px;
+}
+
+.comment_input_box {
+	height: 50px;
+	width: 970px;
+	padding-left: 5px;
+	margin-bottom: 10px;
+	border: 2px solid rgb(225, 225, 225);
+	border-radius: 8px;
+}
+
+.comment_insert_btn {
+	display: inline-block;
+	width: 50px;
+	height: 30px;
+	border: 2px solid #e2e2e2;
+	background-color: white;
+	border-radius: 5px;
+	font-size: 0.8rem;
+}
+
+.comment_insert_btn:hover {
+	background-color: #e2e2e2;
+}
+
+.comment_list_box {
+	margin-top: 10px;
+	width: 100%;
+}
+
+.comment_list_cont {
+	padding: 10px 10px 5px 10px;
+	width: 980px;
+}
+
+.comment_writer_profile {
+	padding-left: 10px; 
+	display: flex;
+}
+
+.comment_writer_profile img {
+	width: 50px; 
+	height: 50px;
+}
+
+.comment_writer_profile span {
+	align-self: flex-end;
+	font-weight: 700;
+	font-size: 1.1rem;
+}
+
+.comment_list_content {
+	padding-top: 10px;
+	padding-bottom: 15px;
+	background-color: #F5F5F5;
+	border-radius: 13px;
+	padding-left: 10px;
+}
+
+.comment_list_content p{
+    word-break: break-all;
+    font-size: 0.9rem;
+}
+
+.comment_list {
+	width: 90%;
+}
+
+.comment_list_info {
+	display: flex;
+	justify-content: space-between;
+}
+
+.comment_list_first_line {
+	display: flex;
+	width: 100%;
+}
+
+.comment_list_first_line_item1{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-items: flex-end;
+}
+
+.comment_list_first_line_item2{
+    margin-left: auto;
+    align-self: flex-end;
+}
+
+.comment_list_date {
+	font-size: 0.9rem;
+	color: gray;
+	margin-left: 20px;
+}
+
+.comment_list_update_a {
+	color: #FE4A8D;
+	font-size: 0.9rem;
+	margin-left: 5px;
+	padding-right: 5px;
+}
+
+.comment_list_delete_a {
+	color: #FE4A8D;
+	font-size: 0.9rem;
+}
+
+.reply_btn {
+	float: right;
+	background-color: #ddd;
+	border: none;
+	width: 70px;
+	height: 20px;
+	vertical-align: middle;
+	border-radius: 5px;
+}
+
+
+.reply_box {
+    margin-top: 20px;
+    width: 95%;
+    margin-left: 50px;
+}
+
+.reply_box strong {
+    font-size: 1.4rem;
+    padding-left: 10px;
+}
+
+.reply_content {
+    padding: 10px 10px 5px 10px;
+    width: 930px;
+}
+
+.reply_input_box {
+    height: 50px;
+    width: 920px;
+    padding-left: 5px;
+    margin-bottom: 10px;
+    border: 2px solid rgb(225, 225, 225);
+    border-radius: 8px;
+}
+
+.reply_insert_btn {
+    display: inline-block;
+    width: 50px;
+    height: 30px;
+    border: 2px solid #e2e2e2;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
+
+.reply_insert_btn:hover {
+    background-color: #e2e2e2;
+}
+
+.reply_list_box {
+    margin-top: 10px;
+    width: 95%;
+    margin-left: 50px;
+}
+
+.reply_list_cont {
+    padding: 10px 10px 5px 10px;
+    width: 930px;
+}
+
+.reply_list_content{
+    padding-top: 10px;
+    padding-bottom: 15px;
+    background-color: #F5F5F5;
+    border-radius: 15px;
+    padding-left: 10px;
+}
+
+.reply_list_content p{
+    word-break: break-all;
+    font-size: 0.9rem;
+}
+
+.reply_list{
+    width: 100%;
+    
+}
+
+.reply_list_info{
+    display: flex;
+    justify-content: space-between;
+}
+
+.reply_list_first_line {
+    display: flex;
+    width: 100%;
+}
+
+.reply_list_first_line_item1{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-items: flex-end;
+}
+
+.reply_list_first_line_item2{
+    margin-left: auto;
+    align-self: flex-end;
+}
+.reply_list_date {
+    font-size: 0.9rem;
+    color: gray;
+    margin-left: 20px;
+}
+
+
+.reply_list_delete_a {
+    color: #FE4A8D;
+    font-size: 0.9rem;
+    margin-left: 10px;
+}
+
+.comment_list_update_a:hover, .comment_list_delete_a:hover {
+	font-weight: 800;
+	cursor: pointer;
+	color: #FE4A8D;
+}
+
+#bbsfullheart, #bbsemptyheart {
+	cursor: pointer;
+}

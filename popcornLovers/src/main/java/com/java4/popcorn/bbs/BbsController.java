@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.java4.popcorn.bbsComment.CommentDAO;
 import com.java4.popcorn.bbsComment.CommentVO;
+import com.java4.popcorn.member.MemberVO;
 
 @Controller
 public class BbsController {

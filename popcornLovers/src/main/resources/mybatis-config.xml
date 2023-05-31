@@ -32,7 +32,6 @@
 	  	<typeAlias type="com.java4.popcorn.bbsComment.CommentVO" alias="commentVO"></typeAlias>
 	  	<typeAlias type="com.java4.popcorn.bbsReply.ReplyVO" alias="replyVO"></typeAlias>
 	  	<typeAlias type="com.java4.popcorn.bbs.BbslikesVO" alias="bbslikesVO"></typeAlias>
-		<typeAlias type="com.java4.popcorn.bbs.MemberVO" alias="memberVO"></typeAlias>
 		<typeAlias type="com.java4.popcorn.bbs.BbsfileVO" alias="bbsfileVO"></typeAlias>
 
         <!--이시현-->
