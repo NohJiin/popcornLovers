@@ -37,6 +37,13 @@ public class RankMovieController {
 		model.addAttribute("list", list);
 	}
 	
+	// 영화 아이디 리스트 확인
+	@RequestMapping("rankMovie/movieIdTest")
+	public void movieIdList(Model model) {
+		List<String> list = dao.movieIdList();
+		model.addAttribute("list", list);
+	}
+	
 	
 	// 추천 영화 리스트 : 전체 목록
 	@RequestMapping("rankMovie/recoMovie")

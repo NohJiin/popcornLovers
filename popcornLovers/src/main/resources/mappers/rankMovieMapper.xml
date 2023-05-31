@@ -54,4 +54,41 @@
 		from popcorn.rankmovie r, popcorn.movie m
 		where r.movieId = m.movieId
     </select>
+    
+    
+    <!-- 스케줄러 업데이트 테스트 -->
+    <update id="rankUpdate2" parameterType="String">
+    	update popcorn.rankmovie m
+		set m.moviePopularity = (
+		select (total.movieLike*0.3 + total.movieHits*0.3 + total.movieReviews*0.3) as per
+		from
+			(select r.*, m.movieLike, m.movieHits, m.movieReviews
+			from popcorn.rankmovie r, popcorn.movie m
+			where r.movieId = m.movieId
+			) total
+		where total.movieId = #{movieId}
+		)
+		where m.movieId = #{movieId}
+    </update>
+    
+    <select id="movieIdList" resultType="RankMovieVO">
+    	select movieId
+    	from popcorn.movie
+    </select>
+    
+    
+    <!-- 랭킹 업데이트는 언제 해야할까? -->
+    <update id="rankUpdate" parameterType="String">
+    	update popcorn.rankmovie m
+		set m.moviePopularity = (
+		select (total.movieLike*0.3 + total.movieHits*0.3 + total.movieReviews*0.3) as per
+		from
+			(select r.*, m.movieLike, m.movieHits, m.movieReviews
+			from popcorn.rankmovie r, popcorn.movie m
+			where r.movieId = m.movieId
+			) total
+		where total.movieId = #{movieId}
+		)
+		where m.movieId = #{movieId}
+    </update>
 </mapper>

@@ -16,7 +16,20 @@ public class RankMovieDAO {
 		int result = my.insert("RankMovieDAO.movieInsert");
 		return result;
 	}
+    
+	/* 스케줄링 할 것 */
+    public void movieUpdate(List<String> list) {
+  		my.update("RankMovieDAO.rankUpdate2", list);
+  		
+  	}
 	
+    public List<String> movieIdList() {
+    	List<String> list = my.selectList("RankMovieDAO.movieIdList");
+    	return list;
+    }
+    /* 스케줄링 끝 */
+    
+    
 	/* 페이징 */
 	// 전체 목록 : 순위별
 	public List<RankMovieVO> all(PageVO vo) {
@@ -30,13 +43,14 @@ public class RankMovieDAO {
 		return list;
 	}
 	
+	
 	// movie 전체 수
     public int count() {
 		return my.selectOne("RankMovieDAO.count");
 	}
-    
 	/* 페이징 끝 */
 	
+    
 	// 전체 목록 가져오기
 	public List<RankMovieVO> recoList() {
 		System.out.println("list DAO실행");

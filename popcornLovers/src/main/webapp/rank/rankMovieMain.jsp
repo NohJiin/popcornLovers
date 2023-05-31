@@ -117,5 +117,6 @@ button {
 		<!-- 추천 항목이 들어갈 곳 -->
 	</div>
 </div>
+<a href="../rankMovie/movieIdTest"><button id="test" style="background: lime;">movieId Test</button></a>
 </body>
 </html>
