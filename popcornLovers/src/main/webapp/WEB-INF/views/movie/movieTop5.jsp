@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>영화 상세 정보</title>
 <style type="text/css">
 table {
     /* margin-left:auto;  */
@@ -14,24 +14,43 @@ table {
 }
 
 td {
- 	padding-left: 26px; /* 좌측 여백을 29px로 설정 */
-    padding-right: 26px; /* 우측 여백을 29px로 설정 */  
+ 	padding-left: 37px; /* 좌측 여백을 37px로 설정 */
+    padding-right: 37px; /* 우측 여백을 37px로 설정 */  
 }
 
 tr {
 	height: 5px;
 	font-size : 13px;
 }
+
 </style>
 </head>
 <body>
 <table>
 	<tr>
-		<td><img alt="영화 Top1 이미지" src="../resources/n_img/${top1.movieImg}" width="185" height="220"></td>
-		<td><img alt="영화 Top2 이미지" src="../resources/n_img/${top2.movieImg}" width="185" height="220"></td>
-		<td><img alt="영화 Top3 이미지" src="../resources/n_img/${top3.movieImg}" width="185" height="220"></td>
-		<td><img alt="영화 Top3 이미지" src="../resources/n_img/${top4.movieImg}" width="185" height="220"></td>
-		<td><img alt="영화 Top3 이미지" src="../resources/n_img/${top5.movieImg}" width="185" height="220"></td>
+		
+		<td>
+		 <a href="movieDetails2?movieId=${top1.movieId}">
+		<img alt="영화 Top1 이미지" src="../resources/n_img/${top1.movieImg}" width="185" height="220">
+		</td>
+		<td>
+		 <a href="movieDetails2?movieId=${top2.movieId}">
+		<img alt="영화 Top2 이미지" src="../resources/n_img/${top2.movieImg}" width="185" height="220">
+		</td>
+		<td>
+		 <a href="movieDetails2?movieId=${top3.movieId}">
+		<img alt="영화 Top3 이미지" src="../resources/n_img/${top3.movieImg}" width="185" height="220">
+		</td>
+		<td>
+		 <a href="movieDetails2?movieId=${top4.movieId}">
+		<img alt="영화 Top4 이미지" src="../resources/n_img/${top4.movieImg}" width="185" height="220">
+		</td>
+		<td>
+		 <a href="movieDetails2?movieId=${top5.movieId}">
+		<img alt="영화 Top5 이미지" src="../resources/n_img/${top5.movieImg}" width="185" height="220">
+		</td>
+		<td>
+		
 	</tr>
 	<tr>
 		<td>${top1.movieTitle}</td>

@@ -3,10 +3,11 @@ package com.java4.popcorn.movieInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.java4.popcorn.rankMovie.RankMovieDAO;
-import com.java4.popcorn.rankMovie.RankMovieVO;
 
 @Controller
 
@@ -23,16 +24,25 @@ public class MovieInfoController {
 	
 	@RequestMapping("movie/movieTop5")
 	public void actorSelectOne(Model model) {
-		RankMovieVO top1 = dao.selectTop(1);
-		RankMovieVO top2 = dao.selectTop(2);
-		RankMovieVO top3 = dao.selectTop(3);
-		RankMovieVO top4 = dao.selectTop(4);
-		RankMovieVO top5 = dao.selectTop(5);
+		MovieInfoVO top1 = dao.selectTop(1);
+		MovieInfoVO top2 = dao.selectTop(2);
+		MovieInfoVO top3 = dao.selectTop(3);
+		MovieInfoVO top4 = dao.selectTop(4);
+		MovieInfoVO top5 = dao.selectTop(5);
 		model.addAttribute("top1", top1);
 		model.addAttribute("top2", top2);
 		model.addAttribute("top3", top3);
 		model.addAttribute("top4", top4);
 		model.addAttribute("top5", top5);
+	}
+	
+	@RequestMapping("movie/movieDetails2")
+	public String movieDetails(String movieId, Model model) {
+		// 영화 정보를 조회하여 MovieInfoVO에 담기
+		MovieInfoVO  bag = dao.selectOne(movieId);
+		// 모델에 영화 정보 추가
+		model.addAttribute("bag", bag);
+		return "movie/movieDetails2";
 	}
 }
 

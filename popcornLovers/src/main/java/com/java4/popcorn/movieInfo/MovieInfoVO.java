@@ -4,16 +4,20 @@ import lombok.Data;
 
 @Data
 public class MovieInfoVO {
-    private int movieid;
-    private String movieTitle;
-    private String movieGenre;
-    private Integer movieGrade;
-    private String movieOpen;
-    private String movieLast;
-    private String movieStory;
-    private Integer movieTime;
-    private String movieimg;
-    private String movieActor;
-    private String movieDirector;
-    private Integer movieLike;
+	private int rank_no;	
+	private double moviePopularity;	
+	private String movieId;	
+	private String movieTitle;	
+	private String movieGenre;	
+	private String movieGrade;	
+	private String movieOpen;	
+	private String movieLast;	
+	private String movieStory;	
+	private int movieTime;	
+	private String movieImg;	
+	private String movieActor;	
+	private String movieDirector;	
+	private int movieLike;	
+	private int movieHits;	
+	private int movieReviews;	
 }

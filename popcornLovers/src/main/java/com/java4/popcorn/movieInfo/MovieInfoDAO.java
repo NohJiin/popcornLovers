@@ -14,9 +14,14 @@ public class MovieInfoDAO {
 	@Autowired
 	SqlSessionTemplate my;
 	
-	// �ϳ��� �˻� : rank_no = #{rank_no} �� �׸� ã�� ������
-	public RankMovieVO selectTop(int rank_no) {
-		RankMovieVO bag = my.selectOne("RankMovieDAO.selectTop", rank_no);
+	public MovieInfoVO selectTop(int rank_no) {
+		MovieInfoVO bag = my.selectOne("MovieInfoDAO.selectTop", rank_no);
 		return bag;
 	}
+
+	 public MovieInfoVO selectOne(String movieId) {
+	     MovieInfoVO bag=  my.selectOne("MovieInfoDAO.selectOne", movieId);
+	     return bag;
+	       
+	    }
 }

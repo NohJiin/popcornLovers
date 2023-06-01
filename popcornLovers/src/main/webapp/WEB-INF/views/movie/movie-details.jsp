@@ -13,7 +13,7 @@ $(function() {
 
     $.getJSON(movieInfoUrl, function(res){
         let movie = res.movieInfoResult.movieInfo;
-        let title = movie.title
+        let movieNm = movie.movieNm
         let actors = movie.actors;
         let director = movie.directors[0].peopleNm;
         let openDt = movie.openDt;
@@ -34,6 +34,7 @@ $(function() {
         let openDtText = openDt ? "개봉일: " + openDt : "개봉일 정보 없음";
 
         let movieDetail = "<hr>" +
+        "<h2>" + movieNm + "</h2>" + 
             openDtText + "<br>" +
             directorText + "<br>" +
             "주연: " + actorsText + "<hr>";

@@ -20,7 +20,7 @@
 
 .boxoffice {
 	background-color: #FFF39C;
-	flex: 0 0 8.3%;
+	flex: 0 0 8.5%;
 	padding: 15px;
 	margin: 5px;
 	border-radius: 30px;
@@ -33,10 +33,8 @@
 .recommend {
 	background-color: #FFF39C;
 	width: 300px;
-	padding: 20px 20px;
+	padding: 70px 70px;
 	margin: 20px 110px;
-	border-radius: 30px;
-	border-style: none;
 	display: inline-block;
 	width: 230px;
 	align-items: center;
@@ -77,6 +75,7 @@ $(function() {
             let posterRequest = $.getJSON(postersUrl);
             posterRequests.push(posterRequest);
         }
+        
 
         // 모든 AJAX 요청이 완료된 후에 데이터 추가
         $.when.apply($, posterRequests).done(function() {
@@ -91,7 +90,7 @@ $(function() {
                 let poster = posters[0];
 
                 let movieDiv = $("<div class='boxoffice' id=" + movie.movieCd + "></div>");
-                movieDiv.append("<img src='" + poster + "'><br>" +  movie.movieNm + "<br>" + "누적 관객: "
+                movieDiv.append(movie.rank + "<br>" + "<img src='" + poster + "'><br>" + "<br>" + movie.movieNm + "<br>" + "누적 관객: "
                     + movie.audiAcc + "명 " + "<br>" + "개봉연도: " + movie.openDt + "<br>" + "<br>");
 
                 movieDivs.push(movieDiv);
@@ -144,6 +143,7 @@ $(function() {
         window.open(contextPath + "/movie/movieDetails?movieCd=" + movieCd, "_self");
     });
 
+    //인기영화 표시
     $.ajax({
         url: "movieTop5",
         success: function(x) {
