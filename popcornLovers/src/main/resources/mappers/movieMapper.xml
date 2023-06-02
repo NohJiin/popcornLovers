@@ -15,4 +15,8 @@
 		where r.movieId = m.movieId) top
 		where rank_no = #{rank_no}
     </select>
+    
+    <select id="selectReview">
+    	select memberId, reviewContent from movie_review where movieId = #{movieId}  
+    </select>
 </mapper>

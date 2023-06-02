@@ -44,5 +44,10 @@ public class MovieInfoController {
 		model.addAttribute("bag", bag);
 		return "movie/movieDetails2";
 	}
+	
+	@RequestMapping("movie/movieReview")
+	public void movieReview(Model model) {
+		
+	}
 }
 

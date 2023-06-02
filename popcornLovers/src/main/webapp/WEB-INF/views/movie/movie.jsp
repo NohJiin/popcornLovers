@@ -72,6 +72,7 @@ $(function() {
             let movieNm = encodeURIComponent(movieList[i].movieNm);
             let openDt = movieList[i].openDt.replaceAll("-", "");
             let postersUrl = 'https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&detail=Y&title=' + movieNm + '&releaseDts=' + openDt + '&ServiceKey=KV1CZ288PZ05JB1CRNFW';
+            console.log("Poster URL for movie", movieList[i].movieNm + ":", postersUrl);
             let posterRequest = $.getJSON(postersUrl);
             posterRequests.push(posterRequest);
         }
@@ -79,22 +80,23 @@ $(function() {
 
         // 모든 AJAX 요청이 완료된 후에 데이터 추가
         $.when.apply($, posterRequests).done(function() {
-            let slider = $(".slider");
-            let movieDivs = []; // 영화 정보를 담을 배열
+  		let slider = $(".slider");
+  		let movieDivs = []; // 영화 정보를 담을 배열
 
-            for (let i = 0; i < arguments.length; i++) {
-                let posterData = arguments[i][0].Data[0].Result[0];
-                let posters = posterData.posters;
-                let movie = movieList[i];
+  		for (let i = 0; i < arguments.length; i++) {
+   		let posterData = arguments[i][0].Data[0].Result[0];
+    	let posters = posterData.posters;
+    	let movie = movieList[i];
 
-                let poster = posters[0];
+    	let posterUrls = posters.split("|"); // 포스터 URL들을 구분자(|)를 기준으로 나눕니다.
+    	let posterUrl = posterUrls[0]; // 첫 번째 포스터 URL을 선택합니다.
 
-                let movieDiv = $("<div class='boxoffice' id=" + movie.movieCd + "></div>");
-                movieDiv.append(movie.rank + "<br>" + "<img src='" + poster + "'><br>" + "<br>" + movie.movieNm + "<br>" + "누적 관객: "
-                    + movie.audiAcc + "명 " + "<br>" + "개봉연도: " + movie.openDt + "<br>" + "<br>");
+    	let movieDiv = $("<div class='boxoffice' id=" + movie.movieCd + "></div>");
+    	movieDiv.append(movie.rank + "<br>" + "<img src='" + posterUrl + "'><br>" + "<br>" + movie.movieNm + "<br>" + "누적 관객: "
+        + movie.audiAcc + "명 " + "<br>" + "개봉연도: " + movie.openDt + "<br>" + "<br>");
 
-                movieDivs.push(movieDiv);
-            }
+    	movieDivs.push(movieDiv);
+  		}
 
             let sliderContainer = $(".slider-container");
             let slideCount = Math.ceil(movieDivs.length / 5); //슬라이드 개수 (5개씩 나누어 계산)
@@ -136,11 +138,13 @@ $(function() {
         });
     });
 
-    // 영화 제목 클릭시 다른 페이지로 이동하고 movieCd 전달
     $(document).on("click", ".boxoffice", function(){
         let movieCd = $(this).attr("id");
+        let movieNm = $(this).data("name");
+        let movieOpenDt = $(this).data("openDt");
         let contextPath = "${pageContext.request.contextPath}";
-        window.open(contextPath + "/movie/movieDetails?movieCd=" + movieCd, "_self");
+        let url = contextPath + "/movie/movieDetails?movieCd=" + movieCd + "&movieNm=" + encodeURIComponent(movieNm) + "&movieOpenDt=" + movieOpenDt;
+        window.open(url, "_self");
     });
 
     //인기영화 표시
