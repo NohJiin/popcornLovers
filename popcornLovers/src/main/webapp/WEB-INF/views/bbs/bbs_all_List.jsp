@@ -11,7 +11,7 @@
 					<c:forEach items="${list}" var="one">
 						<div class="bottom">
 							<div class="num">${one.bbs_row_no}</div>
-							<div class="title"><a href="detail_post?bbs_no=${one.bbs_no}&bbs_cate_num=${one.bbs_cate_num}">${one.bbs_title}</a></div>
+							<div class="title"><a href="detail_post?bbs_no=${one.bbs_no}&bbs_cate_num=${bbsCateNums}">${one.bbs_title}</a></div>
 							<div class="writer">${one.member_id}</div>
 							<div class="date">${one.formattedBbs_date}</div>
 							<div class="count">${one.bbs_hit}</div>

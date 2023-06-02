@@ -67,7 +67,7 @@
                 <div class="reply_content">
                        <input type="text" class="reply_input_box" id="reply_${list[0].b_comment_id}" placeholder="대댓글을 남겨주세요.">
                        <span class="input_group_btn">
-                            <button class="reply_insert_btn" value="${list[0].b_comment_id}">${list[0].b_comment_id}등록</button>
+                            <button class="reply_insert_btn" value="${list[0].b_comment_id}">등록</button>
                        </span>
                 </div>
             </div>

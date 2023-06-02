@@ -112,11 +112,14 @@
 		#{bbs_cate_num} and bbs_delete is null
 	</select>
 
-	<select id="detail_post" resultMap="viewArticle" parameterType="int">
+	<select id="detail_post" resultMap="viewArticle" parameterType="map">
 		SELECT *
 		FROM (
    		SELECT ROW_NUMBER() OVER (ORDER BY bbs.bbs_no) AS bbs_row_no, popcorn.bbs.*
-    	FROM popcorn.bbs WHERE bbs_delete is null
+    	FROM popcorn.bbs WHERE bbs_delete is null 
+    	<if test="bbs_cate_num != null and bbs_cate_num != 0">
+          AND bbs_cate_num = #{bbs_cate_num}
+      	</if> 
 		) AS bbs_row
 		where bbs_no = #{bbs_no}
 	</select>
@@ -202,18 +205,19 @@
 	<select id="search" resultType="bbsVO" parameterType="bbspageVO">
 		SELECT *
 		FROM (
-		select ROW_NUMBER() over(order by bbs_no desc) as bbs_row_no,
+		select ROW_NUMBER() over(order by bbs_no) as bbs_row_no,
 		bbs. *
-		from popcorn.bbs WHERE bbs_title like CONCAT('%', #{searchContent}, '%') or bbs_content like CONCAT('%', #{searchContent}, '%')) bbs
+		from popcorn.bbs WHERE (bbs_title like CONCAT('%', #{searchContent}, '%') or bbs_content like CONCAT('%', #{searchContent}, '%')) and bbs_delete is null ) bbs
 		WHERE bbs.bbs_row_no between
 		${start} and
 		${end}
+		order by bbs_row_no desc;
 	</select>
 	
 	<select id="searchAll" resultType="bbsVO" parameterType="bbspageVO">
 		SELECT *
 		FROM popcorn.bbs
-		WHERE bbs_title like CONCAT('%', #{searchContent}, '%') or bbs_content like CONCAT('%', #{searchContent}, '%')
+		WHERE (bbs_title like CONCAT('%', #{searchContent}, '%') or bbs_content like CONCAT('%', #{searchContent}, '%')) and bbs_delete is null
 	</select>
 	
 	<insert id="writeArticle" parameterType="bbsVO">

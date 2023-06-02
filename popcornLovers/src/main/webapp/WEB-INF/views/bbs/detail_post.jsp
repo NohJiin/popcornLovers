@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="bbsCateNum" value="${bbsCateNum}" />
+<c:set var="cate0" value="bbs_All"/>
+<c:set var="cate1" value="notice"/>
+<c:set var="cate2" value="free"/>
+<c:set var="cate3" value="movietalk"/>
+<c:set var="cate4" value="find"/>
+<c:set var="cate5" value="bungae"/>
 <html>
 <head>
 <script type="text/javascript" src="../resources/js/jquery-3.4.1.js"></script>
@@ -216,20 +223,23 @@ td {
 
 	<div class="board_wrap">
 		<div class="board_title">
+			<c:if test="${bbsCateNum == 0}">
+				<strong>전체게시판</strong>
+			</c:if>
 			<strong>${info2[0].bbs_cate_name}</strong>
-			<p>${info2[0].bbs_cate_info}</p>
+			<%-- <p>${info2[0].bbs_cate_info}</p> --%>
 		</div>
 		<div class="board_view_wrap">
 			<div class="board_view">
 				<div class="title">${list2[0].bbs_title}</div>
 				<div class="info">
-					<dl>
+					<%-- <dl>
 						<dt>번호</dt>
 						<dd>${list2[0].bbs_row_no}</dd>
-					</dl>
+					</dl> --%>
 					<dl>
 						<dt>글쓴이</dt>
-						<dd>${list2[0].member_id}</dd>
+						<dd><a href="../mypage/mypageOne?member_id=${list2[0].member_id}">${list2[0].member_id}</a></dd>
 					</dl>
 					<dl>
 						<dt>작성일</dt>
@@ -334,9 +344,30 @@ td {
 			</div>
 
 			<div class="bt_wrap">
-				<a href="post.jsp"><button class="bbs_list_btn">목록</button></a>
+			<div class="bt_wrap">
+				<c:choose>
+					  <c:when test="${bbsCateNum == 1}">
+					    <c:set var="category" value="${cate1}" />
+					  </c:when>
+					  <c:when test="${bbsCateNum == 2}">
+					    <c:set var="category" value="${cate2}" />
+					  </c:when>
+					  <c:when test="${bbsCateNum == 3}">
+					    <c:set var="category" value="${cate3}" />
+					  </c:when>
+					  <c:when test="${bbsCateNum == 4}">
+					    <c:set var="category" value="${cate4}" />
+					  </c:when>
+					  <c:when test="${bbsCateNum == 5}">
+					    <c:set var="category" value="${cate5}" />
+					  </c:when>
+					  <c:otherwise>
+					    <c:set var="category" value="post" />
+					  </c:otherwise>
+				</c:choose>
+				<a href="${pageContext.request.contextPath}/bbs/${category}?bbs_cate_num=${bbsCateNum}&page=1"><button class="bbs_list_btn">목록</button></a>
 				<c:if test="${(Scope=member_id) == list2[0].member_id && (Scope=member_id) ne null}">
-					<a href="modify/${list2[0].bbs_no}"><button class="bbs_update_btn">수정</button></a>
+					<a href="modify/${list2[0].bbs_no}?category=${category}&bbs_cate_num=${bbsCateNum}"><button class="bbs_update_btn">수정</button></a>
 					<button class="bbs_delete_btn">삭제</button>				
 				</c:if>
 			</div>

@@ -13,7 +13,9 @@ $(function() {
 	$.ajax({
 		url : "bbs_All", //views/bbsList2.jsp가 결과!
 		data : {
-			page : 1
+			page : 1,
+			searchContent : $(".search-txt").val(),
+			bbsCateNums : 0
 		},
 		success : function(result) { //결과가 담겨진 table부분코드
 			$('#paging_result').html(result)

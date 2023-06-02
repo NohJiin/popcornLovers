@@ -23,14 +23,14 @@ public class BbsVO {
 		return bbs_row_no;
 	}
 	public void setBbs_row_no(int bbs_row_no) {
-		System.out.println("=====bbs_row");
+		//System.out.println("=====bbs_row");
 		this.bbs_row_no = bbs_row_no;
 	}
 	public int getBbs_no() {
 		return bbs_no;
 	}
 	public void setBbs_no(int bbs_no) {
-		System.out.println("=====bbs_no");
+		//System.out.println("=====bbs_no");
 		this.bbs_no = bbs_no;
 	}
 	public String getMember_id() {
@@ -59,7 +59,8 @@ public class BbsVO {
 	}
 	
 	public String getBbs_date() {
-		String formattedDate = bbs_date.toString().replace("T", " ");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		String formattedDate = bbs_date.format(formatter).toString().replace("T", " ");
 		return formattedDate;
 	}
 	public void setBbs_date(LocalDateTime bbs_date) {

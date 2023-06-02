@@ -33,8 +33,8 @@
 }
 
 .search-btn {
-	width: 25px;
-	height: 25px;
+	width: 28px !important;
+	height: 25px !important;
 }
   
 </style>
@@ -53,6 +53,7 @@
 	        <div class="mb-3">
 				<select id="category" name="bbs_cate_num" style="width: 40%; height: 30px;">
 					  <option value="0" disabled selected hidden>게시판을 선택해 주세요.</option>
+					  <option value="1">명당자리</option>
 					  <option value="2">자유게시판</option>
 					  <option value="3">영화수다</option>
 					  <option value="4">찾아주세요</option>
@@ -136,7 +137,7 @@
       document.querySelector("#btn-list").addEventListener("click", function () {
     	var category;
     	if(${bbsCateNum} == 0){
-    		category ="post.jsp";
+    		category ="post";
     	}
     	else if(${bbsCateNum} == 1) {
     		category = "notice?bbs_cate_num=${bbsCateNum}&page=1";

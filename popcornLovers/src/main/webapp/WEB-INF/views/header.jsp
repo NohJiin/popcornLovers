@@ -1,6 +1,7 @@
 <%@ page import="java.util.Arrays"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,14 +29,14 @@
                         </ul>
 					</div>
 					</li><!--
-					--><li class="li_menu"><a href="${pageContext.request.contextPath}/bbs/post.jsp"><span class="main_menu">커뮤니티</span></a><!--
+					--><li class="li_menu"><a href="${pageContext.request.contextPath}/bbs/post"><span class="main_menu">커뮤니티</span></a><!--
 					--><div class="menu_sub">
 						<ul>
 							<li><a href="${pageContext.request.contextPath}/bbs/notice?bbs_cate_num=1&page=1"><span>명당자리</span></a></li><!--
 							--><li><a href="${pageContext.request.contextPath}/bbs/free?bbs_cate_num=2&page=1"><span>자유수다</span></a></li><!--
 							--><li><a href="${pageContext.request.contextPath}/bbs/movietalk?bbs_cate_num=3&page=1"><span>영화수다</span></a></li><!--
 							--><li><a href="${pageContext.request.contextPath}/bbs/find?bbs_cate_num=4&page=1"><span>찾아주세요</span></a></li><!--
-							--><li><a href="${pageContext.request.contextPath}/bbs/bungae?bbs_cate_num=5&page=1"><span>번개</span></a></li>
+							--><li><a href="${pageContext.request.contextPath}/bbs/bungae?bbs_cate_num=5&page=1"><span>번개모임</span></a></li>
 						</ul>
 						</div>
                     </li><!--
@@ -48,7 +49,7 @@
 							--></ul>
 						</div>
 					</li><!--
-					--><li class="li_menu"><a href="${pageContext.request.contextPath}/alarm/"><span class="main_menu">영화관 찾기</span></a><!--
+					--><li class="li_menu"><a href="${pageContext.request.contextPath}/alarm/"><span class="main_menu">영화관찾기</span></a><!--
 					--><div class="menu_sub">
 						<ul>
                             <li><a href="${pageContext.request.contextPath}/alarm/movie/"><span>영화 찾기</span></a></li><!--
@@ -68,10 +69,17 @@
 					</li>
 				</ul>
                 </nav>
-                <div class="search-box">
-					<form class="d-flex" role="search">
-                    <img class="search-btn" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
-                    <input type="text" class="search-txt" alt="검색" name=""placeholder="검색어를 입력하세요.">
+               <div class="search-box">
+					<form class="d-flex" action="search" role="search" method="get">
+					   <input name="page" value='1' type="hidden">
+	                   <img class="search-btn" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="검색">
+	                   
+	                   <c:if test="${empty searchContent}">
+	                   		<input type="text" class="search-txt" alt="검색" name="searchContent" placeholder="검색어를 입력하세요.">
+	                   		</c:if>
+	                   <c:if test="${!empty searchContent}">
+	                   		<input type="text" class="search-txt" alt="검색" name="searchContent" value="${searchContent}">
+	                   </c:if>
 					</form>
 				</div>
 				<div class="login">

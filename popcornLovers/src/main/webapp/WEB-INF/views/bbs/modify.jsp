@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
+<c:set var="bbsCateNum" value="${bbsCateNum}" />
+<c:set var="cate0" value="notice"/>
+<c:set var="cate1" value="notice"/>
+<c:set var="cate2" value="free"/>
+<c:set var="cate3" value="movietalk"/>
+<c:set var="cate4" value="find"/>
+<c:set var="cate5" value="bungae"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,6 +49,27 @@
         </div>
         <div class="col-lg-12 col-md-10 col-sm-12">
           <form id="form-modify" method="POST" enctype="multipart/form-data" action="">
+          	<c:choose>
+					  <c:when test="${bbsCateNum == 1}">
+					    <c:set var="category" value="${cate1}" />
+					  </c:when>
+					  <c:when test="${bbsCateNum == 2}">
+					    <c:set var="category" value="${cate2}" />
+					  </c:when>
+					  <c:when test="${bbsCateNum == 3}">
+					    <c:set var="category" value="${cate3}" />
+					  </c:when>
+					  <c:when test="${bbsCateNum == 4}">
+					    <c:set var="category" value="${cate4}" />
+					  </c:when>
+					  <c:when test="${bbsCateNum == 5}">
+					    <c:set var="category" value="${cate5}" />
+					  </c:when>
+					  <c:otherwise>
+					    <c:set var="category" value="default" />
+					  </c:otherwise>
+			</c:choose>
+			<input type="hidden" name="bbs_cate_num" value="${bbsCateNum}">
             <input type="hidden" name="pgno" value="${pgno}">
 		        <input type="hidden" name="key" value="${key}">
 		        <input type="hidden" name="word" value="${word}">
@@ -116,8 +144,23 @@
       });
       
       document.querySelector("#btn-list").addEventListener("click", function () {
+    	  var category;
+      	if(${bbsCateNum == 0}){
+      		category ="post";
+      	}
+      	else if(${bbsCateNum == 1} ) {
+      		category = "notice?bbs_cate_num=${bbsCateNum}&page=1";
+      	} else if(${bbsCateNum == 2}){
+      		category = "free?bbs_cate_num=${bbsCateNum}&page=1";
+      	} else if(${bbsCateNum == 3} ){
+      		category = "movietalk?bbs_cate_num=${bbsCateNum}&page=1";
+      	} else if(${bbsCateNum == 4}){
+      		category = "find?bbs_cate_num=${bbsCateNum}&page=1";
+      	} else if(${bbsCateNum == 5}){
+      		category = "bungae?bbs_cate_num=${bbsCateNum}&page=1";
+      	}   
       	if(confirm("취소를 하시면 작성한 글은 삭제됩니다.\n취소하시겠습니까?")) {
-      		location.href = "${root}/bbs/post.jsp";
+      		location.href = "${root}/bbs/" + category;
      	    }
         });
       

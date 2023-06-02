@@ -2,6 +2,7 @@ package com.java4.popcorn.bbs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -42,8 +43,8 @@ public class BbsDAO {
 	}
 
 	// l에 해당하는 게시물 번호를 가진 게시물의 상세 페이지를 보여줌
-	public List<BbsVO> detail_post(int bbs_row_no) {
-		return my.selectList("BbsDAO.detail_post", bbs_row_no);
+	public List<BbsVO> detail_post(HashMap<String, Integer> map) {
+		return my.selectList("BbsDAO.detail_post", map);
 	}
 
 	// 게시물 개수 세기

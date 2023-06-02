@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -65,50 +66,72 @@ public class BbsController {
 	}
 
 	// (전체-커뮤니티) 페이지 버튼 클릭시 그 페이지 해당 게시물 보여줌.
-	@RequestMapping("bbs/bbs_all_List")
-	public void list2(BbspageVO vo, Model model) {
-		int page = vo.getPage();
-		int count = dao.count();
-		int end = count - ((page - 1) * 10);
-		int start = end - 9;
-		if (start >= 0) {
-			start = end - 9;
-		} else {
-			start = 1;
+		@RequestMapping("bbs/bbs_all_List")
+		public void list2(BbspageVO vo,int bbsCateNum, Model model) {
+			int page = vo.getPage();
+			if(vo.getSearchContent() == null) {
+				vo.setSearchContent("");
+			}
+			int count = dao.searchAllBBS(vo).size();
+			List<BbsVO> list = null;
+			
+			int pages = 0;
+			if (count % 10 == 0) {
+				pages = count / 10; // 전체 페이지 개수 구하기
+			} else {
+				pages = count / 10 + 1; // 전체 페이지 개수 구하기
+			}
+			int end = count - ((page - 1) * 10);
+			int start = end - 9;
+			if (start >= 0) {
+				start = end - 9;
+			} else {
+				start = 1;
+			}
+			vo.setStart(start);
+			vo.setEnd(end);
+			list = dao.searchBBS(vo);
+			System.out.println("all count>> " + bbsCateNum);
+			model.addAttribute("searchContent", vo.getSearchContent());
+			model.addAttribute("bbsCateNums", bbsCateNum);
+			model.addAttribute("list", list);
+			model.addAttribute("count", count);
+			model.addAttribute("pages", pages);
 		}
-		vo.setStart(start);
-		vo.setEnd(end);
-		List<BbsVO> list = dao.all_list(vo);
-		System.out.println(list.size());
-		model.addAttribute("list", list);
-	}
 
-	// (전체-커뮤니티) 클릭시 1페이지에 해당하는 전체 게시물 보여줌.
-	@RequestMapping("bbs/bbs_All")
-	public void all2(BbspageVO vo, Model model) {
-		int page = vo.getPage();
-		int count = dao.count();
-		int pages = 0;
-		if (count % 10 == 0) {
-			pages = count / 10; // 전체 페이지 개수 구하기
-		} else {
-			pages = count / 10 + 1; // 전체 페이지 개수 구하기
+		// (전체-커뮤니티) 클릭시 1페이지에 해당하는 전체 게시물 보여줌.
+		@RequestMapping("bbs/bbs_All")
+		public void all2(BbspageVO vo, int bbsCateNums, Model model) {
+			int page = vo.getPage();
+			if(vo.getSearchContent() == null) {
+				vo.setSearchContent("");
+			}
+			int count = dao.searchAllBBS(vo).size();
+			List<BbsVO> list = null;
+			
+			int pages = 0;
+			if (count % 10 == 0) {
+				pages = count / 10; // 전체 페이지 개수 구하기
+			} else {
+				pages = count / 10 + 1; // 전체 페이지 개수 구하기
+			}
+			int end = count - ((page - 1) * 10);
+			int start = end - 9;
+			if (start >= 0) {
+				start = end - 9;
+			} else {
+				start = 1;
+			}
+			vo.setStart(start);
+			vo.setEnd(end);
+			list = dao.searchBBS(vo);
+			System.out.println("detail all count>> " + bbsCateNums);
+			model.addAttribute("bbsCateNums", bbsCateNums);
+			model.addAttribute("searchContent", vo.getSearchContent());
+			model.addAttribute("list", list);
+			model.addAttribute("count", count);
+			model.addAttribute("pages", pages);
 		}
-		int end = count - ((page - 1) * 10);
-		int start = end - 9;
-		if (start >= 0) {
-			start = end - 9;
-		} else {
-			start = 1;
-		}
-		vo.setStart(start);
-		vo.setEnd(end);
-		List<BbsVO> list = dao.all(vo);
-		System.out.println("all count>> " + count);
-		model.addAttribute("list", list);
-		model.addAttribute("count", count);
-		model.addAttribute("pages", pages);
-	}
 
 	// 카테고리에 타이틀과 카테고리 설명 불러옴
 	@RequestMapping("bbs/bbs_info_category")
@@ -136,7 +159,7 @@ public class BbsController {
 		model.addAttribute("list2", list);
 	}
 
-	// 공지사항 메뉴 클릭했을 때 1페이지에 해당하는 게시물 리스트 보여줌
+	// 명당자리 메뉴 클릭했을 때 1페이지에 해당하는 게시물 리스트 보여줌
 	@RequestMapping("bbs/notice")
 	public void notice(CategoryVO vo, Model model) {
 		int page = vo.getPage();
@@ -284,15 +307,22 @@ public class BbsController {
 	// (전체-커뮤니티 메뉴 눌러서 게시물 클릭했을 때)게시물 상세 페이지 보여줌
 	// 로그인 되어 있는 아이디가 좋아요를 눌렀으면 채워져있는 하트, 안 눌렀으면 빈 하트를 보여줌
 	@GetMapping("bbs/detail_post")
-	public String detail_post(BbsVO vo, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String detail_post(BbsVO vo, @RequestParam(name = "bbs_no") int bbs_no,
+			@RequestParam(name = "bbs_cate_num") int bbs_cate_num,
+			HttpServletRequest request, HttpServletResponse response, Model model) {
 		HttpSession session = request.getSession();
+		vo.setBbs_no(bbs_no);
 		String member_id = (String) session.getAttribute("member_id");
 		// 접속 유저에 해당하는 프로필 가져옴
 		List<MemberVO> list3 = dao.getMemberProfile(member_id);
 		vo.setMember_id(member_id);
 		System.out.println(member_id);
-		List<BbsVO> list = dao.detail_post(vo.getBbs_no());
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("bbs_no", vo.getBbs_no());
+		map.put("bbs_cate_num", bbs_cate_num);
+		List<BbsVO> list = dao.detail_post(map);
 		int yesno = dao.member_like_yesno(vo);
+		model.addAttribute("bbsCateNum", vo.getBbs_cate_num());
 		model.addAttribute("list2", list);
 		model.addAttribute("list3", list3);
 		int count = dao3.comment_count(vo.getBbs_no());
@@ -434,33 +464,39 @@ public class BbsController {
 	}
 
 	// 검색어에 일치하는 제목이나 내용을 가진 게시글 목록을 보여준다.
-	@GetMapping("bbs/search")
-	public String search(BbspageVO vo, Model model, @RequestParam("searchContent") String searchContent) {
-		int page = vo.getPage();
-		System.out.println("search 요청됨.");
-		vo.setStartEnd(vo.getPage());
-		List<BbsVO> list = dao.searchBBS(vo);
-		int count = dao.searchAllBBS(vo).size();
-		int pages = 0;
-		if (count % 10 == 0) {
-			pages = count / 10; // 전체 페이지 개수 구하기
-		} else {
-			pages = count / 10 + 1; // 전체 페이지 개수 구하기
-		}
-		int end = count - ((page - 1) * 10);
-		int start = end - 9;
-		if (start >= 0) {
-			start = end - 9;
-		} else {
-			start = 1;
-		}
+		@GetMapping("bbs/search")
+		public String search(BbspageVO vo, Model model, @RequestParam("searchContent") String searchContent) {
+			int page = vo.getPage();
+			System.out.println("search 요청됨.");
+			vo.setStartEnd(vo.getPage());
+			List<BbsVO> list = dao.searchBBS(vo);
+			int count = dao.searchAllBBS(vo).size();
+			int pages = 0;
+			if (count % 10 == 0) {
+				pages = count / 10; // 전체 페이지 개수 구하기
+			} else {
+				pages = count / 10 + 1; // 전체 페이지 개수 구하기
+			}
+			int end = count - ((page - 1) * 10);
+			int start = end - 9;
+			if (start >= 0) {
+				start = end - 9;
+			} else {
+				start = 1;
+			}
+			model.addAttribute("searchContent", searchContent);
+			model.addAttribute("list", list);
+			model.addAttribute("count", count);
+			model.addAttribute("pages", pages);
 
-		model.addAttribute("list", list);
-		model.addAttribute("count", list.size());
-		model.addAttribute("pages", pages);
-
-		return "bbs/bbs_All";
-	}
+			return "bbs/post";
+		}
+	
+	
+	@GetMapping("bbs/post")
+    public String movePost() throws Exception {
+	return "bbs/post";
+    }	
 	
 	//카테고리별 글작성
 	@GetMapping("bbs/write/{bbs_cate_num}")
@@ -515,7 +551,7 @@ public class BbsController {
 			redirectAttributes.addAttribute("page", "1");
 			return "redirect:./" + cur_cate_name;
 		}
-		return "redirect:./post.jsp";
+		return "redirect:./post";
 	}
 	
 	//글작성 파일 저장
@@ -538,8 +574,12 @@ public class BbsController {
 	@GetMapping("bbs/modify/{bbsNo}")
     public String getModify(@PathVariable(name = "bbsNo") String bbsNo, @RequestParam Map<String, String> map, Model model) throws Exception {
 		logger.debug("modify articleNo : {}", bbsNo);
-		List<BbsVO> list = dao.detail_post(Integer.parseInt(bbsNo));
+		HashMap<String, Integer> m = new HashMap<>();
+		m.put("bbs_no", Integer.parseInt(bbsNo));
+		m.put("bbs_cate_num", Integer.parseInt(map.get("bbs_cate_num")));
+		List<BbsVO> list = dao.detail_post(m);
 		model.addAttribute("bbs", list.get(0));
+		model.addAttribute("bbsCateNum", map.get("bbs_cate_num"));
 		model.addAttribute("pgno", map.get("pgno"));
 		model.addAttribute("key", map.get("key"));
 		model.addAttribute("word", map.get("word"));
@@ -584,9 +624,14 @@ public class BbsController {
 		List<MemberVO> list3 = dao.getMemberProfile(member_id);
 		bbsVO.setMember_id(member_id);
 		
-		List<BbsVO> list = dao.detail_post(bbsVO.getBbs_no());
+		HashMap<String, Integer> m = new HashMap<>();
+		m.put("bbs_no", bbsVO.getBbs_no());
+		m.put("bbs_cate_num", bbsVO.getBbs_cate_num());
+		List<BbsVO> list = dao.detail_post(m);
 		int yesno = dao.member_like_yesno(bbsVO);
 		System.out.println(yesno);
+		System.out.println("$$$$bbsCateNum"+ bbsVO.getBbs_cate_num());
+		model.addAttribute("bbsCateNum", bbsVO.getBbs_cate_num());
 		model.addAttribute("list2", list);
 		model.addAttribute("list3", list3);
 		int count = dao3.comment_count(bbsVO.getBbs_no());
