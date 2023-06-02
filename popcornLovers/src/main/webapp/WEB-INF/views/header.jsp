@@ -89,7 +89,7 @@
 						--><li><a href="${pageContext.request.contextPath}/member/join.jsp"><span>회원가입</span></a></li>
 						<%} else { %>
 						<li><a href="${pageContext.request.contextPath}/mypage/mypage?page=1"><span>${member_knickname}님</span></a></li><!--
-						--><li><a href="${pageContext.request.contextPath}/member/logout.jsp"><span>로그아웃</span></a></li>
+						--><li><a href="${pageContext.request.contextPath}/member/logout"><span>로그아웃</span></a></li>
 						 <%} %>
 					</ul>
 				</div>
