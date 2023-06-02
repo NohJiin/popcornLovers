@@ -92,8 +92,49 @@ $(function(){
 </head>
 <body>
 <%@ include file="/WEB-INF/views/header.jsp" %>
-<h3>회원가입 화면</h3>
-<form action="join" method="get">
+
+<div class="join-page">
+  <div class="form">
+    <form class="login-form" action="join" method="get">
+    <h2 class="join_maintxt">회원가입</h2>
+    <p class="login_txt_id">아이디</p>  <div id="id_result" >
+</div>
+      <input id="id" type="text" placeholder="username"  name= "member_id"  maxlength="20"/>
+    
+
+     <p class="login_txt"> 패스워드</p>
+      <input id="pw" type="password" placeholder="password" name="member_pw" maxlength="20"/>
+      
+      <p class="login_txt"> 이름</p>
+      <input id="name"  placeholder="name" name="member_name" maxlength="10"/>
+      
+          <p class="login_txt"> 닉네임</p>
+      <input id="knickname"  placeholder="knickname" name="member_knickname" maxlength="10"/>
+      
+       <p class="login_txt_id"> 성별</p>
+       <div class="age_input_con">
+       남<input class="age_input" type="radio" name = "member_gender" value ="male" checked>여 <input class="age_input" type="radio" name = "member_gender" value ="female" >
+       </div>
+
+      
+      
+                <p class="login_txt"> 나이</p>
+      <input id="age"  placeholder="age" name="member_age"/>
+      
+      
+                    <p class="login_txt"> 전화번호</p>
+      <input id="tel"  placeholder="tel" name="member_tel" maxlength="20"/>
+      
+        <p class="login_txt"> 이메일</p>
+      <input id="email"  placeholder="example@gmail.com" name="member_email" type="email"  maxlength="50"/>
+      
+      <button id="login">회원가입</button>
+    </form>
+  </div>
+</div>
+
+
+<!-- <form action="join" method="get">
 아이디: <input name = "member_id" id ="id"  maxlength="20">
 <div id="id_result">
 </div>
@@ -109,9 +150,7 @@ $(function(){
 
 <br>
 <button type ="submit" id="mem_join" >회원가입</button>
-</form>
-
-
+</form> -->
 
 </body>
 </html>

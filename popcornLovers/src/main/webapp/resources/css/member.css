@@ -1,10 +1,31 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+
+.join_maintxt{
+	color:#ea414d;
+	margin-bottom:50px;
+}
+
+#id_result{
+	margin: 10px 0;
+	font-size:13px;
+	display:inline;
+	float:left;
+}
+
 .login-page {
   width: 450px;
   padding: 25% 0 0;
   margin: auto;
 }
+
+.join-page {
+  width: 650px;
+  padding: 7% 0 0;
+  margin: auto;
+}
+
+
 .form {
   position: relative;
   z-index: 1;
@@ -16,6 +37,21 @@
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15), 0 5px 5px 0 rgba(0, 0, 0, 0.09);
 }
 
+.join-page  .form{
+  max-width: 650px;
+}
+
+.login_txt_id{
+	text-align: left;
+	display:inline;
+	float:left;
+	text-align: left;
+	font-size:13px;
+	font-weight:1000;
+	margin:10px 10px 10px 0;
+	color:#999;
+}
+
 .login_txt{
 	text-align: left;
 	font-size:13px;
@@ -23,6 +59,8 @@
 	margin:10px 0;
 	color:#999;
 }
+
+
 .form input {
   font-family: "Roboto", sans-serif;
   outline: 0;
@@ -34,6 +72,11 @@
   box-sizing: border-box;
   font-size: 14px;
 }
+
+.form input.age_input{width:20px; margin:10px 0;}
+
+.age_input_con{text-align:left; font-size:14px; font-weight:1000; margin:0 0 22px;}
+
 .form button {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;

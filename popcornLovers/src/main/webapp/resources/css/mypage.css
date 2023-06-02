@@ -1,3 +1,48 @@
+.slider-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.slider {
+	width:200px;
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  flex: 0 0 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.movie-info {
+  text-align: center;
+}
+
+.prev-button, .next-button {
+  cursor: pointer;
+}
+
+
+
+.movie_jjimbox{
+	width:200px; 
+	height: 250px;
+	border-radius:9px;
+	display:inline-block;
+	position:relative;
+	margin: 0 5px;
+}
+
+.movie_jjim{
+	text-align:center;
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%, -50%);
+}
+
+.jjim_txt{font-size:14px; margin:6px 0 0 0;}
 
 /* 버튼 */
 .reviewpages {

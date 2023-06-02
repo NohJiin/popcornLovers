@@ -68,6 +68,70 @@ $(function(){
 		}) //ajax
 	})//reviewpages
 	
+	
+	$(function() {
+		  var slideWrapper = $('.slide-wrapper');
+		  var slides = $('.movie_jjimbox');
+		  var slideCount = slides.length;
+		  var currentIndex = 0;
+		  var slideWidth = slides.outerWidth(true);
+		  var slidesPerPage = 4;
+		  var totalPages = Math.ceil(slideCount / slidesPerPage);
+
+		  // 슬라이드 컨테이너의 너비 설정
+		  slideWrapper.css('width', slideWidth * slideCount);
+
+		  function showSlides() {
+		    var startPosition = currentIndex * slidesPerPage;
+		    var endPosition = startPosition + slidesPerPage;
+
+		    slides.hide(); // 모든 슬라이드 숨기기
+		    slides.slice(startPosition, endPosition).show(); // 현재 페이지의 슬라이드만 보이기
+		  }
+
+		  // 초기 슬라이드 표시
+		  showSlides();
+
+		  // 네비게이션 클릭 시
+		  $('.nav-item').click(function() {
+		    var targetIndex = $(this).index();
+		    currentIndex = targetIndex;
+		    showSlides();
+		    toggleButtons();
+		  });
+
+		  // 이전 버튼 클릭 시
+		  $('.prev-button').click(function() {
+		    if (currentIndex > 0) {
+		      currentIndex--;
+		      showSlides();
+		      toggleButtons();
+		    }
+		  });
+
+		  // 다음 버튼 클릭 시
+		  $('.next-button').click(function() {
+		    if (currentIndex < totalPages - 1) {
+		      currentIndex++;
+		      showSlides();
+		      toggleButtons();
+		    }
+		  });
+		  
+		  // 이전, 다음 버튼 숨김/표시 설정
+		  function toggleButtons() {
+		    $('.prev-button').toggle(currentIndex > 0);
+		    $('.next-button').toggle(currentIndex < totalPages - 1);
+		  }
+		  
+		  toggleButtons();
+
+		  // 페이지 변경 시 네비게이션 및 버튼 숨김/표시 설정
+		  $('.prev-button, .next-button').click(function() {
+		    $('.nav-item').removeClass('active');
+		    $('.nav-item').eq(currentIndex).addClass('active');
+		  });
+		});
 })//$
 </script>
 </head>
@@ -105,37 +169,30 @@ $(function(){
     
        <div class="skills-prog">
       <h3><i class="fa-solid fa-heart"></i>찜 목록</h3>
-      <%
-	int pages3 = (int)request.getAttribute("jjimPages");
-	for(int p3 = 1; p3 <= pages3; p3++){
-%>
-		<button class="jjimpages"><%= p3 %></button>
-<%		
-	}
-%> 
+
 
 <div id="myjjimResult">
- <table>
-   <c:forEach items="${jjimAllList}" var="my"> 
- <%--   <tr>
-      <td>${my.movieTitle}</td> 
-      <td><img alt="movie 이미지" src="../resources/n_img/${my.movieImg}" width="150" height="180"></td>
-      <td>${my.movieGrade}</td>     
-   </tr> --%>
-   
-   <tr>
-		<td><img alt="movie 이미지" src="../resources/n_img/${my.movieImg}" width="150" height="180"></td>
-	</tr>
-	<tr>
-		<td>${my.movieTitle}</td>
-	</tr>
-	<tr>
-		<td> ⭐${my.movieGrade}</td>
-	</tr>
-   </c:forEach>
-</table>
+
+
+<div class="slide-wrapper">
+  <c:forEach items="${jjimAllList}" var="my">
+    <div class="movie_jjimbox">
+      <div class="movie_jjim">
+        <img alt="movie 이미지" src="../resources/n_img/${my.movieImg}" width="150" height="180">
+        <div class="jjim_txt">${my.movieTitle}</div>
+        <div class="jjim_txt">⭐${my.movieGrade}</div>
+      </div>
+    </div>
+  </c:forEach>
+</div>
+
+<button class="prev-button">이전</button>
+<button class="next-button">다음</button>
+
+
 </div>
  </div>
+
     
     <div class="skills-prog">
       <h3><i class="fa-solid fa-comment-dots"></i>작성한 리뷰</h3>
