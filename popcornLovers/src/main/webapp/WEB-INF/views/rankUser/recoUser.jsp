@@ -14,10 +14,10 @@ table {
 </head>
 <body>
 <!-- 유저이름, 좋아요 수, 리뷰 수 -->
-<table style="font-size: 10px;">
+<table style="font-size: 12px;">
 	<c:forEach items="${list}" var="vo" begin="0" end="2">
 		<tr>
-			<td rowspan="3"><a href="../mypage/mypageOne?member_id=${vo.member_id}"><img alt="유저 이미지" src="../resources/n_img/${vo.member_img}" width="50px" height="80px"></a></td>
+			<td rowspan="3"><a href="../mypage/mypageOne?member_id=${vo.member_id}"><img alt="유저 이미지" src="../resources/profile_img/${vo.member_img}" width="50px" height="80px"></a></td>
 			<td><a href="../mypage/mypageOne?member_id=${vo.member_id}">${vo.member_name}</a> / Lv.${vo.member_level}</td>
 		</tr>
 		<tr>

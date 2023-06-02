@@ -64,7 +64,7 @@ $(function() {
 			$("#rankList").append(x)
 		},
 		error: function() {
-			alert("오류발생")
+			alert("랭킹 불러오기 오류발생")
 		}
 	})
 	// 시작과 동시에 actor추천 항목 띄워줌
@@ -74,7 +74,7 @@ $(function() {
 			$("#recoList").append(x)
 		},
 		error: function() {
-			alert("오류발생")
+			alert("추천 리스트 오류발생")
 		}
 	})
 	// 시작과 동시에 User Top3 불러오기
@@ -84,7 +84,7 @@ $(function() {
 			$("#top3").append(x)
 		},
 		error: function() {
-			alert("오류발생")
+			alert("top3 오류발생")
 		}
 	})	// ajax
 	

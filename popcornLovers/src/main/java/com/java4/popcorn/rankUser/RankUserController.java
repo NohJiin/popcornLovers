@@ -7,31 +7,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.java4.popcorn.rankMovie.RankMovieVO;
+
 @Controller
 public class RankUserController {
 	@Autowired
 	RankUserDAO dao;
 	
-//	@RequestMapping("rankUser/userInsert")
-//	public void userInsert() {
-//		System.out.println("userInsert ½ÇÇà");
-//		int result = dao.userInsert();
-//		System.out.println(result + "°³ Ãß°¡µÊ");
-//	}
-	
-	// ÀüÃ¼¸ñ·Ï : ¼øÀ§º°
+	// ì˜í™” ì „ì²´ ë­í¬ ë¦¬ìŠ¤íŠ¸ : ìˆœìœ„ë³„
 	@RequestMapping("rankUser/userRankAll")
 	public void userRankAll(PageVO vo, Model model) {
-		// member¿¡ È¸¿øÀÌ Ãß°¡µÇ¸é rankuser Å×ÀÌºí¿¡µµ Ãß°¡µÇµµ·Ï ÇÔ
+		// memberí…Œë¸”ì— í•­ëª©ì´ ì¶”ê°€ë  ë•Œë§ˆë‹¤ rankuser í…Œì´ë¸”ì—ë„ ì¶”ê°€
 		int result = dao.userInsert();
-		System.out.println(result + "°³ Ãß°¡µÊ");
+		System.out.println(result + "ê°œ ì¶”ê°€ë¨");
+		
+//		// ë³€ê²½ëœ ì‚¬í•­ updateí•˜ê¸°
+//		List<RankUserVO> idList = dao.memberIdList();
+//		System.out.println("member rank update ì‹¤í–‰");
+//		for (int i = 0; i < idList.size(); i++) {
+//			dao.memberUpdate2(idList.get(i));
+//		}
 		
 		vo.setStartEnd(vo.getPage());
-		System.out.println("userRank list½ÇÇà");
+		System.out.println("userRank list ì‹¤í–‰");
 		List<RankUserVO> list = dao.all(vo);
 		int count = dao.count();
 		System.out.println("all count>> " + count);
-		int pages = count / 10 + 1; //ÀüÃ¼ ÆäÀÌÁö °³¼ö ±¸ÇÏ±â 
+		int pages = count / 10 + 1; //ì „ì²´ í˜ì´ì§€ ê°œìˆ˜ êµ¬í•˜ê¸° 
 		model.addAttribute("list", list);
 		model.addAttribute("count", count);
 		model.addAttribute("pages", pages);
@@ -45,19 +47,19 @@ public class RankUserController {
 	}
 	
 	
-	// ÃßÃµ »ç¿ëÀÚ ¸®½ºÆ® : ÀüÃ¼ ¸ñ·Ï
+	// ì¶”ì²œ ì˜í™” ë¦¬ìŠ¤íŠ¸ : ì „ì²´ ëª©ë¡
 	@RequestMapping("rankUser/recoUser")
 	public void userReco(Model model) {
-		System.out.println("userReco list½ÇÇà");
+		System.out.println("userReco list ì‹¤í–‰");
 		List<RankUserVO> list = dao.recoList();
 		model.addAttribute("list", list);
 	}
 	
 	@RequestMapping("rankUser/userTop3")
 	public void selectTop(Model model) {
-		RankUserVO top1 = dao.selectTop(1);	// 1À§
-		RankUserVO top2= dao.selectTop(2);	// 2À§
-		RankUserVO top3 = dao.selectTop(3);	// 3À§
+		RankUserVO top1 = dao.selectTop(1);
+		RankUserVO top2 = dao.selectTop(2);
+		RankUserVO top3 = dao.selectTop(3);
 		model.addAttribute("top1", top1);
 		model.addAttribute("top2", top2);
 		model.addAttribute("top3", top3);

@@ -12,19 +12,29 @@ public class RankMovieController {
 	@Autowired
 	RankMovieDAO dao;
 	
-	// ¿µÈ­ ÀüÃ¼ ·©Å© ¸®½ºÆ® : ¼øÀ§º°
+	@Autowired
+	Scheduler sd;
+	
+	// ì˜í™” ì „ì²´ ë­í¬ ë¦¬ìŠ¤íŠ¸ : ìˆœìœ„ë³„
 	@RequestMapping("rankMovie/movieRankAll")
 	public void movieRank(PageVO vo, Model model) {
-		// movie¿¡ È¸¿øÀÌ Ãß°¡µÇ¸é rankmovie Å×ÀÌºí¿¡µµ Ãß°¡µÇµµ·Ï ÇÔ
+		// movieí…Œë¸”ì— í•­ëª©ì´ ì¶”ê°€ë  ë•Œë§ˆë‹¤ rankmovie í…Œì´ë¸”ì—ë„ ì¶”ê°€
 		int result = dao.movieInsert();
-		System.out.println(result + "°³ Ãß°¡µÊ");
+		System.out.println(result + "ê°œ ì¶”ê°€ë¨");
+		
+//		// ë³€ê²½ëœ ì‚¬í•­ updateí•˜ê¸°
+//		List<RankMovieVO> idList = dao.movieIdList();
+//		System.out.println("movie rank update ì‹¤í–‰");
+//		for (int i = 0; i < idList.size(); i++) {
+//			dao.movieUpdate2(idList.get(i));
+//		}
 		
 		vo.setStartEnd(vo.getPage());
-		System.out.println("movieRank list½ÇÇà");
+		System.out.println("movieRank list ì‹¤í–‰");
 		List<RankMovieVO> list = dao.all(vo);
 		int count = dao.count();
 		System.out.println("all count>> " + count);
-		int pages = count / 10 + 1; //ÀüÃ¼ ÆäÀÌÁö °³¼ö ±¸ÇÏ±â 
+		int pages = count / 10 + 1; //ì „ì²´ í˜ì´ì§€ ê°œìˆ˜ êµ¬í•˜ê¸°
 		model.addAttribute("list", list);
 		model.addAttribute("count", count);
 		model.addAttribute("pages", pages);
@@ -37,18 +47,26 @@ public class RankMovieController {
 		model.addAttribute("list", list);
 	}
 	
-	// ¿µÈ­ ¾ÆÀÌµğ ¸®½ºÆ® È®ÀÎ
+	/* mapperì—ì„œ updateë¬¸ì´ ì‹¤í–‰ë˜ëŠ”ì§€ í™•ì¸ */
+	// movieId ë¦¬ìŠ¤íŠ¸ë¥¼ ê°€ì ¸ì˜¤ëŠ”ì§€ í…ŒìŠ¤íŠ¸
 	@RequestMapping("rankMovie/movieIdTest")
 	public void movieIdList(Model model) {
-		List<String> list = dao.movieIdList();
+		List<RankMovieVO> list = dao.movieIdList();
 		model.addAttribute("list", list);
 	}
 	
+	// ìƒˆë¡œê³ ì¹¨
+	@RequestMapping("rankMovie/movieUpdate")
+	public String movieUpdate(Model model) {
+		return "../../rank/rankMovieMain";
+	}
+	/* mapperì—ì„œ updateë¬¸ì´ ì‹¤í–‰ë˜ëŠ”ì§€ í…ŒìŠ¤íŠ¸ ë */
 	
-	// ÃßÃµ ¿µÈ­ ¸®½ºÆ® : ÀüÃ¼ ¸ñ·Ï
+	
+	// ì¶”ì²œ ì˜í™” ë¦¬ìŠ¤íŠ¸ : ì „ì²´ ëª©ë¡ => ì´ê²ƒë„ ìŠ¤ì¼€ì¤„ë§í•´ì„œ 2-3ì‹œê°„?ë§ˆë‹¤ í•œë²ˆì”© ì—…ë°ì´íŠ¸ ë˜ë„ë¡í•˜ê¸°
 	@RequestMapping("rankMovie/recoMovie")
 	public void movieReco(Model model) {
-		System.out.println("movieReco list½ÇÇà");
+		System.out.println("movieReco list ì‹¤í–‰");
 		List<RankMovieVO> list = dao.recoList();
 		model.addAttribute("list", list);
 	}

@@ -6,32 +6,44 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component	// ½Ì±ÛÅæ ¼±¾ğ
+@Component	// ì‹±ê¸€í†¤ ì„ ì–¸
 public class RankMovieDAO {
 	@Autowired
 	SqlSessionTemplate my;
 	
-	// rankUser Å×ÀÌºí¿¡ ¾ø´Â °ª member Å×ÀÌºí¿¡¼­ °¡Á®¿Í insert
+	// rankUser ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ member ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ insert
     public int movieInsert() {
 		int result = my.insert("RankMovieDAO.movieInsert");
 		return result;
 	}
     
-	/* ½ºÄÉÁÙ¸µ ÇÒ °Í */
-    public void movieUpdate(List<String> list) {
-  		my.update("RankMovieDAO.rankUpdate2", list);
-  		
-  	}
-	
-    public List<String> movieIdList() {
-    	List<String> list = my.selectList("RankMovieDAO.movieIdList");
+	/* ìŠ¤ì¼€ì¤„ëŸ¬ ì‹œì‘ */
+    // movieIdë¥¼ ë‹´ì€ ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
+    public List<RankMovieVO> movieIdList() {
+    	List<RankMovieVO> list = my.selectList("RankMovieDAO.movieIdList");
     	return list;
     }
-    /* ½ºÄÉÁÙ¸µ ³¡ */
+    
+    // movieIdê°€ ë‹´ê¸´ ë¦¬ìŠ¤íŠ¸ë¥¼ ì „ë‹¬ë°›ì•„ updateì‹œí‚¤ê¸°
+    public void movieUpdate(List<RankMovieVO> list) {
+  		my.update("RankMovieDAO.rankUpdate2", list);
+  	}
+    
+    // forë¬¸ ì‚¬ìš©í•´ì„œ update í…ŒìŠ¤íŠ¸
+    public void movieUpdate2(RankMovieVO bag) {
+    	my.update("RankMovieDAO.rankUpdate3", bag);
+    }
+    
+    // updateëœ í•­ëª©ì„ ë­í‚¹ ì •í•´ì§„ëŒ€ë¡œ ê°€ì ¸ì˜¤ëŠ”ì§€ í™•ì¸
+    public List<RankMovieVO> testAll() {
+		List<RankMovieVO> list = my.selectList("RankMovieDAO.testAll");
+		return list;
+	}
+    /* ìŠ¤ì¼€ì¤„ëŸ¬ ë */
     
     
-	/* ÆäÀÌÂ¡ */
-	// ÀüÃ¼ ¸ñ·Ï : ¼øÀ§º°
+	/* í˜ì´ì§• ì‹œì‘ */
+    // ì „ì²´ ëª©ë¡ : ìˆœìœ„ë³„
 	public List<RankMovieVO> all(PageVO vo) {
 		List<RankMovieVO> list = my.selectList("RankMovieDAO.all", vo);
 		System.out.println(list.size());
@@ -44,22 +56,22 @@ public class RankMovieDAO {
 	}
 	
 	
-	// movie ÀüÃ¼ ¼ö
+	// movie ê°œìˆ˜ count
     public int count() {
 		return my.selectOne("RankMovieDAO.count");
 	}
-	/* ÆäÀÌÂ¡ ³¡ */
+	/* í˜ì´ì§• ë */
 	
     
-	// ÀüÃ¼ ¸ñ·Ï °¡Á®¿À±â
+    // ì „ì²´ ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
 	public List<RankMovieVO> recoList() {
-		System.out.println("list DAO½ÇÇà");
-		List<RankMovieVO> list = my.selectList("RankMovieDAO.recoAll");
+		System.out.println("list DAOï¿½ï¿½ï¿½ï¿½");
+		List<RankMovieVO> list = my.selectList("RankMovieDAO.recoList");
 		
 		return list;
 	}
 	
-	// ÇÏ³ª¸¸ °Ë»ö : rank_no = #{rank_no} ÀÎ Ç×¸ñ Ã£¾Æ °¡Á®¿È
+	// í•˜ë‚˜ë§Œ ê²€ìƒ‰ : rank_no = #{rank_no} ì¸ í•­ëª© ì°¾ì•„ ê°€ì ¸ì˜´
 	public RankMovieVO selectTop(int rank_no) {
 		RankMovieVO bag = my.selectOne("RankMovieDAO.selectTop", rank_no);
 		return bag;

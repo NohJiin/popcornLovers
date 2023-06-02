@@ -62,4 +62,52 @@
 		from popcorn.rankuser r, popcorn.member m 
 		where r.member_id = m.member_id 
     </select>
+    
+    
+    <!-- 스케줄러 업데이트 테스트 -->
+    <update id="rankUpdate2" parameterType="java.util.List">	<!-- java.util.List -->
+		<foreach collection="list" item="item" index="index">
+			update popcorn.rankuser r
+			set r.memberPopularity = (
+				select (total.member_fav*0.3 + total.member_view*0.3) as per
+				from
+				(select u.*, m.member_fav, m.member_view
+				from popcorn.rankuser u, popcorn.member m
+				where u.member_id = m.member_id
+				) total
+			where total.member_id = #{item.member_id}
+			)
+			where r.member_id = #{item.member_id}
+		</foreach>
+    </update>
+    
+    <!-- java자제에서 for문으로 저장하기 테스트 -->
+    <update id="rankUpdate3" parameterType="RankUserVO">	<!-- java.util.List -->
+	    update popcorn.rankuser r
+		set r.memberPopularity = (
+			select (total.member_fav*0.3 + total.member_view*0.3) as per
+			from
+				(select u.*, m.member_fav, m.member_view
+				from popcorn.rankuser u, popcorn.member m
+				where u.member_id = m.member_id
+			) total
+			where total.member_id = #{member_id}
+			)
+		where r.member_id = #{member_id}
+    </update>
+    
+    <select id="memberIdList" resultType="RankUserVO">
+    	select member_id
+    	from popcorn.member
+    </select>
+    
+    <select id="testAll" resultType="RankUserVO">
+    	select * 
+    	from (
+    		select
+			row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
+			from popcorn.rankuser r, popcorn.member m 
+			where r.member_id = m.member_id) total
+    </select>
+    <!-- 스케줄러 업데이트 테스트 끝 -->
 </mapper>

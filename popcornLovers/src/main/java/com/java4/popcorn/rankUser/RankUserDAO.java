@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.java4.popcorn.rankMovie.RankMovieVO;
+
 @Component
 public class RankUserDAO {
 //    @Autowired
@@ -14,20 +16,46 @@ public class RankUserDAO {
     @Autowired
     SqlSessionTemplate my;
 
-    // rankUser Å×ÀÌºí¿¡ ¾ø´Â °ª member Å×ÀÌºí¿¡¼­ °¡Á®¿Í insert
+    // rankUser ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ member ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ insert
     public int userInsert() {
 		int result = my.insert("RankUserDAO.userInsert");
 		return result;
 	}
     
-    // ¿øÇÏ´Â ¼øÀ§ÀÇ Á¤º¸ °¡Á®¿À±â (top 1, 2, 3)
+    // ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (top 1, 2, 3)
     public RankUserVO selectTop(int rank_no) {
 		RankUserVO bag = my.selectOne("RankUserDAO.selectTop", rank_no);
 		return bag;
 	}
     
-    /* ÆäÀÌÂ¡ */
-    // ÀüÃ¼ ¸ñ·Ï : ¼øÀ§º°
+    
+    /* ìŠ¤ì¼€ì¤„ëŸ¬ ì‹œì‘ */
+    // memeber_idë¥¼ ë‹´ì€ ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
+    public List<RankUserVO> memberIdList() {
+    	List<RankUserVO> list = my.selectList("RankUserDAO.memberIdList");
+    	return list;
+    }
+    
+    // memeber_idê°€ ë‹´ê¸´ ë¦¬ìŠ¤íŠ¸ë¥¼ ì „ë‹¬ë°›ì•„ updateì‹œí‚¤ê¸°
+    public void memberUpdate(List<RankUserVO> list) {
+  		my.update("RankUserDAO.rankUpdate2", list);
+  	}
+    
+    // forë¬¸ ì‚¬ìš©í•´ì„œ update í…ŒìŠ¤íŠ¸
+    public void memberUpdate2(RankUserVO bag) {
+    	my.update("RankUserDAO.rankUpdate3", bag);
+    }
+    
+    // updateëœ í•­ëª©ì„ ë­í‚¹ ì •í•´ì§„ëŒ€ë¡œ ê°€ì ¸ì˜¤ëŠ”ì§€ í™•ì¸
+    public List<RankUserVO> testAll() {
+		List<RankUserVO> list = my.selectList("RankUserDAO.testAll");
+		return list;
+	}
+    /* ìŠ¤ì¼€ì¤„ëŸ¬ ë */
+    
+    
+    /* ï¿½ï¿½ï¿½ï¿½Â¡ */
+    // ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public List<RankUserVO> all(PageVO vo) {
 		List<RankUserVO> list = my.selectList("RankUserDAO.all", vo);
 		return list;
@@ -38,14 +66,14 @@ public class RankUserDAO {
     	return list;
     }
     
-    // member ÀüÃ¼ ¼ö
+    // member ï¿½ï¿½Ã¼ ï¿½ï¿½
     public int count() {
 		return my.selectOne("RankUserDAO.count");
 	}
     
-    /* ÆäÀÌÂ¡ ³¡ */
+    /* ï¿½ï¿½ï¿½ï¿½Â¡ ï¿½ï¿½ */
     
-    // ¼øÀ§ »ó°ü ¾øÀÌ ÃßÃµ Ç×¸ñ ¸î °³ 
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ãµ ï¿½×¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ 
     public List<RankUserVO> recoList() {
     	List<RankUserVO> list = my.selectList("RankUserDAO.recoAll");
     	return list;

@@ -8,11 +8,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<table style="font-size: 10px;">
-	<c:forEach items="${list}" var="vo" begin="0" end="2">
+<table style="font-size: 12px;">
+	<c:forEach items="${list}" var="vo">
 		<tr>
-			<td rowspan="3"><img alt="영화 이미지" src="../resources/n_img/${vo.movieImg}" width="100px" height="120px"> </td>
-			<td>${vo.movieTitle} / ${vo.movieOpen}</td>
+			<td rowspan="3"><a href="../movie/movieDetails2?movieId=${vo.movieId}"><img alt="영화 이미지" src="../resources/n_img/${vo.movieImg}" width="120px" height="140px"></a></td>
+			<td><a href="../movie/movieDetails2?movieId=${vo.movieId}">${vo.movieTitle}</a> / ${vo.movieOpen}</td>
 		</tr>
 		<tr>
 			<td>⭐ ${vo.movieGrade} / ${vo.movieGenre}</td>

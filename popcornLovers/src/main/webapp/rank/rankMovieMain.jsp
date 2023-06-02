@@ -64,7 +64,7 @@ $(function() {
 			$("#rankList").append(x)
 		},
 		error: function() {
-			alert("오류발생mra")
+			alert("랭킹 불러오기 오류발생")
 		}
 	})
 	// 시작과 동시에 User추천 항목 띄워줌
@@ -74,7 +74,7 @@ $(function() {
 			$("#recoList").append(x)
 		},
 		error: function() {
-			alert("오류발생rm")
+			alert("추천 리스트 오류발생")
 		}
 	})
 	// 시작과 동시에 User Top3 불러오기
@@ -84,7 +84,7 @@ $(function() {
 			$("#top3").append(x)
 		},
 		error: function() {
-			alert("오류발생mt3")
+			alert("top3 오류발생")
 		}
 	})	// ajax
 
@@ -117,6 +117,6 @@ button {
 		<!-- 추천 항목이 들어갈 곳 -->
 	</div>
 </div>
-<a href="../rankMovie/movieIdTest"><button id="test" style="background: lime;">movieId Test</button></a>
+<a href="../rankMovie/movieUpdate"><button id="update" style="background: lime;">새로고침</button></a>
 </body>
 </html>

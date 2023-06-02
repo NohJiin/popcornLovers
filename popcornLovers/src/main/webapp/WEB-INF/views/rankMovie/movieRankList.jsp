@@ -25,7 +25,7 @@
 	<c:forEach items="${list}" var="bag">
 		<tr>
 			<td>${bag.rank_no}</td>
-			<td>${bag.movieTitle}</td>
+			<td><a href="../movie/movieDetails2?movieId=${bag.movieId}">${bag.movieTitle}</a></td>
 			<td>⭐ ${bag.movieGrade}</td>
 			<td>${bag.movieGenre}</td>
 			<td>${bag.movieReviews}</td>

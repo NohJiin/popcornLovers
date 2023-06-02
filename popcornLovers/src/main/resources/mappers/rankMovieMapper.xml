@@ -48,33 +48,65 @@
     </select>
     
     
-    <!-- 전체 랭킹 중 일부 : 추천목록 -->
-    <select id="recoAll" resultType="RankMovieVO">
-    	select m.movieTitle, m.movieImg, m.movieOpen, m.movieGrade, m.movieGenre, m.movieLike, m.movieHits
-		from popcorn.rankmovie r, popcorn.movie m
-		where r.movieId = m.movieId
+    <!-- 상위 20개 중에서 3가지를 랜덤으로 추출하여 추천 -->
+    <select id="recoList" resultType="RankMovieVO">
+    	select *
+		from (
+			select row_number() over(order by moviePopularity desc) as rank_no, r.moviePopularity, m.*
+			from popcorn.rankmovie r, popcorn.movie m
+			where r.movieId = m.movieId) list
+		where list.rank_no between 1 and 20
+		order by rand()
+		limit 3
     </select>
     
     
     <!-- 스케줄러 업데이트 테스트 -->
-    <update id="rankUpdate2" parameterType="String">
-    	update popcorn.rankmovie m
-		set m.moviePopularity = (
-		select (total.movieLike*0.3 + total.movieHits*0.3 + total.movieReviews*0.3) as per
-		from
-			(select r.*, m.movieLike, m.movieHits, m.movieReviews
-			from popcorn.rankmovie r, popcorn.movie m
-			where r.movieId = m.movieId
-			) total
-		where total.movieId = #{movieId}
-		)
-		where m.movieId = #{movieId}
+    <update id="rankUpdate2" parameterType="java.util.List">	<!-- java.util.List -->
+		<foreach collection="list" item="item" index="index">
+	    	update popcorn.rankmovie m
+			set m.moviePopularity = (
+			select (total.movieLike*0.3 + total.movieHits*0.3 + total.movieReviews*0.3) as per
+			from
+				(select r.*, m.movieLike, m.movieHits, m.movieReviews
+				from popcorn.rankmovie r, popcorn.movie m
+				where r.movieId = m.movieId
+				) total
+			where total.movieId = #{item.movieId}
+			)
+			where m.movieId = #{item.movieId}
+		</foreach>
+    </update>
+    
+    <!-- java자제에서 for문으로 저장하기 테스트 -->
+    <update id="rankUpdate3" parameterType="RankMovieVO">	<!-- java.util.List -->
+	    	update popcorn.rankmovie m
+			set m.moviePopularity = (
+			select (total.movieLike*0.3 + total.movieHits*0.3 + total.movieReviews*0.3) as per
+			from
+				(select r.*, m.movieLike, m.movieHits, m.movieReviews
+				from popcorn.rankmovie r, popcorn.movie m
+				where r.movieId = m.movieId
+				) total
+			where total.movieId = #{movieId}
+			)
+			where m.movieId = #{movieId}
     </update>
     
     <select id="movieIdList" resultType="RankMovieVO">
     	select movieId
     	from popcorn.movie
     </select>
+    
+    <select id="testAll" resultType="RankMovieVO">
+    	select *
+    	from(
+    		select 
+			row_number() over(order by moviePopularity desc) as rank_no, r.moviePopularity, m.*
+			from popcorn.rankmovie r, popcorn.movie m
+			where r.movieId = m.movieId) rank2
+    </select>
+    <!-- 스케줄러 업데이트 테스트 끝 -->
     
     
     <!-- 랭킹 업데이트는 언제 해야할까? -->

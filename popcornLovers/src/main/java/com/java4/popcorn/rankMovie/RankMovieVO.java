@@ -4,20 +4,20 @@ import lombok.Data;
 
 @Data
 public class RankMovieVO {
-	private int rank_no;	// ¿µÈ­ ¼øÀ§
-	private double moviePopularity;	// ¿µÈ­ ÀÎ±âµµ
-	private String movieId;	// ¿µÈ­ ¾ÆÀÌµğ
-	private String movieTitle;	// ¿µÈ­ Á¦¸ñ
-	private String movieGenre;	// ¿µÈ­ Àå¸£
-	private String movieGrade;	// ¿µÈ­ ÆòÁ¡
-	private String movieOpen;	// ¿µÈ­ °³ºÀÀÏ
-	private String movieLast;	// ¿µÈ­ ¸¶Áö¸· »ó¿µÀÏ
-	private String movieStory;	// ¿µÈ­ ÁÙ°Å¸®
-	private int movieTime;	// ¿µÈ­ »ó¿µ ½Ã°£
-	private String movieImg;	// ¿µÈ­ ÀÌ¹ÌÁö
-	private String movieActor;	// ¿µÈ­ Ãâ¿¬ ¹è¿ì
-	private String movieDirector;	// ¿µÈ­ °¨µ¶
-	private int movieLike;	// ¿µÈ­ ÁÁ¾Æ¿ä ¼ö
-	private int movieHits;	// ¿µÈ­ Á¶È¸¼ö
-	private int movieReviews;	// ¿µÈ­ ¸®ºä ¼ö
+	private int rank_no;	// ì˜í™” ìˆœìœ„
+	private double moviePopularity;	// ì˜í™” ì¸ê¸°ë„
+	private String movieId;	// ì˜í™” ì•„ì´ë””
+	private String movieTitle;	// ì˜í™” ì œëª©
+	private String movieGenre;	// ì˜í™” ì¥ë¥´
+	private String movieGrade;	// ì˜í™” í‰ì 
+	private String movieOpen;	// ì˜í™” ê°œë´‰ì¼
+	private String movieLast;	// ì˜í™” ë§ˆì§€ë§‰ ìƒì˜ì¼
+	private String movieStory;	// ì˜í™” ì¤„ê±°ë¦¬
+	private int movieTime;	// ì˜í™” ìƒì˜ ì‹œê°„
+	private String movieImg;	// ì˜í™” ì´ë¯¸ì§€
+	private String movieActor;	// ì˜í™” ì¶œì—° ë°°ìš°
+	private String movieDirector;	// ì˜í™” ê°ë…
+	private int movieLike;	// ì˜í™” ì¢‹ì•„ìš” ìˆ˜
+	private int movieHits;	// ì˜í™” ì¡°íšŒìˆ˜
+	private int movieReviews;	// ì˜í™” ë¦¬ë·°ìˆ˜
 }

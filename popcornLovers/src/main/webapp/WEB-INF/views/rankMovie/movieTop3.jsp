@@ -25,14 +25,14 @@ tr {
 <body>
 <table>
 	<tr>
-		<td><img alt="영화 Top1 이미지" src="../resources/n_img/${top1.movieImg}" width="150" height="180"></td>
-		<td><img alt="영화 Top2 이미지" src="../resources/n_img/${top2.movieImg}" width="150" height="180"></td>
-		<td><img alt="영화 Top3 이미지" src="../resources/n_img/${top3.movieImg}" width="150" height="180"></td>
+		<td><a href="../movie/movieDetails2?movieId=${top1.movieId}"><img alt="영화 Top1 이미지" src="../resources/n_img/${top1.movieImg}" width="150" height="200"></a></td>
+		<td><a href="../movie/movieDetails2?movieId=${top2.movieId}"><img alt="영화 Top2 이미지" src="../resources/n_img/${top2.movieImg}" width="150" height="200"></a></td>
+		<td><a href="../movie/movieDetails2?movieId=${top3.movieId}"><img alt="영화 Top3 이미지" src="../resources/n_img/${top3.movieImg}" width="150" height="200"></a></td>
 	</tr>
 	<tr>
-		<td>${top1.movieTitle}</td>
-		<td>${top2.movieTitle}</td>
-		<td>${top3.movieTitle}</td>
+		<td><a href="../movie/movieDetails2?movieId=${top1.movieId}">${top1.movieTitle}</a></td>
+		<td><a href="../movie/movieDetails2?movieId=${top2.movieId}">${top2.movieTitle}</a></td>
+		<td><a href="../movie/movieDetails2?movieId=${top2.movieId}">${top3.movieTitle}</a></td>
 	</tr>
 	<tr>
 		<td>⭐ ${top1.movieGrade}</td>

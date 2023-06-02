@@ -6,16 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Component("scheduler")	// scheduler ½Ì±ÛÅæ °´Ã¼ »ı¼º
+@Component("schedulerMovie")	// scheduler ì‹±ê¸€í†¤ ê°ì²´ ìƒì„±
 public class Scheduler {
 	@Autowired
 	RankMovieDAO dao;
 	
-	// ¸ÅÀÏ ¿ÀÀü12½Ã 00ºĞ 00ÃÊ¿¡ ÀÚµ¿À¸·Î ¾÷µ¥ÀÌÆ®ÇÏ´Â ½ºÄÉÁÙ·¯
-	@Scheduled(cron = "0 0 0 * * *")
+	// ë§¤ì¼ ì˜¤ì „12ì‹œ 00ë¶„ 00ì´ˆì— ë­í‚¹ í˜ì´ì§€ê°€ ì—…ë°ì´íŠ¸ ë˜ë„ë¡ ì„¤ì •
+	@Scheduled(cron = "0 40 18 * * *")
 	public void autoUpdate() {
-		System.out.println("¿ÀÀü 12½Ã 00ºĞ 00ÃÊ°¡ µÇ¾î ¿µÈ­ ·©Å·À» ¾÷µ¥ÀÌÆ®ÇÕ´Ï´Ù.");
-		List<String> list = dao.movieIdList();
-		dao.movieUpdate(list);
+		System.out.println("ì˜¤ì „ 12ì‹œ 00ë¶„ 00ì´ˆê°€ ë˜ì—ˆìœ¼ë¯€ë¡œ ë­í‚¹ ì—…ë°ì´íŠ¸ë¥¼ ì‹œì‘í•©ë‹ˆë‹¤.");
+		List<RankMovieVO> idList = dao.movieIdList();
+		System.out.println("movie rank update ì‹¤í–‰");
+		for (int i = 0; i < idList.size(); i++) {
+			dao.movieUpdate2(idList.get(i));
+		}
 	}
 }
