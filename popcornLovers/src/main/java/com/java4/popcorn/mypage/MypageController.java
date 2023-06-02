@@ -153,50 +153,72 @@ public class MypageController {
 		model.addAttribute("jjimAllList", jjumAllList);
 		
 		model.addAttribute("bag", bag);
+		System.out.println("작성한 bbs 수 " + bbsAllList.size());
+		System.out.println("작성한 reivew 수 " + reviewAllList.size());
+		System.out.println("작성한 jjim 수 " + jjumAllList.size());
+		
+		//회원 이미지 뿌려주기 위해서 memberVO 모델로 지정해서 가지고 오기
+		MemberVO memberVO  = dao.selectOne(member_id);
+		model.addAttribute("memberVO", memberVO);
 	}
 
+	// 회원이 작성한 게시글(나머지 페이지를 처리) + 다른 사람이 보는 회원 프로필 
+	@RequestMapping("mypage/mybbs3")
+	public void bbsListOtherOne(PageVO vo, Model model, String member_id) {
+		vo.setStartEnd(vo.getPage());
+		vo.setMember_id(member_id);
+
+		List<MypageVO> bbsAllList = dao.bbsAllList(vo);// member_id로 해당 list들 들고오기
+
+		model.addAttribute("bbsAllList", bbsAllList);// model에 넣어주자
+	}
+
+	// 회원이 작성한 리뷰(나머지 페이지를 처리) + 다른 사람이 보는 회원 프로필 
+	@RequestMapping("mypage/myreview3")
+	public void reviewListOtherOne(PageVO vo, Model model, String member_id) {
+		vo.setStartEnd(vo.getPage());
+		vo.setMember_id(member_id);
+
+		List<MypageVO> reviewAllList = dao.reviewAllList(vo);// member_id로 해당 list들 들고오기
+
+		model.addAttribute("reviewAllList", reviewAllList);// model에 넣어주자
+	}
+	
+	
+	
 	
 	// 찜 추가 하기(빈 하트 >> 꽉찬 하트)
-	@RequestMapping("mypage/addmoviejjim")
-	public void addMovieJjim(MypageVO vo,  HttpSession session) {
-		String member_id = (String)session.getAttribute("member_id"); //로그인한 회원 세션
-		String movieId = vo.getMovieId();//선택할 movieId 값도 들고온다
-		MypageVO movieInfo = dao.movieSelectOne(movieId); //dao에서 movie id값 읽어오기
-		
-		vo.setMovieId(movieInfo.getMovieId());
-		vo.setMember_id(member_id);
-		System.out.println(movieId);
-		
-		if(member_id != null) { //로그인이 되었을 때
-			 int result = dao.addMovieJjim(vo); // 찜 추가 실행
-			 if (result > 0) { //찜 추가가 성공 되면
-				//세션에 찜한 영화 상태 정보 저장
-				 //만약 movieId 가 123이면 찜 성공을 한다면 jjimStatus_123 값을 주면서 세션에 저장
-				 session.setAttribute("jjimStatus_" + movieId, "liked");
-			       System.out.println("추가 성공" +result);
-				} else { //찜 추가가 실패
-					System.out.println("추가 실패" +result);
-					}
-		       }else {
-		    	 //로그인이 되지 않았을 때
-		    	 System.out.println("로그인 여부 확인");
-		       }
-		}
+//	@RequestMapping("mypage/addmoviejjim")
+//	public void addMovieJjim(MypageVO vo, HttpSession session) {
+//	    String member_id = (String) session.getAttribute("member_id"); // 로그인한 회원 세션
+//	    String movieId = vo.getMovieId(); // 선택한 movieId 값
+//
+//	    MypageVO movieInfo = dao.movieSelectOne(movieId); // dao에서 movie id값 읽어오기
+//
+//	    if (member_id != null) { // 로그인이 되었을 때
+//	        int result = dao.addMovieJjim(movieInfo.getMovieId(), member_id); // 찜 추가 실행
+//	        if (result > 0) { // 찜 추가가 성공되면
+//	            session.setAttribute("jjimStatus_" + movieId, "liked"); // 세션에 찜한 영화 상태 정보 저장
+//	            System.out.println("추가 성공" + result);
+//	        } else { // 찜 추가가 실패
+//	            System.out.println("추가 실패" + result);
+//	        }
+//	    } else {
+//	        // 로그인이 되지 않았을 때
+//	        System.out.println("로그인 여부 확인");
+//	    }
+//	}
 
 	
 	// 찜 삭제하기(꽉찬 하트 >> 빈 하트)
 	@RequestMapping("mypage/removemoviejjim")
 	public void removeMovieJjim(MypageVO vo, HttpSession session) {
 		String member_id = (String) session.getAttribute("member_id");//로그인한 회원 세션
-		String movieId = vo.getMovieId();//선택할 movieId 값도 들고온다
-		MypageVO movieInfo = dao.movieSelectOne(movieId); //dao에서 movie id값 읽어오기
-		
-		vo.setMovieId(movieInfo.getMovieId());
-		vo.setMember_id(member_id);
-		dao.removeMovieJjim(vo);
-		
-		//세션에서 찜한 영화 상태 정보 삭제
-		session.removeAttribute("jjimStatus_" + movieId);
+	    String movieId = vo.getMovieId(); // 선택한 movieId 값
+	    
+	    vo.setMember_id(member_id);
+	    dao.removeMovieJjim(vo);
+	    session.removeAttribute("jjimStatus_" + movieId);
 	}
 
 	//마이페이지로 이동하기

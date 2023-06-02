@@ -68,7 +68,11 @@ public class MemberDAO {
 	public int profileUp(MemberVO vo) {
 		return my.update("MemberDAO.profileUp", vo);
 	}
-    
+	
+	// member 테이블에서 삭제된 id와 동일한 아이디를 rankuser 테이블에서도 삭제
+    public void rankDel(String member_id) {
+		my.delete("RankUserDAO.rankDel", member_id);
+	}
     
 	}
 

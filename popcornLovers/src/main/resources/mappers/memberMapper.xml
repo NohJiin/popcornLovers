@@ -71,4 +71,12 @@
     	set
     	member_img = #{member_img} where member_id = #{member_id}
     </update>
+    
+    
+    <!-- member 테이블에서 삭제된 id와 동일한 아이디를 rankuser 테이블에서도 삭제 -->
+    <delete id="rankDel" parameterType="String">
+    	delete from popcorn.rankuser r
+		where r.member_id = ${member_id}
+    </delete>
+    
 </mapper>
