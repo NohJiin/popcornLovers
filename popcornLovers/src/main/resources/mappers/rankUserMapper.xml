@@ -56,11 +56,16 @@
     </select>
     
     
-    <!-- 전체 랭킹 중 일부 : 추천목록 -->
-    <select id="recoAll" resultType="RankUserVO">
-    	select m.*
-		from popcorn.rankuser r, popcorn.member m 
-		where r.member_id = m.member_id 
+    <!-- 상위 20개 중에서 3가지를 랜덤으로 추출하여 추천 -->
+    <select id="recoList" resultType="RankUserVO">
+    	select *
+		from (
+			select row_number() over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
+			from popcorn.rankuser r, popcorn.member m
+			where r.member_id = m.member_id) list
+		where list.rank_no between 1 and 20
+		order by rand()
+		limit 3
     </select>
     
     
@@ -110,4 +115,10 @@
 			where r.member_id = m.member_id) total
     </select>
     <!-- 스케줄러 업데이트 테스트 끝 -->
+    
+    <!-- member 테이블에서 삭제된 id와 동일한 아이디를 rankuser 테이블에서도 삭제 -->
+    <delete id="rankDel" parameterType="String">
+    	delete from popcorn.rankuser r
+		where r.member_id = ${member_id}
+    </delete>
 </mapper>

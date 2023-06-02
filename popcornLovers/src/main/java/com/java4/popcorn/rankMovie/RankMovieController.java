@@ -71,6 +71,8 @@ public class RankMovieController {
 		model.addAttribute("list", list);
 	}
 	
+	
+	// top3 항목 가져오기
 	@RequestMapping("rankMovie/movieTop3")
 	public void actorSelectOne(Model model) {
 		RankMovieVO top1 = dao.selectTop(1);

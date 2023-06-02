@@ -11,6 +11,7 @@
 	width : 100%;
 	height : 100%;
 	margin : 0px auto;	/* 가운데 정렬 */
+	margin-top: 10px;
 }
 
 .category{
@@ -48,6 +49,13 @@
 	height : 100%;
 	float: left;
 	margin-left: 5px;
+	margin-top: 20px;
+}
+
+.reco-border {
+	border-radius: 30px;
+	border-color: black;
+	border: solid 1px;
 }
 </style>
 <script type="text/javascript">
@@ -113,10 +121,10 @@ button {
 			<!-- 랭킹이 들어갈 곳 -->
 		</div>
 	</div>
-	<div id="recoList">				<!--  style="background: orange;" -->
+	<div id="recoList" class="reco-border" style="background: #FFF4A6;">				<!--  style="background: orange;" -->
 		<!-- 추천 항목이 들어갈 곳 -->
 	</div>
 </div>
-<a href="../rankMovie/movieUpdate"><button id="update" style="background: lime;">새로고침</button></a>
+<!-- <a href="../rankMovie/movieUpdate"><button id="update" style="background: lime;">새로고침</button></a> -->
 </body>
 </html>

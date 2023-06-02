@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h3>🎬 오늘의 추천 영화 🎬</h3>
 <table style="font-size: 12px;">
 	<c:forEach items="${list}" var="vo">
 		<tr>

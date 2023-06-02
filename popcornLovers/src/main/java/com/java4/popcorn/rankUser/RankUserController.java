@@ -47,7 +47,7 @@ public class RankUserController {
 	}
 	
 	
-	// 추천 영화 리스트 : 전체 목록
+	// 추천 멤버 리스트 : 전체 목록 => 이것도 스케줄링해서 2-3시간?마다 한번씩 업데이트 되도록하기
 	@RequestMapping("rankUser/recoUser")
 	public void userReco(Model model) {
 		System.out.println("userReco list 실행");
@@ -55,6 +55,8 @@ public class RankUserController {
 		model.addAttribute("list", list);
 	}
 	
+	
+	// top3 항목 가져오기
 	@RequestMapping("rankUser/userTop3")
 	public void selectTop(Model model) {
 		RankUserVO top1 = dao.selectTop(1);
@@ -64,4 +66,11 @@ public class RankUserController {
 		model.addAttribute("top2", top2);
 		model.addAttribute("top3", top3);
 	}
+	
+//	// rankuser에서 삭제가 되는지 확인
+//	@RequestMapping("rankUser/rankDel")
+//	public void rankDel(String member_id, Model model) {
+//		dao.rankDel(member_id);
+//		model.addAttribute("member_id", member_id);
+//	}
 }

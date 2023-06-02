@@ -11,7 +11,7 @@ public class RankMovieDAO {
 	@Autowired
 	SqlSessionTemplate my;
 	
-	// rankUser ���̺� ���� �� member ���̺��� ������ insert
+	// rankmovie 테이블에 없는 항목을 movie 테이블에서 가져와 insert
     public int movieInsert() {
 		int result = my.insert("RankMovieDAO.movieInsert");
 		return result;
@@ -63,11 +63,9 @@ public class RankMovieDAO {
 	/* 페이징 끝 */
 	
     
-    // 전체 목록 가져오기
+    // 상위 20개 중에서 랜덤으로 3개 가져오기
 	public List<RankMovieVO> recoList() {
-		System.out.println("list DAO����");
 		List<RankMovieVO> list = my.selectList("RankMovieDAO.recoList");
-		
 		return list;
 	}
 	

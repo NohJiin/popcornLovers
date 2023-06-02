@@ -16,13 +16,13 @@ public class RankUserDAO {
     @Autowired
     SqlSessionTemplate my;
 
-    // rankUser ���̺� ���� �� member ���̺��� ������ insert
+    // rankUser 테이블에 없는 항목을 member 테이블에서 가져와 insert
     public int userInsert() {
 		int result = my.insert("RankUserDAO.userInsert");
 		return result;
 	}
     
-    // ���ϴ� ������ ���� �������� (top 1, 2, 3)
+    // 하나만 검색 : rank_no = #{rank_no} 인 항목 찾아 가져옴
     public RankUserVO selectTop(int rank_no) {
 		RankUserVO bag = my.selectOne("RankUserDAO.selectTop", rank_no);
 		return bag;
@@ -54,8 +54,8 @@ public class RankUserDAO {
     /* 스케줄러 끝 */
     
     
-    /* ����¡ */
-    // ��ü ��� : ������
+    /* 페이징 시작 */
+    // 전체 목록 : 순위별
     public List<RankUserVO> all(PageVO vo) {
 		List<RankUserVO> list = my.selectList("RankUserDAO.all", vo);
 		return list;
@@ -66,17 +66,22 @@ public class RankUserDAO {
     	return list;
     }
     
-    // member ��ü ��
+    // member 개수 count
     public int count() {
 		return my.selectOne("RankUserDAO.count");
 	}
     
-    /* ����¡ �� */
+    /* 페이징 끝 */
     
-    // ���� ��� ���� ��õ �׸� �� �� 
+    // 상위 20개 중에서 랜덤으로 3개 가져오기
     public List<RankUserVO> recoList() {
-    	List<RankUserVO> list = my.selectList("RankUserDAO.recoAll");
+    	List<RankUserVO> list = my.selectList("RankUserDAO.recoList");
     	return list;
     }
+    
+    // member 테이블에서 삭제된 id와 동일한 아이디를 rankuser 테이블에서도 삭제
+    public void rankDel(String member_id) {
+		my.delete("RankUserDAO.rankDel", member_id);
+	}
 
 }
