@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,7 +37,7 @@ public class CrawlerController {
 	        }
 	    	
 	    	@RequestMapping("bbs/main")
-	        public String getNewsList(Model model) {
+	        public void getNewsList(Model model) {
 	    		List<NewslistVO> news = dao.getNewsList();
 	    		System.out.println(news.size());
 	    		model.addAttribute("news", news);
@@ -46,10 +47,6 @@ public class CrawlerController {
 	    		model.addAttribute("likes", likes);
 	    		model.addAttribute("hits", hits);
 	    		model.addAttribute("newest_bbs",newest_bbs);
-	    		return "bbs/main";
-	    		
-	    		
-	    		
 	        }
 	    	
 	    	
