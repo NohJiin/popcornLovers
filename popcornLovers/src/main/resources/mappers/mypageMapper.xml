@@ -31,29 +31,28 @@
     <select id="myBbsAll" resultType="mypageVO" parameterType="MemberPageVO">
 	select * from (
 	select
-	row_number() over(order by member_id) as mybbs_no,
-	b.bbs_no, m.member_id, m.member_knickname, b.bbs_title, b.bbs_date
+	row_number() over(order by member_id desc) as mybbs_no,
+	b.bbs_no, m.member_id, m.member_knickname , b.bbs_title, b.bbs_date
 	from member m
-	inner join bbs b on m.member_id = b.member_id
-	where m.member_id = #{member_id}
-	) mb2
-	order by mybbs_no desc
-	limit #{start}, #{end};
+	inner join bbs b 
+	on m.member_id = b.member_id 
+	where m.member_id = #{member_id}) mb2
+	where mb2.mybbs_no between #{start} and #{end}
 	</select>
 	
 	<!-- 회원의 모든 review list 페이징 서브쿼리 -->
 	    <select id="myReviewAll" resultType="mypageVO" parameterType="MemberPageVO">
-	select * from (
+	select * from(
 	select
-	row_number() over(order by member_id desc) as mr_no,
-	m2.movietitle, mr.reviewcontent, m.member_knickname
+	row_number() over(order by member_id) as mr_no,
+	m2.movieTitle, mr.reviewContent, m.member_knickname 
 	from member m
-	inner join movie_review mr on m.member_id = mr.memberid
-	inner join movie m2 on m2.movieid = mr.movieid
-	where m.member_id = #{member_id}
-	) mr2
-	order by mr_no desc
-	limit #{start}, #{end};
+	inner join movie_review mr
+	on m.member_id = mr.memberId 
+	inner join movie m2 
+	on m2.movieId = mr.movieId 
+	where m.member_id = #{member_id}) mr2
+	where mr2.mr_no between #{start} and #{end}
 	</select>
 	
     <!-- 회원이 쓴 bbs 카운트 -->

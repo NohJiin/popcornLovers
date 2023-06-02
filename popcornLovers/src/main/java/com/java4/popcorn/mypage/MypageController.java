@@ -132,6 +132,11 @@ public class MypageController {
 		int reviewPages = reviewCount / 10 + 1; // bbs 10개씩 넣은 페이지 갯수
 		List<MypageVO> reviewAllList = dao.reviewAllList(vo);// member_id로 해당 list들 들고오기
 
+		// jjim
+				int jjimCount = dao.jjimCount(vo);
+				int jjimPages = jjimCount / 10 + 1;
+				List<MypageVO> jjumAllList = dao.jjimAllList(vo);
+		
 		dao.viewCount(member_id); //프로필 조회수
 		
 		// model에 넣어주자
@@ -143,6 +148,10 @@ public class MypageController {
 		model.addAttribute("reviewCount", reviewCount);
 		model.addAttribute("reviewPages", reviewPages);
 		
+		model.addAttribute("jjimCount", jjimCount);
+		model.addAttribute("jjimPages",  jjimPages);
+		model.addAttribute("jjimAllList", jjumAllList);
+		
 		model.addAttribute("bag", bag);
 	}
 
@@ -150,7 +159,7 @@ public class MypageController {
 	// 찜 추가 하기(빈 하트 >> 꽉찬 하트)
 	@RequestMapping("mypage/addmoviejjim")
 	public void addMovieJjim(MypageVO vo,  HttpSession session) {
-		String member_id = (String)session.getAttribute("member_id"); //member_id 세션 값 잡아두기
+		String member_id = (String)session.getAttribute("member_id"); //로그인한 회원 세션
 		String movieId = vo.getMovieId();//선택할 movieId 값도 들고온다
 		MypageVO movieInfo = dao.movieSelectOne(movieId); //dao에서 movie id값 읽어오기
 		
@@ -161,6 +170,9 @@ public class MypageController {
 		if(member_id != null) { //로그인이 되었을 때
 			 int result = dao.addMovieJjim(vo); // 찜 추가 실행
 			 if (result > 0) { //찜 추가가 성공 되면
+				//세션에 찜한 영화 상태 정보 저장
+				 //만약 movieId 가 123이면 찜 성공을 한다면 jjimStatus_123 값을 주면서 세션에 저장
+				 session.setAttribute("jjimStatus_" + movieId, "liked");
 			       System.out.println("추가 성공" +result);
 				} else { //찜 추가가 실패
 					System.out.println("추가 실패" +result);
@@ -175,13 +187,16 @@ public class MypageController {
 	// 찜 삭제하기(꽉찬 하트 >> 빈 하트)
 	@RequestMapping("mypage/removemoviejjim")
 	public void removeMovieJjim(MypageVO vo, HttpSession session) {
-		String member_id = (String) session.getAttribute("member_id");
+		String member_id = (String) session.getAttribute("member_id");//로그인한 회원 세션
 		String movieId = vo.getMovieId();//선택할 movieId 값도 들고온다
 		MypageVO movieInfo = dao.movieSelectOne(movieId); //dao에서 movie id값 읽어오기
 		
 		vo.setMovieId(movieInfo.getMovieId());
 		vo.setMember_id(member_id);
 		dao.removeMovieJjim(vo);
+		
+		//세션에서 찜한 영화 상태 정보 삭제
+		session.removeAttribute("jjimStatus_" + movieId);
 	}
 
 	//마이페이지로 이동하기

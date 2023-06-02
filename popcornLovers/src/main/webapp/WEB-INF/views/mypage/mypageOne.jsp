@@ -19,20 +19,23 @@
 <script type="text/javascript">
 $(function(){
 
-	 
-	 $('.profile_img').click(function() {
-		 var popupWidth = 500;
-		    var popupHeight = 300;
-		    var left = (window.screen.width - popupWidth) / 2;
-		    var top = (window.screen.height - popupHeight) / 2;
-		    var popupOptions = 'width=' + popupWidth + ', height=' + popupHeight + ', left=' + left + ', top=' + top;
-
-		    // 팝업 창을 열기
-		    window.open('popupGO', '프로필 이미지 업로드', popupOptions);
-		  });
+	 /* 찜한 영화 목록 버튼*/ 
+	$('.jjimpages').click(function() {
+		$.ajax({
+			url : "../mypage/myjjim2" , //views/mybbsAll.jsp가 결과!
+			data : {
+				page : $(this).text()
+			},
+			success : function(result) { //결과가 담겨진 table부분코드
+				$('#myjjimResult').html(result)
+			},
+			error : function() {
+				alert('실패')
+			}
+		}) //ajax
+	})//bbspages
 	
-	
-	
+	 /* 작성한 게시글 목록 버튼*/ 
 	$('.bbspages').click(function() {
 		$.ajax({
 			url : "../mypage/mybbs2" , //views/mybbsAll.jsp가 결과!
@@ -48,6 +51,7 @@ $(function(){
 		}) //ajax
 	})//bbspages
 	
+	/* 작성한 리뷰 목록 버튼 */
 	$('.reviewpages').click(function() {
 		$.ajax({
 			url : "../mypage/myreview2" , //views/mybbsAll.jsp가 결과!
@@ -69,15 +73,15 @@ $(function(){
 <body>
 <%@ include file="/WEB-INF/views/header.jsp" %>
 
+
 <div class="resume">
   <div class="base">
     <div class="profile">
-      <div class="photo"><img src="../resources/n_img/profil.png" width="210px" height="210px"/></div>
-       
+      <div class="photo"><img src="../resources/profile_img/${memberVO.member_img}" width="210px" height="210px"/></div>  
       <div class="info">
-        <p class="name">${bag.member_knickname}</p>
+        <p class="name">${member_knickname}</p>
 
-        <small class="job">#${bag.member_id}</small>
+        <small class="job">#${member_id}</small>
                 <i class="fa-sharp fa-solid fa-medal" style="color: #916a55;"></i>
 <i class="fa-sharp fa-solid fa-medal" style="color: #a1a1a1;"></i>
 <i class="fa-sharp fa-solid fa-medal" style="color: #f0c424;"></i>
@@ -97,6 +101,40 @@ $(function(){
    
   </div>
   <div class="func">
+    <div class="skills-prog">
+      <h3><i class="fa-solid fa-heart"></i>찜 목록</h3>
+      <%
+	int pages3 = (int)request.getAttribute("jjimPages");
+	for(int p3 = 1; p3 <= pages3; p3++){
+%>
+		<button class="jjimpages"><%= p3 %></button>
+<%		
+	}
+%> 
+
+<div id="myjjimResult">
+ <table>
+   <c:forEach items="${jjimAllList}" var="my"> 
+ <%--   <tr>
+      <td>${my.movieTitle}</td> 
+      <td><img alt="movie 이미지" src="../resources/n_img/${my.movieImg}" width="150" height="180"></td>
+      <td>${my.movieGrade}</td>     
+   </tr> --%>
+   
+   <tr>
+		<td><img alt="movie 이미지" src="../resources/n_img/${my.movieImg}" width="150" height="180"></td>
+	</tr>
+	<tr>
+		<td>${my.movieTitle}</td>
+	</tr>
+	<tr>
+		<td> ⭐${my.movieGrade}</td>
+	</tr>
+   </c:forEach>
+</table>
+</div>
+ </div>
+    
     
     <div class="skills-prog">
       <h3><i class="fa-solid fa-comment-dots"></i>작성한 리뷰</h3>
@@ -142,18 +180,18 @@ $(function(){
  <thead>
    <tr>
       <th>번호</th>
-      <th>작성자</th>
       <th>제목</th>
       <th>시간</th>
+      <th>작성자</th>
    </tr>
    </thead>
    <c:forEach items="${bbsAllList}" var="my"> 
       <tbody>
    <tr>
       <td>${my.bbs_id}</td> 
-      <td>${my.member_knickname}</td> 
-      <td>${my.bbs_title}</td>
+      <td><a href="../bbs/detail_post?bbs_no=${one.bbs_no}&bbs_cate_num=${one.bbs_cate_num}">${my.bbs_title}</a></td>
       <td>${my.bbs_date}</td>     
+      <td>${my.member_knickname}</td> 
    </tr>
    </tbody>
    </c:forEach>
