@@ -4,6 +4,14 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MypageDAO">
 
+<!-- movie id 정보값 가지고 오기 -->
+
+    <select id="movieSelectOne" resultType="mypageVO" parameterType="MovieInfoVO">
+        select * from popcorn.movie
+        where movieId = #{movieId}
+    </select>
+    
+    
     	<!-- member 하나만 검색 -->
 	<select id="selectOne" parameterType="String"
 		resultType="MemberVO">
@@ -23,28 +31,29 @@
     <select id="myBbsAll" resultType="mypageVO" parameterType="MemberPageVO">
 	select * from (
 	select
-	row_number() over(order by member_id desc) as mybbs_no,
-	b.bbs_no, m.member_id, m.member_knickname , b.bbs_title, b.bbs_date
+	row_number() over(order by member_id) as mybbs_no,
+	b.bbs_no, m.member_id, m.member_knickname, b.bbs_title, b.bbs_date
 	from member m
-	inner join bbs b 
-	on m.member_id = b.member_id 
-	where m.member_id = #{member_id}) mb2
-	where mb2.mybbs_no between #{start} and #{end}
+	inner join bbs b on m.member_id = b.member_id
+	where m.member_id = #{member_id}
+	) mb2
+	order by mybbs_no desc
+	limit #{start}, #{end};
 	</select>
 	
 	<!-- 회원의 모든 review list 페이징 서브쿼리 -->
 	    <select id="myReviewAll" resultType="mypageVO" parameterType="MemberPageVO">
-	select * from(
+	select * from (
 	select
-	row_number() over(order by member_id) as mr_no,
-	m2.movieTitle, mr.reviewContent, m.member_knickname 
+	row_number() over(order by member_id desc) as mr_no,
+	m2.movietitle, mr.reviewcontent, m.member_knickname
 	from member m
-	inner join movie_review mr
-	on m.member_id = mr.memberId 
-	inner join movie m2 
-	on m2.movieId = mr.movieId 
-	where m.member_id = #{member_id}) mr2
-	where mr2.mr_no between #{start} and #{end}
+	inner join movie_review mr on m.member_id = mr.memberid
+	inner join movie m2 on m2.movieid = mr.movieid
+	where m.member_id = #{member_id}
+	) mr2
+	order by mr_no desc
+	limit #{start}, #{end};
 	</select>
 	
     <!-- 회원이 쓴 bbs 카운트 -->
@@ -80,16 +89,52 @@
 	where m.member_id = #{member_id}
 	</select>
 	
+	<!-- 회원 찜 목록 카운트 -->
+	<select id="myJjimCount" resultType="Integer">
+	select count(*)
+	from member m
+	inner join moviejjim m2 on m.member_id = m2.member_id
+    inner join movie m3 on m3.movieId = m2.movieId
+	where m.member_id = #{member_id} and m2.movie_like = 1	
+	</select>
+	
 	<!-- 회원의 영화 찜 목록 추가  -->
 	<insert id ="addMovieJjim" parameterType="mypageVO">
-		insert into moviejjim values(#{movie_id}, #{member_id}, 1)
+		insert into moviejjim values(#{movieId}, #{member_id}, 1)
 	</insert>
 	
 	<!-- 회원의 영화 찜 목록 삭제 -->
 		<delete id ="removeMovieJjim" parameterType="mypageVO">
 		delete from moviejjim
-		where movie_id = #{movie_id} and member_id = #{member_id}
+		where movieId = #{movieId} and member_id = #{member_id}
 	</delete>
+	
+	<!-- 회원이 찜을 했는지 안했는지 -->
+	<select id = "JjimCheck"  resultType="Integer" parameterType="mypageVO">
+	select movie_like 
+	from moviejjim 
+	where member_id = #{member_id} and movieId = #{movieId}
+	</select>
+	
+	<!-- 회원 찜 목록 -->
+ <select id="myJjimAll" resultType="mypageVO" parameterType="MemberPageVO">
+	select * from (
+	select
+	row_number() over (order by member_id desc) as mj_no,
+	m3.movieid, m3.movietitle, m3.movieimg, m3.moviegrade, m2.movie_like, m.member_id
+	from member m
+	inner join moviejjim m2 on m.member_id = m2.member_id
+	inner join movie m3 on m3.movieid = m2.movieid
+	where m.member_id = #{member_id} and m2.movie_like = 1
+	) mjj
+	where mjj.mj_no between #{start} and #{end};
+	</select>
+	
+	<!-- 	<select id = "JjimCheck"  resultType="Integer" parameterType="mypageVO">
+	select count(*) from moviejjim 
+	where member_id = #{member_id} and movieId = #{movieId}
+	</select> -->
+	
 	
 	
 </mapper>

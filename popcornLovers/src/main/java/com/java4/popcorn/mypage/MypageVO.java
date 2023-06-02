@@ -20,13 +20,28 @@ public class MypageVO {
 	  
 	//회원의 영화 찜 목록
 	  private Integer movie_like;
+	  private String movieImg;
+	  private String movieGrade;
 	  
 	  //회원 프로필의 조회수와 좋아요
 	  private Integer memberHits;
 	  private Integer memberLike;
 	  
 	  
-	  //getter setter
+	  //getter setter	  
+	 
+	 public String getMovieGrade() {
+		return movieGrade;
+	}
+	 public void setMovieGrade(String movieGrade) {
+		this.movieGrade = movieGrade;
+	}
+	 public String getMovieImg() {
+		return movieImg;
+	}
+	 public void setMovieImg(String movieImg) {
+		this.movieImg = movieImg;
+	}
 	 public Integer getMemberHits() {
 		return memberHits;
 	}

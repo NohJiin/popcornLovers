@@ -6,7 +6,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.java4.popcorn.bbs.BbsVO;
 import com.java4.popcorn.member.MemberVO;
+import com.java4.popcorn.movieInfo.MovieInfoVO;
 
 @Component
 public class MypageDAO {
@@ -36,6 +38,13 @@ public class MypageDAO {
 		return  reviewAllList;
 	}
 	
+	//회원의 찜 목록
+		public List<MypageVO> jjimAllList(PageVO vo) {//member_id로 잡아오기
+			List<MypageVO> jjimAllList = my.selectList("MypageDAO.myJjimAll", vo); //pageVO에 넣었으니 vo에서 꺼내기
+			System.out.println("페이지에 보이는 jjim 갯수 : " + jjimAllList.size()); 
+			return  jjimAllList;
+		}
+	
 	//회원이 작성한 게시글 갯수
 	public int bbsCount(PageVO vo) {
 		return my.selectOne("MypageDAO.myBbsCount",vo);
@@ -56,6 +65,11 @@ public class MypageDAO {
 		return my.selectOne("MypageDAO.myReplyCount2",vo);
 	}
 	
+	//회원 찜 목록 갯수
+	public int jjimCount(PageVO vo) {
+		return my.selectOne("MypageDAO.myJjimCount",vo);
+	}
+	
 	//찜 추가하기
 	public int addMovieJjim(MypageVO vo) {
 		return my.insert("MypageDAO.addMovieJjim", vo);
@@ -66,9 +80,31 @@ public class MypageDAO {
 		return my.delete("MypageDAO.removeMovieJjim",vo);
 	}
 	
+	
+	
+	// 찜 클릭 여부 체크
+		public int jjim_Check(MypageVO vo) {
+			try {
+				Integer result = my.selectOne("MypageDAO.JjimCheck", vo);
+				if (result != null) {
+					return result;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return 0;
+		}
+		
+	
     //회원 조회수
     public int viewCount(String member_id) {
 		return my.update("MemberDAO.viewCount", member_id);
+	}
+    
+	//영화 선택
+	public MypageVO movieSelectOne(String movieId) {
+		MypageVO bag = my.selectOne("MypageDAO.movieSelectOne", movieId);
+		return bag;
 	}
 	
 }

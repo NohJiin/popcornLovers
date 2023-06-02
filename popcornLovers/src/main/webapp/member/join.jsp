@@ -5,91 +5,85 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입 화면</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript">
 
 $(function(){
-	    
-	$('#id').blur(function(){
+	 
+	<!-- 아이디 확인 --> 
+	$('#id').blur(function() {
 	    var memberId = $('#id').val();
-        var regex = /^[a-zA-Z0-9]+$/; // 영문과 숫자로만 이루어진 정규 표현식
+	    var regex = /^[a-zA-Z0-9]+$/; // 영문과 숫자로만 이루어진 정규 표현식
 
-        if(!regex.test(memberId)){
-            $('#id_result').text('영문과 숫자로만 입력해주세요.').css('color','red');
-            return; 
-        }// 아이디가 올바르지 않으므로 추가 검증 과정을 수행하지 않고 종료
-        // 아이디 유효성 검사를 먼저 수행한 후, 올바른 아이디일 경우 ajax에 요청 
+	    if (!regex.test(memberId)) {
+	        $('#id_result').text('영문과 숫자로만 입력해주세요.').css('color', 'red');
+	        return;
+	    }
 
-		$.ajax({
-			url:"idCheck",
-			data:{
-				"member_id" : $('#id').val()
-			},
-			success : function(data){
-				console.log('data',data)
-				if(data === 1 ){ //아이디 사용 불가능
-					//data==result (컨트롤러의 model의 result)
-					$('#id_result').text('사용할 수 없는 아이디 입니다.').css('color','red');
-				} else {
-						$('#id_result').text('사용가능한 아이디 입니다').css('color','blue');
-				}//if
-			}//success
-		})//ajax
-	})//#id
-	
+	    $.ajax({
+	        url: "idCheck",
+	        data: {
+	            "member_id": $('#id').val()
+	        },
+	        success: function(data) {
+	            console.log('data', data)
+	            if (data === 1) { // 아이디 사용 불가능
+	                $('#id_result').text('중복된 아이디 입니다.').css('color', 'red');
+	            } else {
+	                $('#id_result').text('사용가능한 아이디입니다.').css('color', 'blue');
+	            }
+	        }
+	    })
+	}) //#id
 
+	<!-- 회원가입 버튼 -->
 	$('#mem_join').click(function() {
-		var memberId = $('#id').val();
-		var memberpw = $('#pw').val();
-		var membername = $('#name').val();
-		var memberknickname = $('#knickname').val();
-		var memberage = $('#age').val();
-		var membertel = $('#tel').val();
-		var memberemail = $('#email').val();
-		
-		if(memberId === ""){
-			alert("아이디를 입력하세요")
-			$('#id').focus();
-			return false;
-		}
-		
-		if(memberpw === ""){
-			alert("비밀번호를 입력하세요")
-			$('#pw').focus();
-			return false;
-		}
-		
-		if(membername === ""){
-			alert("이름을 입력하세요")
-			$('#name').focus();
-			return false; 
-		}
-		
-		if(memberknickname === ""){
-			alert("닉네임을 입력하세요")
-			$('#knickname').focus();
-			return false;
-		}
-		
-		if(memberage === ""){
-			alert("나이를 입력하세요")
-			$('#age').focus();
-			return false; 
-		}
-		
-		if(membertel === ""){
-			alert("전화번호를 입력하세요")
-			$('#tel').focus();
-			return false; 
-		}
-		
-		if(memberemail === ""){
-			alert("이메일을 입력하세요")
-			$('#email').focus();
-			return false; 
-		}
-	})//mem_join
+	    var memberId = $('#id').val();
+	    var memberpw = $('#pw').val();
+	    var membername = $('#name').val();
+	    var memberknickname = $('#knickname').val();
+	    var memberage = $('#age').val();
+	    var membertel = $('#tel').val();
+	    var memberemail = $('#email').val();
+
+	    if (memberId === "" || memberpw === "" || membername === "" || memberknickname === "" || memberage === "" || membertel === "" || memberemail === "") {
+	        alert("모든 정보를 입력해주세요.");
+	        
+	        // 가장 상단부터 빈 공란으로 이동
+	        if (memberId === "") {
+	            $('#id').focus();
+	        } else if (memberpw === "") {
+	            $('#pw').focus();
+	        } else if (membername === "") {
+	            $('#name').focus();
+	        } else if (memberknickname === "") {
+	            $('#knickname').focus();
+	        } else if (memberage === "") {
+	            $('#age').focus();
+	        } else if (membertel === "") {
+	            $('#tel').focus();
+	        } else if (memberemail === "") {
+	            $('#email').focus();
+	        }
+	        return false;
+	    }
+
+	    var regex = /^[a-zA-Z0-9]+$/; // 영문과 숫자로만 이루어진 정규 표현식
+
+	    if (!regex.test(memberId)) {
+	        alert("아이디는 영문과 숫자로만 입력해주세요.");
+	        return false;
+	    }
+
+	    // 아이디 중복 체크 등 추가 검증 로직
+	    if ($('#id_result').text() === '중복된 아이디 입니다.') {
+	        alert("중복된 아이디 입니다. 다른 아이디를 입력해주세요.");
+	        return false;
+	    }
+	})//#mem_join
+
 })//$
 
 
@@ -116,6 +110,8 @@ $(function(){
 <br>
 <button type ="submit" id="mem_join" >회원가입</button>
 </form>
+
+
 
 </body>
 </html>

@@ -12,7 +12,7 @@
 		insert into
 		popcorn.member values (#{member_id}, #{member_pw}, #{member_name},
 		#{member_knickname},
-		#{member_tel}, #{member_email}, #{member_level}, null , null , null, #{member_age},
+		#{member_tel}, #{member_email}, #{member_level}, 0 , 0 , null, #{member_age},
 		#{member_gender})
 	</insert>
 

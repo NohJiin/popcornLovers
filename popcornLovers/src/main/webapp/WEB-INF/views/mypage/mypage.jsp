@@ -19,31 +19,21 @@
 <script type="text/javascript">
 $(function(){
 
-	
-	 $('#btntest').click(function() {
-		    if ($(this).hasClass('jjim')) {
-		      // jjim 클래스가 있는 경우
-		      $(this).removeClass('jjim').addClass('jjimout');
-		      alert("찜 취소");
-		    } else {
-		      // jjimout 클래스가 있는 경우
-		      $(this).removeClass('jjimout').addClass('jjim');
-		      alert("찜 완료");
-		    }
-		  });
-	 
-	 
-	 $('#jjim1').click(function() {
-		    if ($(this).hasClass('notlove')) {
-		      $(this).removeClass('notlove');
-		      $('#jjim1 i').removeClass('fa-regular').addClass('fa-solid');
-		      alert("찜 완료");
-		    } else {
-		    	$(this).addClass('notlove');
-		      $('#jjim1 i').removeClass('fa-solid').addClass('fa-regular');
-		      alert("찜 취소");
-		    }
-		  });
+	 /* 찜한 영화 목록 버튼*/ 
+	$('.jjimpages').click(function() {
+		$.ajax({
+			url : "../mypage/myjjim2" , //views/mybbsAll.jsp가 결과!
+			data : {
+				page : $(this).text()
+			},
+			success : function(result) { //결과가 담겨진 table부분코드
+				$('#myjjimResult').html(result)
+			},
+			error : function() {
+				alert('실패')
+			}
+		}) //ajax
+	})//bbspages
 	
 	 /* 작성한 게시글 목록 버튼*/ 
 	$('.bbspages').click(function() {
@@ -116,6 +106,40 @@ $(function(){
    
   </div>
   <div class="func">
+    <div class="skills-prog">
+      <h3><i class="fa-solid fa-heart"></i>찜 목록</h3>
+      <%
+	int pages3 = (int)request.getAttribute("jjimPages");
+	for(int p3 = 1; p3 <= pages3; p3++){
+%>
+		<button class="jjimpages"><%= p3 %></button>
+<%		
+	}
+%> 
+
+<div id="myjjimResult">
+ <table>
+   <c:forEach items="${jjimAllList}" var="my"> 
+ <%--   <tr>
+      <td>${my.movieTitle}</td> 
+      <td><img alt="movie 이미지" src="../resources/n_img/${my.movieImg}" width="150" height="180"></td>
+      <td>${my.movieGrade}</td>     
+   </tr> --%>
+   
+   <tr>
+		<td><img alt="movie 이미지" src="../resources/n_img/${my.movieImg}" width="150" height="180"></td>
+	</tr>
+	<tr>
+		<td>${my.movieTitle}</td>
+	</tr>
+	<tr>
+		<td> ⭐${my.movieGrade}</td>
+	</tr>
+   </c:forEach>
+</table>
+</div>
+ </div>
+    
     
     <div class="skills-prog">
       <h3><i class="fa-solid fa-comment-dots"></i>작성한 리뷰</h3>
@@ -161,18 +185,18 @@ $(function(){
  <thead>
    <tr>
       <th>번호</th>
-      <th>작성자</th>
       <th>제목</th>
       <th>시간</th>
+      <th>작성자</th>
    </tr>
    </thead>
    <c:forEach items="${bbsAllList}" var="my"> 
       <tbody>
    <tr>
       <td>${my.bbs_id}</td> 
-      <td>${my.member_knickname}</td> 
-      <td>${my.bbs_title}</td>
+      <td><a href="../bbs/detail_post?bbs_no=${one.bbs_no}&bbs_cate_num=${one.bbs_cate_num}">${my.bbs_title}</a></td>
       <td>${my.bbs_date}</td>     
+      <td>${my.member_knickname}</td> 
    </tr>
    </tbody>
    </c:forEach>
