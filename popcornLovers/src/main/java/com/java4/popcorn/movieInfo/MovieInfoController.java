@@ -38,6 +38,9 @@ public class MovieInfoController {
 	
 	@RequestMapping("movie/movieDetails2")
 	public String movieDetails(String movieId, Model model) {
+		// 조회수 증가하기
+		dao.viewCount(movieId);
+		
 		// 영화 정보를 조회하여 MovieInfoVO에 담기
 		MovieInfoVO  bag = dao.selectOne(movieId);
 		// 모델에 영화 정보 추가

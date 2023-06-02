@@ -24,4 +24,8 @@ public class MovieInfoDAO {
 	     return bag;
 	       
 	    }
+	 
+	 public void viewCount(String movieId) {
+		my.update("MovieInfoDAO.viewCount", movieId);
+	}
 }
