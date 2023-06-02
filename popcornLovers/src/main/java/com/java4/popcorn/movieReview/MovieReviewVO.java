@@ -1,4 +1,4 @@
-package com.java4.popcorn.movieInfo;
+package com.java4.popcorn.movieReview;
 
 import lombok.Data;
 

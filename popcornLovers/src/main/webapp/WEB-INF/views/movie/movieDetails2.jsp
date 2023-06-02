@@ -10,6 +10,8 @@
 
 <meta charset="UTF-8">
 <title>영화 상세 정보</title>
+<script src="https://kit.fontawesome.com/a86e134bc2.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.6.4.js"></script>
 <style>
 	textarea {
 	width: 40%;
@@ -59,17 +61,78 @@
 .rate input[type="radio"]:checked ~ label {
   color: #f73c32;
 }
+.jjim_heart{font-size:30px;}
+
+#jjim{background:none;}
 </style>
+
+<script type="text/javascript">
+$(function() {
+	var movieId = '${scope=bag.movieId}';
+	var jjimStatus = sessionStorage.getItem('jjimStatus_' + movieId);
+	
+	//찜 상태가 없는 경우 초기 값은 class를 notlove로 설정
+	if (jjimStatus === null) { 
+	    jjimStatus = 'notlove'; 
+	  }
+	
+	//jjimStatus가 liked가 되면 love를 class에 넣어준다
+	if (jjimStatus === 'liked') {
+	    $('#jjim').addClass('love');
+	    $('#jjim i').removeClass('fa-regular').addClass('fa-solid');
+	  } else {
+	    $('#jjim').addClass('notlove');
+	    $('#jjim i').removeClass('fa-solid').addClass('fa-regular');
+	  }
+	
+	$('#jjim').click(function() {
+		    if (${(Scope=member_id) ne null}) {
+		      if ($('#jjim').hasClass('notlove')) { // 찜 추가(빈 하트 클릭)
+		        $.ajax({
+		          url: '../mypage/addmoviejjim',
+		          data: {
+		            movieId: '${scope=bag.movieId}',
+		            member_id: '${scope=member_id}'
+		          },
+		          success: function(result) {
+		            $('#jjim').removeClass('notlove').addClass('love');
+		            $('#jjim i').removeClass('fa-regular').addClass('fa-solid');
+		            sessionStorage.setItem('jjimStatus_' + movieId, 'liked'); // 찜 상태 세션에 저장
+		            alert("찜 완료");
+		          }
+		        });
+		      } else { //찜 삭제(꽉 찬 하트 클릭)
+		    	  $.ajax({
+			          url: '../mypage/removemoviejjim',
+			          data: {
+			            movieId: '${scope=bag.movieId}',
+			            member_id: '${scope=member_id}'
+			          },
+			          success: function(result) {
+			            $('#jjim').removeClass('love').addClass('notlove');
+			            $('#jjim i').removeClass('fa-solid').addClass('fa-regular');
+			            sessionStorage.removeItem('jjimStatus_' + movieId); // 찜 상태 세션에서 제거
+			            alert("찜 삭제");
+			          }
+			        });
+		      }
+		    } else {
+		      alert('로그인 후 찜하기를 사용할 수 있습니다.');
+		    }
+		  });
+	})
+</script>
+
 <script>
-	$.ajax({
-    url: "movieReview",
-    success: function(x) {
-        $("#review").append(x);
-    },
-    error: function() {
-        alert("오류발생");
-    }
-	});
+    $.ajax({
+        url: "movieReview",
+        success: function(x) {
+            $("#review").append(x);
+        },
+        error: function() {
+            alert("오류발생");
+        }
+    });
 </script>
 
 </head>
@@ -91,6 +154,8 @@
     <input type="radio" id="rating1" name="rating" value="1">
     <label for="rating1" title="1점"></label>
   </div>
+  <button>평점 등록</button>
+  <button id='jjim' style='border :0; cursor:pointer'><i class='fa-sharp fa-regular fa-heart fa-heart jjim_heart' style='color: #ff3d3d;'></i></button>
   <hr style="border: solid 3px #FFF39C ">
   <p>감독: ${bag.movieDirector}</p>
   <p>주연 배우: ${bag.movieActor}</p>
@@ -100,8 +165,7 @@
   <hr style="border: solid 3px #FFF39C ">
 </div>
 <div id="review"></div>
-<textarea style="font-size: 13px">영화 리뷰 작성하기 (최대 500자)</textarea><br>
-<button>등록</button>
+<textarea style="font-size: 13px" placeholder ="최대 500글자 입력 가능"></textarea> <button>등록</button>
 
 </body>
 </html>

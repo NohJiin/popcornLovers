@@ -16,10 +16,6 @@
 		where rank_no = #{rank_no}
     </select>
     
-    <select id="selectReview">
-    	select memberId, reviewContent from movie_review where movieId = #{movieId}  
-    </select>
-    
     <update id="viewCount" parameterType="String">
     	update popcorn.movie m
 		set m.movieHits = m.movieHits + 1
