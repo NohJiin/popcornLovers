@@ -19,6 +19,7 @@
 <script type="text/javascript">
 $(function(){
 
+	 
 	 /* 찜한 영화 목록 버튼*/ 
 	$('.jjimpages').click(function() {
 		$.ajax({
@@ -73,15 +74,15 @@ $(function(){
 <body>
 <%@ include file="/WEB-INF/views/header.jsp" %>
 
-
 <div class="resume">
   <div class="base">
     <div class="profile">
-      <div class="photo"><img src="../resources/profile_img/${memberVO.member_img}" width="210px" height="210px"/></div>  
+      <div class="photo"><img src="../resources/profile_img/${memberVO.member_img}" width="210px" height="210px"/></div>
+       
       <div class="info">
-        <p class="name">${member_knickname}</p>
+        <p class="name">${bag.member_knickname}</p>
 
-        <small class="job">#${member_id}</small>
+        <small class="job">#${bag.member_id}</small>
                 <i class="fa-sharp fa-solid fa-medal" style="color: #916a55;"></i>
 <i class="fa-sharp fa-solid fa-medal" style="color: #a1a1a1;"></i>
 <i class="fa-sharp fa-solid fa-medal" style="color: #f0c424;"></i>
@@ -101,7 +102,8 @@ $(function(){
    
   </div>
   <div class="func">
-    <div class="skills-prog">
+    
+       <div class="skills-prog">
       <h3><i class="fa-solid fa-heart"></i>찜 목록</h3>
       <%
 	int pages3 = (int)request.getAttribute("jjimPages");
@@ -134,7 +136,6 @@ $(function(){
 </table>
 </div>
  </div>
-    
     
     <div class="skills-prog">
       <h3><i class="fa-solid fa-comment-dots"></i>작성한 리뷰</h3>
@@ -180,18 +181,18 @@ $(function(){
  <thead>
    <tr>
       <th>번호</th>
+      <th>작성자</th>
       <th>제목</th>
       <th>시간</th>
-      <th>작성자</th>
    </tr>
    </thead>
    <c:forEach items="${bbsAllList}" var="my"> 
       <tbody>
    <tr>
       <td>${my.bbs_id}</td> 
-      <td><a href="../bbs/detail_post?bbs_no=${one.bbs_no}&bbs_cate_num=${one.bbs_cate_num}">${my.bbs_title}</a></td>
-      <td>${my.bbs_date}</td>     
       <td>${my.member_knickname}</td> 
+      <td>${my.bbs_title}</td>
+      <td>${my.bbs_date}</td>     
    </tr>
    </tbody>
    </c:forEach>
