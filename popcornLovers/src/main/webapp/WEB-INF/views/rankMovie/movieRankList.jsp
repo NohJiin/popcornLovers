@@ -17,9 +17,9 @@
 		<td>제목</td>
 		<td>별점</td>
 		<td>장르</td>
-		<td>리뷰 수</td>
-		<td><img alt="조회수 눈 이미지" src="../resources/n_img/eye.png" width="10px" height="10px"></td>
-		<td><img alt="좋아요 하트 이미지" src="../resources/n_img/pink.png" width="10px" height="10px"></td>
+		<td><img alt="리뷰수" src="../resources/n_img/reviews.png" width="23px" height="23px"></td>
+		<td><img alt="조회수 눈 이미지" src="../resources/n_img/eye.png" width="20px" height="20px"></td>
+		<td><img alt="좋아요 하트 이미지" src="../resources/n_img/heart.png" width="20px" height="20px"></td>
 		<!-- <td>버튼</td> -->
 	</tr>
 	<c:forEach items="${list}" var="bag">

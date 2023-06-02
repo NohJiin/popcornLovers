@@ -45,11 +45,10 @@
 }
 
 #recoList {
-	width : 29%;
+	width : 28%;
 	height : 100%;
 	float: left;
 	margin-left: 5px;
-	margin-top: 20px;
 }
 
 .reco-border {
@@ -112,16 +111,16 @@ button {
 <body>
 <%@ include file="../WEB-INF/views/header.jsp" %>
 
-<div id="main">
+<div id="main" style="margin-top: 30px;">
 	<div id="rank">					<!--  style="background: yellow;" -->
 		<!-- Movie Rank -->
-		<div id="top3"><!-- Top3 --></div>	<!--  style="background: violet;" -->
+		<div id="top3" style="width: 80%; margin: auto;"><!-- Top3 --></div>	<!--  style="background: violet;" -->
 		
-		<div id="rankList">			<!--  style="background: pink;" -->
+		<div id="rankList" style="margin-top: 15px;">			<!--  style="background: pink;" -->
 			<!-- 랭킹이 들어갈 곳 -->
 		</div>
 	</div>
-	<div id="recoList" class="reco-border" style="background: #FFF4A6;">				<!--  style="background: orange;" -->
+	<div id="recoList" class="reco-border" style="background: #FFF4A6; margin-left: 1%;">				<!--  style="background: orange;" -->
 		<!-- 추천 항목이 들어갈 곳 -->
 	</div>
 </div>
