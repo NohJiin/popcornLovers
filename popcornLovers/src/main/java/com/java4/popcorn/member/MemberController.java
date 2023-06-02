@@ -53,7 +53,7 @@ public class MemberController {
 	}
 
 	// 로그아웃
-	@RequestMapping("../member/logout")
+	@RequestMapping("member/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:../Main.jsp";
@@ -135,7 +135,7 @@ public class MemberController {
 			model.addAttribute("vo",vo);
 			dao.profileUp(vo);
 			
-			return "redirect:../mypage/mypage";
+			return "redirect:../mypage/mypage?page=1";
 		}
 	
 	
