@@ -4,6 +4,13 @@
 <html>
 <head>
 <style>
+#main{
+	width : 100%;
+	height : 100%;
+	margin : 0px auto;	/* 가운데 정렬 */
+	margin-top: 10px;
+}
+
 .slider-container {
 	width: 100%;
 	overflow: hidden;
@@ -165,15 +172,17 @@ $(function() {
 <body>
 <%@ include file="../header.jsp"%>
 
-<div id="boxoffice">
-    <h2>박스 오피스 순위</h2>
-    <div class="slider-container">
-        <div class="slider"></div>
-    </div>
-</div>
-
-<div id="recommend">
-    <h2>팝콘 인기 영화</h2>
+<div id="main">
+	<div id="boxoffice">
+	    <h2>박스 오피스 순위</h2>
+	    <div class="slider-container">
+	        <div class="slider"></div>
+	    </div>
+	</div>
+	
+	<div id="recommend">
+	    <h2>팝콘 인기 영화</h2>
+	</div>
 </div>
 </body>
 </html>

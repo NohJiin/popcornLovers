@@ -30,14 +30,12 @@ th, td {
 		<col width="0.5%">
 	</colgroup>
 	<tr>
-		<td><img alt="2등" src="../resources/n_img/silvercrown.png" width="50" height="35"></td>
+		<td rowspan="2"><br><img alt="2등" src="../resources/n_img/silvercrown.png" width="50" height="35"><br><a href="../mypage/mypageOne?member_id=${top2.member_id}"><img alt="멤버 Top2 이미지" src="../resources/profile_img/${top2.member_img}" width="170" height="170"></a></td>
 		<td><img alt="1등" src="../resources/n_img/goldcrown.png" width="70" height="45"></td>
-		<td><img alt="3등" src="../resources/n_img/dongcrown.png" width="50" height="35"></td>
+		<td rowspan="2"><br><img alt="3등" src="../resources/n_img/dongcrown.png" width="50" height="35"><br><a href="../mypage/mypageOne?member_id=${top3.member_id}"><img alt="멤버 Top3 이미지" src="../resources/profile_img/${top3.member_img}" width="170" height="170"></a></td>
 	</tr>
 	<tr>
-		<td><a href="../mypage/mypageOne?member_id=${top2.member_id}"><img alt="멤버 Top2 이미지" src="../resources/profile_img/${top2.member_img}" width="170" height="170"></a></td>
 		<td><a href="../mypage/mypageOne?member_id=${top1.member_id}"><img alt="멤버 Top1 이미지" src="../resources/profile_img/${top1.member_img}" width="200" height="200"></a></td>
-		<td><a href="../mypage/mypageOne?member_id=${top3.member_id}"><img alt="멤버 Top3 이미지" src="../resources/profile_img/${top3.member_img}" width="170" height="170"></a></td>
 	</tr>
 	<tr>
 		<td>LV. ${top2.member_level} ㆍ <a href="../mypage/mypageOne?member_id=${top2.member_id}">${top2.member_knickname}</a></td>

@@ -45,7 +45,7 @@
 						<ul>
 							<li><a href="${pageContext.request.contextPath}/rank/rankUserMain.jsp"><span>유저랭킹</span></a></li><!--
 							--><li><a href="${pageContext.request.contextPath}/rank/rankMovieMain.jsp"><span>영화랭킹</span></a></li><!--
-							--><li><a href="${pageContext.request.contextPath}/rank/rankActorMain.jsp"><span>배우랭킹</span></a></li><!--
+							--><%-- <li><a href="${pageContext.request.contextPath}/rank/rankActorMain.jsp"><span>배우랭킹</span></a></li> --%><!--
 							--></ul>
 						</div>
 					</li><!--
