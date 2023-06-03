@@ -188,26 +188,29 @@ public class MypageController {
 	
 	
 	// 찜 추가 하기(빈 하트 >> 꽉찬 하트)
-//	@RequestMapping("mypage/addmoviejjim")
-//	public void addMovieJjim(MypageVO vo, HttpSession session) {
-//	    String member_id = (String) session.getAttribute("member_id"); // 로그인한 회원 세션
-//	    String movieId = vo.getMovieId(); // 선택한 movieId 값
-//
-//	    MypageVO movieInfo = dao.movieSelectOne(movieId); // dao에서 movie id값 읽어오기
-//
-//	    if (member_id != null) { // 로그인이 되었을 때
-//	        int result = dao.addMovieJjim(movieInfo.getMovieId(), member_id); // 찜 추가 실행
-//	        if (result > 0) { // 찜 추가가 성공되면
-//	            session.setAttribute("jjimStatus_" + movieId, "liked"); // 세션에 찜한 영화 상태 정보 저장
-//	            System.out.println("추가 성공" + result);
-//	        } else { // 찜 추가가 실패
-//	            System.out.println("추가 실패" + result);
-//	        }
-//	    } else {
-//	        // 로그인이 되지 않았을 때
-//	        System.out.println("로그인 여부 확인");
-//	    }
-//	}
+	@RequestMapping("mypage/addmoviejjim")
+	public void addMovieJjim(MypageVO vo, HttpSession session) {
+	    String member_id = (String) session.getAttribute("member_id"); // 로그인한 회원 세션
+	    String movieId = vo.getMovieId(); // 선택한 movieId 값
+
+	    MypageVO movieInfo = dao.movieSelectOne(movieId); // dao에서 movie id값 읽어오기
+
+	    vo.setMovieId(movieInfo.getMovieId());
+	    vo.setMember_id(member_id);
+	    
+	    if (member_id != null) { // 로그인이 되었을 때
+	        int result = dao.addMovieJjim(vo); // 찜 추가 실행
+	        if (result > 0) { // 찜 추가가 성공되면
+	            session.setAttribute("jjimStatus_" + movieId, "liked"); // 세션에 찜한 영화 상태 정보 저장
+	            System.out.println("추가 성공" + result);
+	        } else { // 찜 추가가 실패
+	            System.out.println("추가 실패" + result);
+	        }
+	    } else {
+	        // 로그인이 되지 않았을 때
+	        System.out.println("로그인 여부 확인");
+	    }
+	}
 
 	
 	// 찜 삭제하기(꽉찬 하트 >> 빈 하트)
