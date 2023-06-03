@@ -42,6 +42,7 @@
         <!--김준명-->
         <typeAlias type="com.java4.popcorn.movieInfo.MovieInfoVO" alias="MovieInfoVO"/>
         <typeAlias type="com.java4.popcorn.actor.ActorVO" alias="ActorVO"/>
+        <typeAlias type="com.java4.popcorn.movieReview.MovieReviewVO" alias="MovieReviewVO"/>
 
         <!--박근우-->
         <typeAlias type="com.java4.popcorn.mycalendar.MyCalendarVO" alias="mycalendarVO"/>
