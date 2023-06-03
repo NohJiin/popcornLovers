@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.java4.popcorn.member.MemberVO;
+import com.java4.popcorn.movieReview.MovieReviewVO;
 
 @Component
 public class BbsDAO {
@@ -197,8 +198,8 @@ public class BbsDAO {
 		}
 		
 		//최신 리뷰 가져오기
-		public List<BbsVO> newest_review() {
-			List<BbsVO> result = my.selectList("BbsDAO.newest_review");
+		public List<MovieReviewVO> newest_review() {
+			List<MovieReviewVO> result = my.selectList("BbsDAO.newest_review");
 			return result;
 		}
 }

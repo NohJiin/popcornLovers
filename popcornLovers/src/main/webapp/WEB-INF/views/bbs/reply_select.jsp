@@ -61,7 +61,7 @@
 <c:if test="${list[0].b_reply_content == null}">
  <div class="reply_box" style="border-top: 1px solid #999; padding-top: 10px;">
                 <div class="replyt_writer_profile" style="padding-left: 10px; display: flex;">
-                    <img src="../resources/img/bbs/${list4[0].member_img}" style="width: 50px; height: 50px;">
+                    <img src="../resources/profile_img/${list4[0].member_img}" style="width: 50px; height: 50px;">
                     <span style="align-self: flex-end;">${list4[0].member_knickname}</span>
                 </div>
                 <div class="reply_content">

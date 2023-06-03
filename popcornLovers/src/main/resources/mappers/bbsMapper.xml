@@ -293,7 +293,7 @@
 	</select>
 	
 	<!-- 최신 리뷰 리스트 -->
-	<select id="newest_review">
+	<select id="newest_review" resultType="MovieReviewVO">
     	SELECT *
 		FROM popcorn.movie_review
 		ORDER BY reviewId DESC

@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.java4.popcorn.movieReview.MovieReviewVO;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -44,9 +46,11 @@ public class CrawlerController {
 	    		List<BbsVO> likes = dao2.best_bbslike();
 	    		List<BbsVO> hits = dao2.best_bbsview_cnt();
 	    		List<BbsVO> newest_bbs = dao2.newest_bbs();
+	    		List<MovieReviewVO> newest_review = dao2.newest_review();
 	    		model.addAttribute("likes", likes);
 	    		model.addAttribute("hits", hits);
 	    		model.addAttribute("newest_bbs",newest_bbs);
+	    		model.addAttribute("newest_review",newest_review);
 	        }
 	    	
 	    	

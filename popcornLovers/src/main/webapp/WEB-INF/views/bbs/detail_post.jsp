@@ -290,7 +290,7 @@ td {
             <div class="comment_list_cont">
                 <div class="comment_list">
                     <div class="comment_list_info">
-                        <img src="../resources/img/bbs/${one.member_img}" style="width: 50px; height: 50px;">
+                        <img src="../resources/profile_img/${one.member_img}" style="width: 50px; height: 50px;">
                         <div class="comment_list_first_line">
                             <div class="comment_list_first_line_item1">
                                 <span>${one.member_knickname}</span>
@@ -331,7 +331,7 @@ td {
 			<span>로그인이 필요합니다.</span>
 			</c:if>
 			<c:if test="${(Scope=member_id) ne null}">
-			<img src="../resources/img/bbs/${list3[0].member_img}">
+			<img src="../resources/profile_img/${list3[0].member_img}">
 				<span>${list3[0].member_knickname}</span>
 				</c:if>
 				</div>

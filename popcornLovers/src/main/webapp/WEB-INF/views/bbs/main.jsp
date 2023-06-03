@@ -92,11 +92,11 @@ body {
 					<div class="top_post_first_line"><span style="text-align: left;">최신 리뷰</span><span style="text-align: right;"></span></div>
 						<hr style="margin-top: 10px; margin-bottom: 22px; width: 93%;">
 						<div class="posts_sub_contents_box" style="padding-left: 15px; margin-right: 19px;">
-						<div style="display: flex; align-items: center; margin-bottom: 10px;"><img src="./resources/img/bbs/review.png" style="width: 30px; height: 30px; margin-right: 5px;"><span><a href="#">' 된 김선호, 영화계 시선 쏠리는</a></span></div>
-						<div style="display: flex; align-items: center; margin-bottom: 10px;"><img src="./resources/img/bbs/review.png" style="width: 30px; height: 30px; margin-right: 5px;"><span style="text-align: left;display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis"><a href="#">[시네마Y] 박훈정의 '귀공자' 된 김선호, 영화계 시선 쏠리는 쏠리는</a></span></div>
-						<div style="display: flex; align-items: center; margin-bottom: 10px;"><img src="./resources/img/bbs/review.png" style="width: 30px; height: 30px; margin-right: 5px;"><span><a href="#">[시네마Y] 박훈정의 '귀공자' 된 김선호, 영화계 시선 쏠리는</a></span></div>
-						<div style="display: flex; align-items: center; margin-bottom: 10px;"><img src="./resources/img/bbs/review.png" style="width: 30px; height: 30px; margin-right: 5px;"><span><a href="#">[시네마Y] 박훈정의 '귀공자' 된 김선호, 영화계 시선 쏠리는</a></span></div>
-						<div style="display: flex; align-items: center; margin-bottom: 10px;"><img src="./resources/img/bbs/review.png" style="width: 30px; height: 30px; margin-right: 5px;"><span><a href="#">[시네마Y] 박훈정의 '귀공자' 된 김선호, 영화계 시선 쏠리는</a></span></div>
+						<div style="display: flex; align-items: center; margin-bottom: 10px;"><img src="./resources/img/bbs/review.png" style="width: 30px; height: 30px; margin-right: 5px;"><span><a href="movie/movieDetails2?movieId=${newest_review[0].movieId}">${newest_review[0].reviewContent}</a></span></div>
+						<div style="display: flex; align-items: center; margin-bottom: 10px;"><img src="./resources/img/bbs/review.png" style="width: 30px; height: 30px; margin-right: 5px;"><span style="text-align: left;display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis"><a href="movie/movieDetails2?movieId=${newest_review[1].movieId}">${newest_review[1].reviewContent}</a></span></div>
+						<div style="display: flex; align-items: center; margin-bottom: 10px;"><img src="./resources/img/bbs/review.png" style="width: 30px; height: 30px; margin-right: 5px;"><span><a href="movie/movieDetails2?movieId=${newest_review[2].movieId}">${newest_review[2].reviewContent}</a></span></div>
+						<div style="display: flex; align-items: center; margin-bottom: 10px;"><img src="./resources/img/bbs/review.png" style="width: 30px; height: 30px; margin-right: 5px;"><span><a href="movie/movieDetails2?movieId=${newest_review[3].movieId}">${newest_review[3].reviewContent}</a></span></div>
+						<div style="display: flex; align-items: center; margin-bottom: 10px;"><img src="./resources/img/bbs/review.png" style="width: 30px; height: 30px; margin-right: 5px;"><span><a href="movie/movieDetails2?movieId=${newest_review[4].movieId}">${newest_review[4].reviewContent}</a></span></div>
 						</div>
 						</div>
                 </div>
