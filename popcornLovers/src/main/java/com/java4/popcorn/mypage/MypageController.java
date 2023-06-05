@@ -69,6 +69,10 @@ public class MypageController {
 		int jjimPages = jjimCount / 10 + 1;
 		List<MypageVO> jjumAllList = dao.jjimAllList(vo);
 		
+		//grade
+				int gradeCount = dao.jjimCount(vo);
+				int gradePages = gradeCount / 10 + 1;
+				List<MypageVO> gradeAllList = dao.gradeAllList(vo);
 		
 		dao.viewCount(member_id); //프로필 조회수
 		
@@ -113,6 +117,19 @@ public class MypageController {
 		List<MypageVO> reviewAllList = dao.reviewAllList(vo);// member_id로 해당 list들 들고오기
 
 		model.addAttribute("reviewAllList", reviewAllList);// model에 넣어주자
+		System.out.println("리뷰 페이지 수 " + vo);
+	}
+	
+	// 회원이 찜한 영화(나머지 페이지를 처리)
+	@RequestMapping("mypage/myjjim2")
+	public void jjimListOther(PageVO vo, Model model, HttpSession session) {
+		String member_id = (String) session.getAttribute("member_id"); // member_id 세션 값 잡아두기 - String으로 id 잡기!
+		vo.setStartEnd(vo.getPage());
+		vo.setMember_id(member_id);
+
+		List<MypageVO> jjimAllList = dao.jjimAllList(vo);// member_id로 해당 list들 들고오기
+
+		model.addAttribute("jjimAllList", jjimAllList);// model에 넣어주자
 	}
 
 	
@@ -170,8 +187,11 @@ public class MypageController {
 		vo.setMember_id(member_id);
 
 		List<MypageVO> bbsAllList = dao.bbsAllList(vo);// member_id로 해당 list들 들고오기
-
 		model.addAttribute("bbsAllList", bbsAllList);// model에 넣어주자
+		
+		//어떤 회원의 프로필을 선택했는지 member_id로 셀렉해서 model에 넣어주자
+		MemberVO memberVO  = dao.selectOne(member_id);
+		model.addAttribute("memberVO", memberVO);
 	}
 
 	// 회원이 작성한 리뷰(나머지 페이지를 처리) + 다른 사람이 보는 회원 프로필 
@@ -181,37 +201,30 @@ public class MypageController {
 		vo.setMember_id(member_id);
 
 		List<MypageVO> reviewAllList = dao.reviewAllList(vo);// member_id로 해당 list들 들고오기
-
+		
 		model.addAttribute("reviewAllList", reviewAllList);// model에 넣어주자
+		
+		//어떤 회원의 프로필을 선택했는지 member_id로 셀렉해서 model에 넣어주자
+		MemberVO memberVO  = dao.selectOne(member_id);
+		model.addAttribute("memberVO", memberVO);
 	}
 	
+	// 회원이 찜한 영화(나머지 페이지를 처리)
+	@RequestMapping("mypage/myjjim3")
+	public void jjimListOtherOne(PageVO vo, Model model, String member_id) {
+		vo.setStartEnd(vo.getPage());
+		vo.setMember_id(member_id);
+
+		List<MypageVO> jjimAllList = dao.jjimAllList(vo);// member_id로 해당 list들 들고오기
+
+		model.addAttribute("jjimAllList", jjimAllList);// model에 넣어주자
+		
+		//어떤 회원의 프로필을 선택했는지 member_id로 셀렉해서 model에 넣어주자
+		MemberVO memberVO  = dao.selectOne(member_id);
+		model.addAttribute("memberVO", memberVO);
+	}
 	
-	
-	
-//	// 찜 추가 하기(빈 하트 >> 꽉찬 하트)
-//	@RequestMapping("mypage/addmoviejjim")
-//	public void addMovieJjim(MypageVO vo, HttpSession session) {
-//	    String member_id = (String) session.getAttribute("member_id"); // 로그인한 회원 세션
-//	    String movieId = vo.getMovieId(); // 선택한 movieId 값
-//
-//	    MypageVO movieInfo = dao.movieSelectOne(movieId); // dao에서 movie id값 읽어오기
-//
-//	    vo.setMovieId(movieInfo.getMovieId());
-//	    vo.setMember_id(member_id);
-//	    
-//	    if (member_id != null) { // 로그인이 되었을 때
-//	        int result = dao.addMovieJjim(vo); // 찜 추가 실행
-//	        if (result > 0) { // 찜 추가가 성공되면
-//	            session.setAttribute("jjimStatus_" + movieId, "liked"); // 세션에 찜한 영화 상태 정보 저장
-//	            System.out.println("추가 성공" + result);
-//	        } else { // 찜 추가가 실패
-//	            System.out.println("추가 실패" + result);
-//	        }
-//	    } else {
-//	        // 로그인이 되지 않았을 때
-//	        System.out.println("로그인 여부 확인");
-//	    }
-//	}
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	
 	
 	// 찜 추가 하기(빈 하트 >> 꽉찬 하트)

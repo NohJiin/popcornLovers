@@ -22,7 +22,7 @@ $(function(){
 	 /* 찜한 영화 목록 버튼*/ 
 	$('.jjimpages').click(function() {
 		$.ajax({
-			url : "../mypage/myjjim2" , //views/mybbsAll.jsp가 결과!
+			url : "../mypage/myjjim2" , //views/myjjim2.jsp가 결과!
 			data : {
 				page : $(this).text()
 			},
@@ -33,7 +33,23 @@ $(function(){
 				alert('실패')
 			}
 		}) //ajax
-	})//bbspages
+	})//jjimpages
+	
+	/* 별점 매긴 페이지 목록 버튼 */ 
+	$('.jjimpages').click(function() {
+		$.ajax({
+			url : "../mypage/mygrade" , //views/mybbsAll.jsp가 결과!
+			data : {
+				page : $(this).text()
+			},
+			success : function(result) { //결과가 담겨진 table부분코드
+				$('#mygradeResult').html(result)
+			},
+			error : function() {
+				alert('실패')
+			}
+		}) //ajax
+	})//pages
 	
 	 /* 작성한 게시글 목록 버튼*/ 
 	$('.bbspages').click(function() {
@@ -65,7 +81,7 @@ $(function(){
 				alert('실패')
 			}
 		}) //ajax
-	})//reviewpages
+	})//jjimpages
 	
 	
 	$(function() {
@@ -172,14 +188,14 @@ $(function(){
   <div class="func">
     <div class="skills-prog">
       <h3><i class="fa-solid fa-heart"></i>찜 목록</h3>
- <%--      <%
+      <%
 	int pages3 = (int)request.getAttribute("jjimPages");
 	for(int p3 = 1; p3 <= pages3; p3++){
 %>
 		<button class="jjimpages"><%= p3 %></button>
 <%		
 	}
-%>  --%>
+%>  
 
 <div id="myjjimResult">
 
@@ -237,6 +253,7 @@ $(function(){
 	</tr> --%>
     
     <div class="skills-prog">
+    
       <h3><i class="fa-solid fa-comment-dots"></i>작성한 리뷰</h3>
       <%
 	int pages2 = (int)request.getAttribute("reviewPages");
@@ -264,6 +281,75 @@ $(function(){
 </table>
 </div>
  </div>
+ 
+  <!--평가 목록 부분  -->
+    <div class="skills-prog">
+      <h3><i class="fa-solid fa-star"></i>평가 목록</h3>
+ <%--      <%
+	int pages3 = (int)request.getAttribute("jjimPages");
+	for(int p3 = 1; p3 <= pages3; p3++){
+%>
+		<button class="jjimpages"><%= p3 %></button>
+<%		
+	}
+%>  --%>
+
+<div id="mygradeResult">
+
+<%-- <div class="slider-container">
+  <div class="slider">
+    <c:forEach items="${jjimAllList}" var="my"> 
+      <div class="slide">
+        <img alt="movie 이미지" src="../resources/n_img/${my.movieImg}" width="150" height="180">
+        <div class="movie-info">
+          <p>${my.movieTitle}</p>
+          <p>⭐${my.movieGrade}</p>
+        </div>
+      </div>
+    </c:forEach>
+  </div>
+  <div class="prev-button">이전</div>
+  <div class="next-button">다음</div>
+</div> --%>
+
+<div class="slide-wrapper">
+  <c:forEach items="${gradeAllList}" var="my">
+    <div class="movie_jjimbox">
+      <div class="movie_jjim">
+        <img alt="movie 이미지" src="../resources/n_img/${my.movieImg}" width="150" height="180">
+        <div class="jjim_txt">${my.movieTitle}</div>
+        <div class="jjim_txt">나의 평점⭐: ${my.grade}</div>
+      </div>
+    </div>
+  </c:forEach>
+</div>
+
+<button class="prev-button">이전</button>
+<button class="next-button">다음</button>
+ 
+ <%--   <c:forEach items="${jjimAllList}" var="my"> 
+<div class="movie_jjimbox">
+	<div class="movie_jjim">
+		<img alt="movie 이미지" src="../resources/n_img/${my.movieImg}" width="150" height="180">
+		<div class="jjim_txt">${my.movieTitle}</div>
+		<div class="jjim_txt">⭐${my.movieGrade}</div>
+	</div>
+</div>   
+   </c:forEach> --%>
+
+</div>
+ </div>
+    <%--    <tr>
+		<td><img alt="movie 이미지" src="../resources/n_img/${my.movieImg}" width="150" height="180"></td>
+	</tr> --%>
+<%-- 	<tr>
+		<td>${my.movieTitle}</td>
+	</tr>
+	<tr>
+		<td> ⭐${my.movieGrade}</td>
+	</tr> --%>
+	<!--평가 목록 부분  -->
+ 
       <div class="skills-prog">
       <h3><i class="fa-solid fa-list"></i>작성한 게시글</h3>
 

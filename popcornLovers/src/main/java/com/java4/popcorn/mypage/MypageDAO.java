@@ -105,4 +105,11 @@ public class MypageDAO {
 		return bag;
 	}
 	
+	//회원의 평가 목록
+	public List<MypageVO> gradeAllList(PageVO vo) {//member_id로 잡아오기
+		List<MypageVO> gradeAllList = my.selectList("MypageDAO.myGradeAll", vo); //pageVO에 넣었으니 vo에서 꺼내기
+		System.out.println("페이지에 보이는 평가 갯수 : " + gradeAllList.size()); 
+		return  gradeAllList;
+	}
+	
 }

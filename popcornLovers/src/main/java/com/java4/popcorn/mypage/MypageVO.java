@@ -28,8 +28,19 @@ public class MypageVO {
 	  private Integer memberLike;
 	  
 	  
+	//회원의 영화 평가 목록
+	  private Integer grade;
+	  
 	  //getter setter	  
 	 
+	 public Integer getGrade() {
+		return grade;
+	}
+	 
+	 public void setGrade(Integer grade) {
+		this.grade = grade;
+	}
+	  
 	 public String getMovieGrade() {
 		return movieGrade;
 	}
