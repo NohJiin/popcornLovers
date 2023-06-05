@@ -42,6 +42,7 @@ public class MemberController {
 		MemberVO vo2 = dao.selectOne(member_id); 
 		if (result != null) {
 			// 로그인 성공
+			dao.loginCount(vo.getMember_id());
 			session.setAttribute("member_id", vo.getMember_id());// ★세션잡아둔것
 			session.setAttribute("member_knickname", result);// list를 불러오려면 view 아래에 파일이 있어야함으로 닉네임 값을 넣어주기		
 			session.setAttribute("bag", vo2);
@@ -76,6 +77,37 @@ public class MemberController {
 		System.out.println("result : "+result);
 		return result;
 	}
+	
+	// 닉네임 중복 확인
+	@RequestMapping("member/knicknameCheck")
+	@ResponseBody
+	public int knicknameCheck(String member_knickname) {
+		System.out.println(member_knickname);
+		MemberVO vo2 = dao.knicknameCheck(member_knickname);
+		System.out.println(vo2);
+
+		int result = 1;
+		if (vo2 == null) { // 같은 아이디가 없다면
+			result = 0; // 사용 가능 아이디
+		}
+	
+		System.out.println("result : "+result);
+		return result;
+	}
+	
+	
+	// 아이디 비번 체크 
+	@RequestMapping("member/memberCheck")
+	public int memberCheck(MemberVO vo) {
+		MemberVO vo2 = dao.memberCheck(vo);
+		
+		int result = 0; //
+		if(vo2 != null) {
+			
+		}
+		return result;
+	}
+	
 
 	// 회원정보 수정
 	@RequestMapping("member/update")
@@ -84,17 +116,48 @@ public class MemberController {
 		dao.update(vo);
 		System.out.println(vo);
 	}
-//
-//	// 회원 탈퇴
-//	@RequestMapping("member/remove")
-//	public String name(MemberVO vo, HttpSession session) {
-//		System.out.println("delete 요청됨");
-//		String result = dao.remove(vo);
-//		if (result) {
-//
-//		}
-//	}
+	
 
+	// 회원 탈퇴
+//	@RequestMapping("member/remove")
+//	public String remove(MemberVO vo, String member_id, HttpSession session) {
+//		System.out.println("delete 요청됨");
+//		
+//		MemberVO bag = dao.selectOne(member_id);
+//		
+//		int result = dao.remove(vo);
+//		if(member_id != null)
+//		if(result == 1) {
+//		     session.invalidate();
+//		        return "member/removeSuccess";
+//		    } else {
+//		        // 회원 삭제가 실패한 경우
+//		        return "member/removeFail";
+//		    }
+//	}
+	
+	
+	@RequestMapping("member/remove")
+	public String remove(HttpSession session) {
+	    String member_id = (String) session.getAttribute("member_id"); // 세션에서 회원 아이디 가져오기
+	    MemberVO vo = (MemberVO) session.getAttribute("bag"); // 세션에서 회원 정보 객체 가져오기
+	    
+	    // 회원 탈퇴 처리
+	    int result = dao.remove(vo);
+	    if (result == 1) {
+	        session.invalidate();
+	        return "member/removeSuccess";
+	    } else {
+	        // 회원 탈퇴가 실패한 경우
+	        System.out.println("회원 탈퇴 실패");
+	        System.out.println("member_id 값: " + member_id);
+	        System.out.println("탈퇴 결과값: " + result);
+	        return "redirect:remove.jsp";
+	    }
+	}
+
+	
+	
 	// 회원전체 리스트
 	@RequestMapping("member/list")
 	public void list(Model model) {
@@ -110,7 +173,7 @@ public class MemberController {
 		model.addAttribute("bag", bag);
 	}
 	
-	//회원 프로필 설정
+	//회원 프로필 이미지 설정
 		@RequestMapping("member/profileUp")
 		public String profileUp(MemberVO vo, HttpSession session,
 				HttpServletRequest request, //경로 자동으로 구하기

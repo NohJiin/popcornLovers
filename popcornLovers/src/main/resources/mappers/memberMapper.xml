@@ -25,10 +25,20 @@
 	</select>
 
 	<!-- 아이디 중복 체크 -->
-	<select id="idCheck" parameterType="String"
-		resultType="MemberVO">
+	<select id="idCheck" parameterType="String" resultType="MemberVO">
 		select * from popcorn.member where member_id = #{member_id}
 		<!-- dao에서 가져온 member_id 가 #{member_id}에 입력 -->
+	</select>
+	
+		<!-- 닉네임 중복 체크 -->
+	<select id="knicknameCheck" parameterType="String" resultType="MemberVO">
+		select * from popcorn.member where member_knickname = #{member_knickname}
+	</select>
+
+	<!-- 아이디와 비밀번호 체크용 -->
+	<select id="memberCheck"  parameterType="memberVO" resultType="int">
+	select * from member 
+	where member_id = #{member_id} and member_pw = #{member_pw}
 	</select>
 
 	<!-- 회원 정보 수정 -->
@@ -51,8 +61,7 @@
 	</select>
 
 	<!-- member 하나만 검색 -->
-	<select id="selectOne" parameterType="String"
-		resultType="MemberVO">
+	<select id="selectOne" parameterType="String" resultType="MemberVO">
 		select *
 		from popcorn.member
 		where member_id = #{member_id}
@@ -65,7 +74,14 @@
 		where member_id = #{member_id}
 	</update>
 	
-	          <!-- 회원 프로필 이미지 수정 -->
+	<!-- login 할때마다 member_point에 login_count값 1씩 더하기 -->
+	<update id="loginCount" parameterType="String">
+		update popcorn.member_point p
+		set p.login_count = p.login_count + 1
+		where p.member_id = #{member_id}
+	</update>
+	
+	<!-- 회원 프로필 이미지 수정 -->
     <update id="profileUp" parameterType="MemberVO">
     	update popcorn.member
     	set

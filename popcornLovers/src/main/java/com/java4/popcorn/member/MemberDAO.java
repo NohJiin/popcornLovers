@@ -31,6 +31,17 @@ public class MemberDAO {
     	return result;    	
 	}
    
+ // 로그인하면 login_count +1 
+  	public void loginCount(String member_id) {
+  		my.update("MemberDAO.loginCount", member_id);
+  	}
+    
+    //아이디와 비밀번호  db에 있는지 확인 체크용(int)
+    public MemberVO memberCheck(MemberVO vo) {
+		System.out.println(vo);
+		MemberVO vo2 = my.selectOne("MemberDAO.memberCheck",vo);
+		return vo2;
+	}
     
     //아이디 중복 확인
     public MemberVO idCheck(String member_id) {
@@ -39,6 +50,12 @@ public class MemberDAO {
 		return vo2;
 	}
     
+    //닉네임 중복 확인
+    public MemberVO knicknameCheck(String member_knickname) {
+		System.out.println(member_knickname);
+		MemberVO vo2 = my.selectOne("MemberDAO.knicknameCheck", member_knickname);
+		return vo2;
+	}
     
     //회원정보 수정
     public int update(MemberVO vo) {
