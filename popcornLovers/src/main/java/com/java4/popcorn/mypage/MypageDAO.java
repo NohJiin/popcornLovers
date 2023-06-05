@@ -80,8 +80,6 @@ public class MypageDAO {
 		return my.delete("MypageDAO.removeMovieJjim",vo);
 	}
 	
-	
-	
 	// 찜 클릭 여부 체크
 		public int jjim_Check(MypageVO vo) {
 			try {

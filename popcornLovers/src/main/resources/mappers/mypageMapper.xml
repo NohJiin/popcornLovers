@@ -108,7 +108,7 @@
 		where movieId = #{movieId} and member_id = #{member_id}
 	</delete>
 	
-	<!-- 회원이 찜을 했는지 안했는지 -->
+	<!-- 회원이 찜을 했는지 안했는지(찜 체크 여부) -->
 	<select id = "JjimCheck"  resultType="Integer" parameterType="mypageVO">
 	select movie_like 
 	from moviejjim 
