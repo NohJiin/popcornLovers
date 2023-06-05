@@ -22,7 +22,16 @@ public class RankMovieController {
 		int result = dao.movieInsert();
 		System.out.println(result + "개 추가됨");
 		
-//		// 변경된 사항 update하기
+//		// movieLike수 업데이트 후 movie의 rank_no 정하기
+//		// movieLike 업데이트할 idList를 가져옴
+//		System.out.println("movieLike를 업데이트 합니다");
+//		List<RankMovieVO> upList = dao.likeMovieId();
+//		for (int i = 0; i < upList.size(); i++) {
+//			dao.likeUpdate(upList.get(i));
+//		}
+//		
+//		// 랭킹을 업데이트할 idList를 가져옴
+//		System.out.println("movie 랭킹을 업데이트 합니다");
 //		List<RankMovieVO> idList = dao.movieIdList();
 //		System.out.println("movie rank update 실행");
 //		for (int i = 0; i < idList.size(); i++) {
@@ -65,9 +74,15 @@ public class RankMovieController {
 	
 	// 추천 영화 리스트 : 전체 목록 => 이것도 스케줄링해서 2-3시간?마다 한번씩 업데이트 되도록하기
 	@RequestMapping("rankMovie/recoMovie")
-	public void movieReco(Model model) {
+	public void movieReco(RankMovieVO bag, Model model) {
 		System.out.println("movieReco list 실행");
-		List<RankMovieVO> list = dao.recoList();
+		List<RankMovieVO> list = dao.recoMovieList();
+		// reco_movie 테이블에 항목이 없을 경우 스케줄러와 상관 없이 추가해줌
+		if (list.size() == 0) {
+			dao.recoMovieAdd();	// 값을 랜덤으로 가져오기
+			list = dao.recoMovieList();	// 추가된 값을 리스트로 불러오기
+			System.out.println("Controller단계에서 reco_movie테이블에 항목 추가됨");
+		}
 		model.addAttribute("list", list);
 	}
 	

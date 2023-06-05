@@ -113,9 +113,9 @@
     <update id="rankUpdate" parameterType="String">
     	update popcorn.rankmovie m
 		set m.moviePopularity = (
-		select (total.movieLike*0.3 + total.movieHits*0.3 + total.movieReviews*0.3) as per
+		select (total.movieLike*0.03 + total.movieHits*0.01 + total.movieReviews*0.02 + total.movieGrade*0.1) as per
 		from
-			(select r.*, m.movieLike, m.movieHits, m.movieReviews
+			(select r.*, m.movieLike, m.movieHits, m.movieReviews, m.movieGrade
 			from popcorn.rankmovie r, popcorn.movie m
 			where r.movieId = m.movieId
 			) total
@@ -123,4 +123,93 @@
 		)
 		where m.movieId = #{movieId}
     </update>
+    
+    
+    <!-- Like한 항목이 있는 movieId만 가져오기 -->
+    <select id="likeMovieId" resultType="RankMovieVO">
+	    select movieId
+		from popcorn.moviejjim m
+		group by movieId
+    </select>
+    
+    <!-- movie테이블에 movieLike 수 업데이트 -->
+	<update id="likeUpdate" parameterType="RankMovieVO">
+		update popcorn.movie m
+		set m.movieLike = (
+			select movieLike
+			from (
+				select movieId, count(*) as movieLike
+				from popcorn.moviejjim m
+				group by movieId
+			) likecount
+			where likecount.movieId = #{movieId}
+		)
+		where m.movieId = #{movieId}
+	</update>
+	
+	
+	<!-- movieReviews 업데이트하기 -->
+	<update id="reviewsUpdate" parameterType="RankMovieVO">
+		update popcorn.movie m
+		set m.movieReviews = (
+			select count(*) as count
+			from popcorn.movie_review mr
+			where mr.movieId = #{movieId}
+			group by mr.movieId
+		)
+		where m.movieId = #{movieId}
+	</update>
+	
+	<!-- review 수가 0이 아닌 리스트 가져오기 -->
+	<select id="reviewMovieId" resultType="RankMovieVO">
+		select mr.movieId
+		from popcorn.movie_review mr
+		group by mr.movieId
+	</select>
+	
+	
+	<!-- movieGrade 평균 별점으로 업데이트 -->
+	<update id="gradeUpdate" parameterType="RankMovieVO">
+	update popcorn.movie m
+	set m.movieGrade = (
+		select round(avg(grade), 1)  as avgGrade
+		from popcorn.movie_grade mg
+		where mg.movieId = #{movieId}
+		group by mg.movieId
+		)
+	where m.movieId = #{movieId}
+	</update>
+	
+	<!-- 평균 별점이 매겨진 영화 리스트를 가져옴 -->
+	<select id="gradeMovieId" resultType="RankMovieVO">
+		select mg.movieId
+		from popcorn.movie_grade mg
+		group by mg.movieId
+	</select>
+	
+	
+	<!-- recoList 다시 만들어야함 -->
+	<!-- reco_movie 테이블에 있는 항목 가져오기 -->
+	<select id="recoMovieList" resultType="RankMovieVO">
+		select *
+		from popcorn.reco_movie rm
+	</select>
+	
+	<!-- movie 테이블 상위 20개 항목중에서 3개만 가져와 reco_movie 테이블에 저장하기 -->
+	<insert id="recoMovieAdd" parameterType="RankMovieVO">
+		insert into popcorn.reco_movie (movieId, movieTitle, movieGrade, movieOpen, movieGenre, movieImg, movieLike, movieHits)
+		select list.movieId, list.movieTitle, list.movieGrade, list.movieOpen, list.movieGenre, list.movieImg, list.movieLike, list.movieHits
+		from (
+			select row_number() over(order by moviePopularity desc) as rank_no, m.movieId, m.movieTitle, m.movieGrade, m.movieOpen, m.movieGenre, m.movieImg, m.movieLike, m.movieHits
+			from popcorn.rankmovie r, popcorn.movie m
+			where r.movieId = m.movieId) list
+		where list.rank_no between 1 and 20
+		order by rand()
+		limit 3
+	</insert>
+	
+	<!-- reco_movie 테이블의 모든 항목을 삭제 -->
+	<delete id="recoMovieDel">
+		delete from popcorn.reco_movie
+	</delete>	
 </mapper>
