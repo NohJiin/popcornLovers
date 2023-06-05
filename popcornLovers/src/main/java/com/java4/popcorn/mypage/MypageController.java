@@ -89,6 +89,8 @@ public class MypageController {
 		model.addAttribute("jjimPages",  jjimPages);
 		model.addAttribute("jjimAllList", jjumAllList);
 		
+		model.addAttribute("gradeAllList", gradeAllList);
+		
 		MemberVO memberVO  = dao.selectOne(member_id);
 		model.addAttribute("memberVO", memberVO);
 	}

@@ -252,37 +252,7 @@ $(function(){
 		<td> ⭐${my.movieGrade}</td>
 	</tr> --%>
     
-    <div class="skills-prog">
-    
-      <h3><i class="fa-solid fa-comment-dots"></i>작성한 리뷰</h3>
-      <%
-	int pages2 = (int)request.getAttribute("reviewPages");
-	for(int p2 = 1; p2 <= pages2; p2++){
-%>
-		<button class="reviewpages"><%= p2 %></button>
-<%		
-	}
-%> 
-
-<div id="myreviewResult">
- <table>
-   <tr>
-      <td>영화제목</td>
-      <td>내용</td>
-      <td>작성자</td>
-   </tr>
-   <c:forEach items="${reviewAllList}" var="my"> 
-   <tr>
-      <td>${my.movieTitle}</td> 
-      <td>${my.reviewContent}</td>
-      <td>${my.member_knickname}</td>     
-   </tr>
-   </c:forEach>
-</table>
-</div>
- </div>
- 
-  <!--평가 목록 부분  -->
+    <!--평가 목록 부분  -->
     <div class="skills-prog">
       <h3><i class="fa-solid fa-star"></i>평가 목록</h3>
  <%--      <%
@@ -350,6 +320,39 @@ $(function(){
 	</tr> --%>
 	<!--평가 목록 부분  -->
  
+    
+    
+    <div class="skills-prog">
+    
+      <h3><i class="fa-solid fa-comment-dots"></i>작성한 리뷰</h3>
+      <%
+	int pages2 = (int)request.getAttribute("reviewPages");
+	for(int p2 = 1; p2 <= pages2; p2++){
+%>
+		<button class="reviewpages"><%= p2 %></button>
+<%		
+	}
+%> 
+
+<div id="myreviewResult">
+ <table>
+   <tr>
+      <td>영화제목</td>
+      <td>내용</td>
+      <td>작성자</td>
+   </tr>
+   <c:forEach items="${reviewAllList}" var="my"> 
+   <tr>
+      <td>${my.movieTitle}</td> 
+      <td>${my.reviewContent}</td>
+      <td>${my.member_knickname}</td>     
+   </tr>
+   </c:forEach>
+</table>
+</div>
+ </div>
+ 
+  
       <div class="skills-prog">
       <h3><i class="fa-solid fa-list"></i>작성한 게시글</h3>
 
