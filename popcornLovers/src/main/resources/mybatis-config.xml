@@ -43,6 +43,7 @@
         <typeAlias type="com.java4.popcorn.movieInfo.MovieInfoVO" alias="MovieInfoVO"/>
         <typeAlias type="com.java4.popcorn.actor.ActorVO" alias="ActorVO"/>
         <typeAlias type="com.java4.popcorn.movieReview.MovieReviewVO" alias="MovieReviewVO"/>
+        <typeAlias type="com.java4.popcorn.movieGrade.MovieGradeVO" alias="MovieGradeVO"/>
 
         <!--박근우-->
         <typeAlias type="com.java4.popcorn.mycalendar.MyCalendarVO" alias="mycalendarVO"/>
@@ -72,6 +73,9 @@
         <!--김준명-->
         <mapper resource="mappers/movieMapper.xml"/>
         <mapper resource="mappers/actorMapper.xml"/>
+        <mapper resource="mappers/movieReviewMapper.xml"/>
+        <mapper resource="mappers/movieGradeMapper.xml"/>
+     
 
         <!--박근우-->
         <mapper resource="mappers/mycalendarMapper.xml"/>

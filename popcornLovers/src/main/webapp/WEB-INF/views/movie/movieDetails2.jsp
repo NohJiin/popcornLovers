@@ -4,6 +4,7 @@
 <%@ page import="com.java4.popcorn.movieInfo.MovieInfoDAO" %>
 <%@ page import="com.java4.popcorn.movieInfo.MovieInfoVO" %>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,14 +15,15 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.6.4.js"></script>
 <style>
 	textarea {
-	width: 40%;
-	height: 150px;
-	padding: 10px;
-	box-sizing: border-box;
-	border: solid 2px #FFF39C;
-	border-radius: 5px;
-	font-size: 16px;
-	resize: both;
+	  width: 40%;
+        height: 150px; /* 텍스트 에어리어의 높이 설정 */
+        padding: 10px;
+        box-sizing: border-box;
+        border: solid 2px #FFF39C;
+        border-radius: 5px;
+        font-size: 16px;
+        resize: both;
+        /* margin-bottom: 10px; */ /* 불필요한 마진 제거 */
 		}
 </style>
 <style>
@@ -41,6 +43,7 @@
 .rate {
   display: inline-block;
   direction: rtl;
+   vertical-align: middle;
 }
 
 .rate input[type="radio"] {
@@ -59,81 +62,149 @@
 }
 
 .rate input[type="radio"]:checked ~ label {
-  color: #f73c32;
+  color: #FFF39C;
+  text-shadow: 0 0 5px black;
 }
 .jjim_heart{font-size:30px;}
 
 #jjim{background:none;}
+
+.btnOrange.btnPush {
+ vertical-align: middle;
+  width: 60px;
+  padding: 0;
+  margin: 10px 15px 10px 0;
+  font-weight: 600;
+  text-align: center;
+  line-height: 30px;
+  color: black;
+  border-radius: 5px;
+  transition: all 0.2s ;
+}
+.btnOrange {
+  background: #FFF39C;
+}
+
+.btnOrange.btnPush {
+  box-shadow: 0px 5px 0px 0px #A66615;
+}
+
+.btnPush:hover {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.btnOrange.btnPush:hover {
+  box-shadow: 0px 0px 0px 0px #A66615;
+}
 </style>
 
+<!--영화 찜 -->
 <script type="text/javascript">
 $(function() {
-	var movieId = '${scope=bag.movieId}';
-	var jjimStatus = sessionStorage.getItem('jjimStatus_' + movieId);
-	
-	//찜 상태가 없는 경우 초기 값은 class를 notlove로 설정
-	if (jjimStatus === null) { 
-	    jjimStatus = 'notlove'; 
-	  }
-	
-	//jjimStatus가 liked가 되면 love를 class에 넣어준다
-	if (jjimStatus === 'liked') {
-	    $('#jjim').addClass('love');
-	    $('#jjim i').removeClass('fa-regular').addClass('fa-solid');
-	  } else {
-	    $('#jjim').addClass('notlove');
-	    $('#jjim i').removeClass('fa-solid').addClass('fa-regular');
-	  }
-	
-	$('#jjim').click(function() {
-		    if (${(Scope=member_id) ne null}) {
-		      if ($('#jjim').hasClass('notlove')) { // 찜 추가(빈 하트 클릭)
-		        $.ajax({
-		          url: '../mypage/addmoviejjim',
-		          data: {
-		            movieId: '${scope=bag.movieId}',
-		            member_id: '${scope=member_id}'
-		          },
-		          success: function(result) {
-		            $('#jjim').removeClass('notlove').addClass('love');
-		            $('#jjim i').removeClass('fa-regular').addClass('fa-solid');
-		            sessionStorage.setItem('jjimStatus_' + movieId, 'liked'); // 찜 상태 세션에 저장
-		            alert("찜 완료");
-		          }
-		        });
-		      } else { //찜 삭제(꽉 찬 하트 클릭)
-		    	  $.ajax({
-			          url: '../mypage/removemoviejjim',
-			          data: {
-			            movieId: '${scope=bag.movieId}',
-			            member_id: '${scope=member_id}'
-			          },
-			          success: function(result) {
-			            $('#jjim').removeClass('love').addClass('notlove');
-			            $('#jjim i').removeClass('fa-solid').addClass('fa-regular');
-			            sessionStorage.removeItem('jjimStatus_' + movieId); // 찜 상태 세션에서 제거
-			            alert("찜 삭제");
-			          }
-			        });
-		      }
-		    } else {
-		      alert('로그인 후 찜하기를 사용할 수 있습니다.');
-		    }
-		  });
+	  var movieId = '${scope=bag.movieId}';
+	  // 초기에 DB에서 찜 상태를 읽어와서 설정
+	  $.ajax({
+	    url: '../mypage/jjimCheck',
+	    data: {
+	      movieId: movieId
+	    },
+	    success: function(result) {
+	      if (result === 1) {//db에 찜한 상태가 있다면 love를 class에 넣어준다
+	        $('#jjim').removeClass('notlove').addClass('love');
+	        $('#jjim i').removeClass('fa-regular').addClass('fa-solid');
+	      } else {//db에 찜한 상태가 없다면 notlove를 class에 넣어준다
+	        $('#jjim').removeClass('love').addClass('notlove');
+	        $('#jjim i').removeClass('fa-solid').addClass('fa-regular');
+	      }
+	    }
+	  });
+
+	  $('#jjim').click(function() {
+	    if (${(Scope=member_id) ne null}) {
+	      if ($('#jjim').hasClass('notlove')) { // 찜 추가(빈 하트 클릭)
+	        $.ajax({
+	          url: '../mypage/addmoviejjim',
+	          data: {
+	            movieId: movieId,
+	            member_id: '${scope=member_id}'
+	          },
+	          success: function(result) {
+	            $('#jjim').removeClass('notlove').addClass('love');
+	            $('#jjim i').removeClass('fa-regular').addClass('fa-solid');
+	            alert("찜 완료");
+	          }
+	        });
+	      } else { // 찜 삭제(꽉 찬 하트 클릭)
+	        $.ajax({
+	          url: '../mypage/removemoviejjim',
+	          data: {
+	            movieId: movieId,
+	            member_id: '${scope=member_id}'
+	          },
+	          success: function(result) {
+	            $('#jjim').removeClass('love').addClass('notlove');
+	            $('#jjim i').removeClass('fa-solid').addClass('fa-regular');
+	            alert("찜 삭제");
+	          }
+	        });
+	      }
+	    } else {
+	      alert('로그인 후 찜하기를 사용할 수 있습니다.');
+	    }
+	  });
 	})
+</script>
+
+<!-- 영화 평가  -->
+<script type="text/javascript">
+$(function() {
+	  // 평가 버튼 클릭 이벤트 처리
+	  $('.btnPush').click(function() {
+	    var rating = $('input[name="rating"]:checked').val(); // 선택한 평점 값
+	    var memberId = '${scope=member_id}'; // 로그인한 회원의 ID
+	    var movieId = '${scope=bag.movieId}'; // 현재 영화의 ID
+
+	    // 로그인 확인
+	    if (memberId) {
+	      // 평가 정보 전송
+	      $.ajax({
+	        url: '../movieInfo/submitRating',
+	        method: 'POST',
+	        data: {
+	          rating: rating,
+	          memberId: memberId,
+	          movieId: movieId
+	        },
+	        success: function(response) {
+	          // 평가 성공 시 처리
+	          alert('평가가 등록되었습니다.');
+	          location.reload(); // 페이지 새로고침
+	        },
+	        error: function() {
+	          // 평가 실패 시 처리
+	          alert('이미 등록한 영화 평가입니다.');
+	        }
+	      });
+	    } else {
+	      // 로그인되어 있지 않을 경우 처리
+	      alert('평가를 등록하려면 로그인이 필요합니다.');
+	    }
+	  });
+	});
 </script>
 
 <script>
     $.ajax({
-        url: "movieReview",
+        url:"movieReview",
         success: function(x) {
-            $("#review").append(x);
+            $("#reviewList").append(x);
         },
         error: function() {
             alert("오류발생");
         }
     });
-</script>
+</script> 
 
 </head>
 <body>
@@ -154,7 +225,7 @@ $(function() {
     <input type="radio" id="rating1" name="rating" value="1">
     <label for="rating1" title="1점"></label>
   </div>
-  <button>평점 등록</button>
+  <button title="Button push orange" class="button btnPush btnOrange">평가</button>
   <button id='jjim' style='border :0; cursor:pointer'><i class='fa-sharp fa-regular fa-heart fa-heart jjim_heart' style='color: #ff3d3d;'></i></button>
   <hr style="border: solid 3px #FFF39C ">
   <p>감독: ${bag.movieDirector}</p>
@@ -164,8 +235,12 @@ $(function() {
   <p>줄거리: ${bag.movieStory}</p>
   <hr style="border: solid 3px #FFF39C ">
 </div>
-<div id="review"></div>
-<textarea style="font-size: 13px" placeholder ="최대 500글자 입력 가능"></textarea> <button>등록</button>
+<div id="reviewList"></div>
+<div style="display: flex; align-items: flex-end;">
+<form action=""></form>
+  <textarea id="review" style="font-size: 13px" placeholder="최대 500글자 입력 가능"></textarea>
+  <button id="reviewIn" title="Button push orange" class="button btnPush btnOrange">등록</button>
+</div>
 
 </body>
 </html>
