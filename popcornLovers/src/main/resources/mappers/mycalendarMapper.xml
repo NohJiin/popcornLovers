@@ -14,7 +14,7 @@
 		SELECT year, month, day, movieTitle
 		From popcorn.mycalendar
 		JOIN movie ON mycalendar.movieId = movie.movieId
-		WHERE year = #{year} AND month = #{month} AND member_id = #{member_id}
+		WHERE year = #{year} AND month = #{month} AND day = #{day} AND member_id = #{member_id}
 		ORDER BY day ASC
 	</select>
 	

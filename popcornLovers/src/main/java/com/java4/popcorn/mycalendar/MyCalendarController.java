@@ -16,8 +16,8 @@ public class MyCalendarController {
 	MyCalendarDAO dao;
 
 	@RequestMapping("mycalendar/mycalendarmain") //연도와 월, 멤버id를 넣고, 연도와 월, 일, 영화제목을 리스트로 가져오기
-	public String list1(@RequestParam("year") int year, @RequestParam("month") int month, HttpSession session,
-			Model model) {
+	public String list1(@RequestParam("year") int year, @RequestParam("month") int month, @RequestParam("day") int day,
+			 HttpSession session, Model model) {
 
 		String member_id = (String) session.getAttribute("member_id");
 
@@ -27,6 +27,8 @@ public class MyCalendarController {
 		System.out.println(year + "연도 불러오기 완료");
 		vo.setMonth(month);
 		System.out.println(month + "월 불러오기 완료");
+		vo.setDay(day);
+		System.out.println(day + "일 불러오기 완료");
 		vo.setMember_id(member_id);
 		System.out.println(member_id + "memberid 불러오기 완료");
 		System.out.println(vo);

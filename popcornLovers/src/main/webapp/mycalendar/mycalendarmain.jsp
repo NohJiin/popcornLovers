@@ -61,11 +61,12 @@ int lastday = cal.getActualMaximum(Calendar.DATE);
 	src="${pageContext.request.contextPath}/resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$("#listbutton").click(function() {
+		$("#datebutton").click(function() {
 			$.ajax({
 				url : "../mycalendarview/mycalendarlist.jsp",
+				method : "GET",
 				success : function(x) {
-					$("#mycalendarlist").append(x);
+					$("#mycalendarlist").html(x);
 				},
 				error : function() {
 					alert("list를 불러오는데 오류발생");
@@ -78,25 +79,28 @@ int lastday = cal.getActualMaximum(Calendar.DATE);
 
 
 <style>
-body {
-	font-size: 0pt;
-	color: #1e1e1f;
-	border-radius: 10px;
-}
 
 .mymoviecalendar table {
-	border-collapse: collapse;
 	padding-bottom: 100px;
-	background-color: white;
+	;
 }
 
 .mymoviecalendar tr, .mymoviecalendar td, .mymoviecalendar th {
-	border: 5px solid #fbff8c;
-	width: 100px;
-	height: 60px;
+	border: none;
+	width: 120px;
+	height: 100px;
 	text-align: center;
 	font-size: 30px;
-	background-color: #fdffbf;
+	background-color: white;
+}
+
+.mymoviecalendar button {
+	width: 80px;
+	height: 80px;
+	font-size: 40px;
+	border: none;
+	background-color: #fff9ab;
+	border-radius: 40px;
 }
 
 .mymoviecalendar caption {
@@ -167,53 +171,62 @@ select {
 
 	<div class="all">
 		<div class="mymoviecalendar">
-			<table>
-				<caption><%=y%>년
-					<%=m + 1%>월
-				</caption>
-				<tr>
-					<th>일</th>
-					<th>월</th>
-					<th>화</th>
-					<th>수</th>
-					<th>목</th>
-					<th>금</th>
-					<th>토</th>
-				</tr>
-				<tr>
+			<form action="mycalendarmain" method="post">
+				<table>
+					<caption><%=y%>년
+						<%=m + 1%>월
+					</caption>
+					<tr>
+						<th>일</th>
+						<th>월</th>
+						<th>화</th>
+						<th>수</th>
+						<th>목</th>
+						<th>금</th>
+						<th>토</th>
+					</tr>
+					<tr>
 
-					<%
-						int count = 0;
+						<%
+							int count = 0;
 
-					for (int s = 1; s < dayOfweek; s++) {
+						for (int s = 1; s < dayOfweek; s++) {
+							out.print("<td></td>");
+							count++;
+						}
+
+						for (int d = 1; d <= lastday; d++) {
+							count++;
+							String color = "#141313";
+							if (count % 7 == 0) {
+								color = "#0004ff";
+							} else if (count % 7 == 1) {
+								color = "#ff1500";
+							}
+						%>
+						<td style="color:<%=color%>;">
+							<button type="submit" name="day" value="<%=d%>" id="datebutton"
+								class="datebutton" formmethod="post" formaction="mycalendarmain" style="color:<%=color%>;">
+								<input type="hidden" name="year" value="<%=y%>">
+								<input type="hidden" name="month" value="<%=m + 1%>">
+								<%=d%>
+							</button>
+						</td>
+						<%
+							if (count % 7 == 0) {
+							out.print("</tr><tr>");
+							count = 0;
+						}
+						}
+
+						while (count < 7) {
 						out.print("<td></td>");
 						count++;
-					}
-
-					for (int d = 1; d <= lastday; d++) {
-						count++;
-						String color = "#141313";
-						if (count % 7 == 0) {
-							color = "#0004ff";
-						} else if (count % 7 == 1) {
-							color = "#ff1500";
 						}
-					%>
-					<td style="color:<%=color%>;"><%=d%></td>
-					<%
-						if (count % 7 == 0) {
-						out.print("</tr><tr>");
-						count = 0;
-					}
-					}
-
-					while (count < 7) {
-					out.print("<td></td>");
-					count++;
-					}
-					%>
-				</tr>
-			</table>
+						%>
+					</tr>
+				</table>
+			</form>
 		</div>
 		<div class="calendarsetting">
 			<h1 style="font-size: 24px;">달력 설정</h1>
@@ -261,9 +274,8 @@ select {
 					type="hidden" id="month" name="month" value="<%=m + 1%>">
 				<button type="submit" id="listbutton">조회하기</button>
 			</form>
-			<div id="mycalendarlist" class="mycalendarlist">
-			</div>
 		</div>
+		<div id="mycalendarlist" class="mycalendarlist"></div>
 	</div>
 
 
