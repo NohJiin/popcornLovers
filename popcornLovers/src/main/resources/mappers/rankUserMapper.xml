@@ -5,12 +5,6 @@
 <mapper namespace="RankUserDAO">
     <!-- 랭크가 rank_no인 항목 가져오기 -->
     <select id="selectTop" parameterType="int" resultType="RankUserVO">
-    	<!-- select *
-		from (select
-		row_number() over(order by memberPopularity DESC) as rank_no, r.memberPopularity, m.*
-		from popcorn.rankuser r, popcorn.member m
-		where r.member_id = m.member_id) top
-		where rank_no = #{rank_no} -->
 		select *
 		from (
 			select *
