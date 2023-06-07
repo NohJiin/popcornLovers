@@ -28,7 +28,7 @@ public class Scheduler {
 		// 댓글 개수 업데이트
 		List<RankUserVO> commentidList = dao.commentIdList();
 		for (int i = 0; i < commentidList.size(); i++) {
-			System.out.println(commentidList.get(i));
+			// System.out.println(commentidList.get(i));
 			dao.commentUpdate(commentidList.get(i));
 		}
 		System.out.println("b_comment_count 업데이트 성공");
