@@ -61,16 +61,16 @@
 					--><li class="li_menu"><a href="링크주소"><span class="main_menu">캘린더</span></a><!--
 					--><div class="menu_sub">
 						<ul>
-							<li><a href="링크주소"><span>나의 영화일지</span></a></li><!--
-							--><li><a href="링크주소"><span>나의 일지 관리</span></a></li><!--
-							--><li><a href="링크주소"><span>개봉 예정작 정보</span></a></li>
+							<li><a href="${pageContext.request.contextPath}/mycalendar/mycalendarmain.jsp"><span>나의 영화일지</span></a></li><!--
+							--><li><a href="${pageContext.request.contextPath}/mycalendar/mycalendarcrud.jsp"><span>나의 일지 추가</span></a></li><!--
+							--><li><a href="${pageContext.request.contextPath}/mycalendar/mycalendardelete.jsp"><span>나의 일지 삭제</span></a></li>
                         </ul>
 						</div>
 					</li>
 				</ul>
                 </nav>
                <div class="search-box">
-					<form class="d-flex" action="bbs/search" role="search" method="get">
+					<form class="d-flex" action="search" role="search" method="get">
 					   <input name="page" value='1' type="hidden">
 	                   <img class="search-btn" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="검색">
 	                   

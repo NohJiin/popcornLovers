@@ -2,13 +2,30 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
 <mapper namespace="MyCalendarDAO">
-    <insert id="insertOne">
-        insert into popcorn.mycalendar
-        values(#{calendarlogNo}, #{myDate}, #{movieId}, #{memberId})
+
+	<insert id="insertMyCalendar" parameterType="MyCalendarVO">
+        INSERT INTO popcorn.mycalendar (movieId, member_id, year, month, day)
+        VALUES (#{movieId}, #{member_id}, #{year}, #{month}, #{day})
     </insert>
-    <select id="selectOne" resultType="MyCalendarVO">
-        select * from popcorn.mycalendar
-        where calendarlog_no = #{calendarlogNo}
-    </select>
+    
+	<select id="joinmycalendar" resultType="MyCalendarVO" parameterType="MyCalendarVO">
+		SELECT year, month, day, movieTitle
+		From popcorn.mycalendar
+		JOIN movie ON mycalendar.movieId = movie.movieId
+		WHERE year = #{year} AND month = #{month} AND member_id = #{member_id}
+		ORDER BY day ASC
+	</select>
+	
+	<delete id="deletemycalendar" parameterType="MyCalendarVO">
+		DELETE FROM popcorn.mycalendar
+		WHERE YEAR = #{year} AND MONTH = #{month} AND DAY = #{day} AND member_id = #{member_id}
+	</delete>
+	
+	<select id="joinmovielist" resultType="MyCalendarVO" parameterType="MyCalendarVO">
+		SELECT movieId, movieTitle
+		FROM popcorn.movie
+	</select>
+	
 </mapper>

@@ -30,7 +30,8 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/jiin/Downloads/kobis-opcl-soap-v1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/jiin/Downloads/kobis-opcl-rest-v1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rmsdn/Downloads/kobis-opcl-rest-v1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rmsdn/Downloads/kobis-opcl-soap-v1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rmsdn/Downloads/jstl-1.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
