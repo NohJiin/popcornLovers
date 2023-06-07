@@ -10,11 +10,12 @@
     </select>
 
 	<select id="selectTop" parameterType="int" resultType="MovieInfoVO">
-    	select * from ( select row_number() over(order by moviePopularity desc) as rank_no, r.moviePopularity, m.*
-		from popcorn.rankmovie r, popcorn.movie m
-		where r.movieId = m.movieId) top
-		where rank_no = #{rank_no}
-    </select>
+    SELECT * FROM popcorn.movie ORDER BY RAND() LIMIT 5
+</select>
+
+<select id="selectRandomTop" parameterType="java.util.Map" resultType="MovieInfoVO">
+    SELECT * FROM popcorn.movie ORDER BY RAND() LIMIT #{count}
+</select>
     
     <update id="viewCount" parameterType="String">
     	update popcorn.movie m

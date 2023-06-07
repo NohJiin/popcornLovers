@@ -22,7 +22,7 @@
         border: solid 2px #FFF39C;
         border-radius: 5px;
         font-size: 16px;
-        resize: both;
+        resize: none;
         /* margin-bottom: 10px; */ /* 불필요한 마진 제거 */
 		}
 </style>
@@ -160,7 +160,7 @@ $(function() {
 <script type="text/javascript">
 $(function() {
 	  // 평가 버튼 클릭 이벤트 처리
-	  $('.btnPush').click(function() {
+	  $('#grade').click(function() {
 	    var rating = $('input[name="rating"]:checked').val(); // 선택한 평점 값
 	    var memberId = '${scope=member_id}'; // 로그인한 회원의 ID
 	    var movieId = '${scope=bag.movieId}'; // 현재 영화의 ID
@@ -194,17 +194,50 @@ $(function() {
 	});
 </script>
 
-<script>
-    $.ajax({
-        url:"movieReview",
-        success: function(x) {
-            $("#reviewList").append(x);
+<script type="text/javascript">
+$(function() {
+  $('#reviewIn').click(function() {
+    var memberId = '${scope=member_id}'; // 로그인한 회원의 ID
+    var movieId = '${scope=bag.movieId}'; // 현재 영화의 ID
+    var review = $('#review').val(); // 작성한 리뷰 내용
+
+    // 로그인 확인
+    if (memberId) {
+      // 리뷰 정보 전송
+      $.ajax({
+        url: '../movieReview/submitReview',
+        method: 'POST',
+        data: {
+          memberId: memberId,
+          movieId: movieId,
+          review: review
+        },
+        success: function(response) {
+          alert('리뷰가 등록되었습니다.');
+          location.reload(); // 페이지 새로고침
         },
         error: function() {
-            alert("오류발생");
+          alert('이미 작성한 리뷰가 있습니다.');
+        }
+      });
+    } else {
+      alert('리뷰를 등록하려면 로그인이 필요합니다.');
+    }
+  });
+});
+</script>
+
+<script>
+    $.ajax({
+        url: "movieReview", // 적절한 서버 URL로 수정
+        success: function(response) {
+            $("#reviewList").append(response);
+        },
+        error: function() {
+            alert("오류 발생");
         }
     });
-</script> 
+</script>
 
 </head>
 <body>
@@ -225,7 +258,7 @@ $(function() {
     <input type="radio" id="rating1" name="rating" value="1">
     <label for="rating1" title="1점"></label>
   </div>
-  <button title="Button push orange" class="button btnPush btnOrange">평가</button>
+  <button id = "grade" title="Button push orange" class="button btnPush btnOrange">평가</button>
   <button id='jjim' style='border :0; cursor:pointer'><i class='fa-sharp fa-regular fa-heart fa-heart jjim_heart' style='color: #ff3d3d;'></i></button>
   <hr style="border: solid 3px #FFF39C ">
   <p>감독: ${bag.movieDirector}</p>
