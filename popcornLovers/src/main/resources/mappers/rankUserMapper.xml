@@ -5,12 +5,22 @@
 <mapper namespace="RankUserDAO">
     <!-- 랭크가 rank_no인 항목 가져오기 -->
     <select id="selectTop" parameterType="int" resultType="RankUserVO">
-    	select *
+    	<!-- select *
 		from (select
 		row_number() over(order by memberPopularity DESC) as rank_no, r.memberPopularity, m.*
 		from popcorn.rankuser r, popcorn.member m
 		where r.member_id = m.member_id) top
-		where rank_no = #{rank_no}
+		where rank_no = #{rank_no} -->
+		select *
+		from (
+			select *
+			from (
+				select
+				row_number() over(order by memberPopularity DESC) as rank_no, r.memberPopularity, m.*
+				from popcorn.rankuser r, popcorn.member m
+				where r.member_id = m.member_id) top
+			) top2, popcorn.member_point p
+		where top2.member_id = p.member_id and rank_no = #{rank_no}
     </select>
     
     <!-- member 테이블에서 rankUser 테이블애 없는 값 insert하기 (left outer join 사용) -->
@@ -33,21 +43,41 @@
     <!-- 페이징하기 위함 -->
 	<!-- 전체 랭킹 : 순위별 페이징 -->
     <select id="all" parameterType="RankUserPageVO" resultType="RankUserVO">
-    	select * from (
+    	<!-- select * from (
     	select
 		row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
 		from popcorn.rankuser r, popcorn.member m 
-		where r.member_id = m.member_id) total
-		where total.rank_no between ${start} and ${end}
+		where r.member_id = m.member_id) total -->
+		select *
+		from (
+			select * 
+			from (
+				select
+				row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
+				from popcorn.rankuser r, popcorn.member m 
+				where r.member_id = m.member_id) total
+			) total2, popcorn.member_point p
+		where total2.member_id = p.member_id and rank_no between ${start} and ${end}
+		<!-- where total.rank_no between ${start} and ${end} -->
     </select>
     
     <select id="list" parameterType="RankUserPageVO" resultType="RankUserVO">
-    	select * from (
+    	<!-- select * from (
     	select
 		row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
 		from popcorn.rankuser r, popcorn.member m 
-		where r.member_id = m.member_id) total
-		where total.rank_no between ${start} and ${end}
+		where r.member_id = m.member_id) total -->
+		select *
+		from (
+			select * 
+			from (
+				select
+				row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
+				from popcorn.rankuser r, popcorn.member m 
+				where r.member_id = m.member_id) total
+			) total2, popcorn.member_point p
+		where total2.member_id = p.member_id and rank_no between ${start} and ${end}
+		<!-- where total.rank_no between ${start} and ${end} -->
     </select>
     
     <select id="count" resultType="Integer">
@@ -69,8 +99,8 @@
     </select>
     
     
-    <!-- 스케줄러 업데이트 테스트 -->
-    <update id="rankUpdate2" parameterType="java.util.List">	<!-- java.util.List -->
+<!--     스케줄러 업데이트 테스트
+    <update id="rankUpdate2" parameterType="java.util.List">	java.util.List
 		<foreach collection="list" item="item" index="index">
 			update popcorn.rankuser r
 			set r.memberPopularity = (
@@ -84,10 +114,10 @@
 			)
 			where r.member_id = #{item.member_id}
 		</foreach>
-    </update>
+    </update> -->
     
-    <!-- java자제에서 for문으로 저장하기 테스트 -->
-    <update id="rankUpdate3" parameterType="RankUserVO">	<!-- java.util.List -->
+<!--     java자제에서 for문으로 저장하기 테스트
+    <update id="rankUpdate3" parameterType="RankUserVO">	java.util.List
 	    update popcorn.rankuser r
 		set r.memberPopularity = (
 			select (total.member_fav*0.3 + total.member_view*0.3) as per
@@ -99,7 +129,7 @@
 			where total.member_id = #{member_id}
 			)
 		where r.member_id = #{member_id}
-    </update>
+    </update> -->
     
     <select id="memberIdList" resultType="RankUserVO">
     	select member_id
@@ -119,6 +149,193 @@
     <!-- member 테이블에서 삭제된 id와 동일한 아이디를 rankuser 테이블에서도 삭제 -->
     <delete id="rankDel" parameterType="String">
     	delete from popcorn.rankuser r
-		where r.member_id = ${member_id}
+		where r.member_id = #{member_id}
     </delete>
+    
+    
+    <!-- member에 있는 member_id를 member_point 테이블에도 추가하기 -->
+    <insert id="pointMemberInsert" parameterType="RankUserVO">
+    	insert into popcorn.member_point (member_id)
+		select m.member_id
+		from popcorn.member m left outer join popcorn.member_point p on m.member_id = p.member_id
+		where p.member_id is null
+    </insert>
+    
+<!--     member_point 컬럼 데이터 값 업데이트
+    <update id="pointMemberUpdate" parameterType="RankUserVO">
+    	update popcorn.member_point p
+		set p.bbs_count = (
+				select count(member_id) as bbscount 
+				from popcorn.bbs b
+				where b.member_id = #{member_id}
+				group by b.member_id
+			),
+			p.b_comment_count = (
+				select count(b_comment_writer_id) as count 
+				from popcorn.b_comment bc 
+				where bc.b_comment_writer_id = #{member_id}
+				group by bc.b_comment_writer_id
+			),
+			p.review_count = (
+				select count(memberId) as count 
+				from popcorn.movie_review mr
+				where mr.memberId = #{member_id}
+				group by mr.memberId
+			),
+			p.grade_count = (
+				select count(member_id) as count 
+				from popcorn.movie_grade mg
+				where mg.member_id = #{member_id}
+				group by mg.member_id
+			),
+			p.hits_count = (
+				select m.member_view
+				from popcorn.member m 
+				where m.member_id = #{member_id}
+			)
+		where p.member_id = #{member_id}
+    </update> -->
+
+    
+    
+    <!-- rank update 항목 -->
+    <update id="rankUpdate" parameterType="RankUserVO">
+    	update popcorn.rankuser r
+		set r.memberPopularity = (
+				select (p.bbs_count*2 + p.b_comment_count + p.review_count*2 + p.grade_count*0.5 + p.hits_count*0.01 + p.login_count) as memberpoint
+				from popcorn.member_point p
+				where p.member_id = #{member_id}
+			)
+		where r.member_id = #{member_id}
+    </update>
+    
+    <!-- 리스트 가져오기 -->
+    <!-- 게시글을 작성한 사람의 아이디만 가져오기 -->
+    <select id="bbsIdList" resultType="RankUserVO">
+    	select b.member_id
+		from popcorn.bbs b
+		group by b.member_id
+    </select>
+    
+    <!-- 댓글을 작성한 사람의 아이디만 가져오기 -->
+    <select id="commentIdList" resultType="RankUserVO">
+    	select bc.b_comment_writer_id as member_id
+		from popcorn.b_comment bc 
+		group by bc.b_comment_writer_id
+    </select>
+    
+    <!-- 리뷰를 작성한 사람의 아이디만 가져오기 -->
+    <select id="reviewIdList" resultType="RankUserVO">
+    	select mr.memberId as member_id
+		from popcorn.movie_review mr
+		group by mr.memberId
+    </select>
+    
+    <!-- 별점을 매긴 사람의 아이디만 가져오기 -->
+    <select id="gradeIdList" resultType="RankUserVO">
+    	select mg.member_id 
+		from popcorn.movie_grade mg
+		group by mg.member_id
+    </select>
+    
+    <!-- 조회수가 0보다 큰 사람의 아이디만 가져오기 -->
+    <select id="hitsIdList" resultType="RankUserVO">
+    	select m.member_id
+		from popcorn.member m 
+		where m.member_view > 0
+    </select>
+    
+    
+    <!-- member_point 컬럼값 업데이트 -->
+    <!-- 게시글 -->
+    <update id="bbsUpdate" parameterType="RankUserVO">
+    	update popcorn.member_point p
+		set p.bbs_count = (
+				select count(member_id) as bbscount 
+				from popcorn.bbs b
+				where b.member_id = #{member_id}
+				group by b.member_id
+			)
+		where p.member_id = #{member_id}
+    </update>
+    
+    <!-- 댓글 업데이트 -->
+    <update id="commentUpdate" parameterType="RankUserVO">
+    	update popcorn.member_point p
+		set p.b_comment_count = (
+				select count(b_comment_writer_id) as count 
+				from popcorn.b_comment bc 
+				where bc.b_comment_writer_id = #{member_id}
+				group by bc.b_comment_writer_id
+			)
+		where p.member_id = #{member_id}
+    </update>
+    
+    
+    <!-- 리뷰 업데이트 -->
+    <update id="reviewUpdate" parameterType="RankUserVO">
+    	update popcorn.member_point p
+		set p.review_count = (
+				select count(memberId) as count 
+				from popcorn.movie_review mr
+				where mr.memberId = #{member_id}
+				group by mr.memberId
+			)
+		where p.member_id = #{member_id}
+    </update>
+    
+    
+    <!-- 별점 업데이트 -->
+    <update id="gradeUpdate" parameterType="RankUserVO">
+    	update popcorn.member_point p
+		set p.grade_count = (
+				select count(member_id) as count 
+				from popcorn.movie_grade mg
+				where mg.member_id = #{member_id}
+				group by mg.member_id
+			)
+		where p.member_id = #{member_id}
+    </update>
+    
+    
+    <!-- 조회수 업데이트 -->
+    <update id="hitsUpdate" parameterType="RankUserVO">
+    	update popcorn.member_point p
+		set p.hits_count = (
+				select m.member_view
+				from popcorn.member m 
+				where m.member_id = #{member_id}
+			)
+		where p.member_id = #{member_id}
+    </update>
+    
+    
+    <!-- recoList 다시 만들어야함 -->
+	<!-- reco_member 테이블에 있는 항목 가져오기 -->
+	<select id="recoMemberList" resultType="RankUserVO">
+		select *
+		from popcorn.reco_member rm
+	</select>
+	
+	<!-- member 테이블 상위 20개 항목중에서 3개만 가져와 reco_member 테이블에 저장하기 -->
+	<insert id="recoMemberAdd" parameterType="RankUserVO">
+		insert into popcorn.reco_member (member_id, member_name, member_level, member_img, member_email, bbs_count, review_count)
+		select list2.member_id, list2.member_name, list2.member_level, list2.member_img, list2.member_email, list2.bbs_count, list2.review_count
+		from (
+			select list.*, mp.bbs_count, mp.review_count
+			from (
+				select row_number() over(order by memberPopularity desc) as rank_no, m.member_id, m.member_name, m.member_level, m.member_img, m.member_email
+				from popcorn.rankuser r, popcorn.member m
+				where r.member_id = m.member_id
+				) list, popcorn.member_point mp
+			where list.member_id = mp.member_id) list2
+		where list2.rank_no between 1 and 20
+		order by rand()
+		limit 3
+	</insert>
+	
+	<!-- reco_member 테이블의 모든 항목을 삭제 -->
+	<delete id="recoMemberDel">
+		delete from popcorn.reco_member
+	</delete>
 </mapper>

@@ -16,41 +16,42 @@ public class Scheduler {
 	@Scheduled(cron = "0 */5 * * * *")
 	public void autoUpdate() {
 		/* movieLike, movieReviews, movieGrade 업데이트 후 movie의 rank_no 정해야함 */
-
+		System.out.println("==============================");
+		System.out.println("무비 랭킹 업데이트를 시작합니다.");
 		// movieLike 업데이트할 idList를 가져온 후 update
-		System.out.println("movieLike를 업데이트합니다");
 		List<RankMovieVO> likeList = dao.likeMovieId();
 		for (int i = 0; i < likeList.size(); i++) {
 			dao.likeUpdate(likeList.get(i));
 		}
+		System.out.println("movieLike를 업데이트 성공");
 
 		// movieReviews 업데이트할 idList를 가져온 후 update
-		System.out.println("movieReviews를 업데이트합니다");
 		List<RankMovieVO> reviewList = dao.reviewMovieId();
 		for (int i = 0; i < reviewList.size(); i++) {
 			dao.reviewsUpdate(reviewList.get(i));
 		}
+		System.out.println("movieReviews를 업데이트 성공");
 
 		// movieGrade 업데이트할 idList를 가져온 후 update
-		System.out.println("movieGrade를 업데이트합니다");
 		List<RankMovieVO> gradeList = dao.gradeMovieId();
 		for (int i = 0; i < gradeList.size(); i++) {
 			dao.gradeUpdate(gradeList.get(i));
 		}
+		System.out.println("movieGrade를 업데이트 성공");
 		/* movieLike, movieReviews, movieGrade 업데이트 완료 */
 
 		// 랭킹을 업데이트할 idList를 가져옴
-		System.out.println("movie 랭킹을 업데이트합니다");
 		List<RankMovieVO> idList = dao.movieIdList();
-		System.out.println("movie rank update 실행");
 		for (int i = 0; i < idList.size(); i++) {
 			dao.movieUpdate2(idList.get(i));
 		}
+		System.out.println("moviePopularity 업데이트 성공");
 	}
 
-	// 매일 3시간에 한번 씩 추천 되도록 설정 (임시 설정)
+	// 매일 3시간에 한번 씩 추천 되도록 설정(임시로 10분마다 한번씩 추천 리스트가 변경되도록 함)
 	@Scheduled(cron = "0 */10 * * * *")
 	public void autoReco() {
+		System.out.println("==============================");
 		System.out.println("reco_movie 테이블을 업데이트합니다");
 		// reco_movie 테이블 항목 모두 삭제
 		dao.recoMovieDel();

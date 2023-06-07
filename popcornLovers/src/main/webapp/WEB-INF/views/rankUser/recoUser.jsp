@@ -34,7 +34,7 @@ h3 {
 			<td>Lv.${vo.member_level} ㆍ <a href="../mypage/mypageOne?member_id=${vo.member_id}">${vo.member_name}</a></td>
 		</tr>
 		<tr>
-			<td><img alt="좋아요" src="../resources/n_img/heart.png" width="13px" height="10px"> ${vo.member_fav} ㆍ <img alt="좋아요" src="../resources/n_img/eye.png" width="13px" height="10px"> ${vo.member_view}</td>
+			<td><img alt="게시글수" src="../resources/n_img/bbsCount.png" width="13px" height="10px"> ${vo.bbs_count} ㆍ <img alt="리뷰수" src="../resources/n_img/reviewCount.png" width="15px" height="13px"> ${vo.review_count}</td>
 		</tr>
 		<tr>
 			<td>💌 ${vo.member_email}</td>

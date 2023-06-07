@@ -9,7 +9,7 @@
 <style type="text/css">
 #main{
 	width : 100%;
-	height : 100%;
+	height : 200%;
 	margin : 0px auto;	/* 가운데 정렬 */
 	margin-top: 10px;
 }
@@ -100,6 +100,14 @@ $(function() {
 			alert("top3 오류발생")
 		}
 	})	// ajax
+	
+	
+	// 스크롤 따라 다니기
+	$(document).ready(function(){
+		$(window).scroll(function(){
+			$('#recoList').css('top',$(window).scrollTop()+100);
+		});
+	});
 	
 /* 	// let status = false;
 	let like = "resources/n_img/likeHeart.png"

@@ -18,15 +18,11 @@ public class RankUserController {
 	@RequestMapping("rankUser/userRankAll")
 	public void userRankAll(PageVO vo, Model model) {
 		// member테블에 항목이 추가될 때마다 rankuser 테이블에도 추가
-		int result = dao.userInsert();
-		System.out.println(result + "개 추가됨");
-		
-//		// 변경된 사항 update하기
-//		List<RankUserVO> idList = dao.memberIdList();
-//		System.out.println("member rank update 실행");
-//		for (int i = 0; i < idList.size(); i++) {
-//			dao.memberUpdate2(idList.get(i));
-//		}
+		int result1 = dao.userInsert();
+		System.out.println("rankuser 테이블에 memberId " + result1 + "개 추가됨");
+		// member테블에 항목이 추가될 때마다 member_point 테이블에도 추가
+		int result2 = dao.pointMemberInsert();
+		System.out.println("movie_point 테이블에 memberId " + result2 + "개 추가됨");
 		
 		vo.setStartEnd(vo.getPage());
 		System.out.println("userRank list 실행");
@@ -51,7 +47,13 @@ public class RankUserController {
 	@RequestMapping("rankUser/recoUser")
 	public void userReco(Model model) {
 		System.out.println("userReco list 실행");
-		List<RankUserVO> list = dao.recoList();
+		List<RankUserVO> list = dao.recoMemberList();
+		// reco_member 테이블에 항목이 없을 경우 스케줄러와 상관 없이 추가해줌
+		if (list.size() == 0) {
+			dao.recoMemberAdd();	// 값을 랜덤으로 가져오기
+			list = dao.recoMemberList();	// 추가된 값을 리스트로 불러오기
+			System.out.println("Controller단계에서 reco_member테이블에 항목 추가됨");
+		}
 		model.addAttribute("list", list);
 	}
 	
