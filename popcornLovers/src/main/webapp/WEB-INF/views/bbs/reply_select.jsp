@@ -79,7 +79,7 @@
                 <div class="reply_list_cont">
                     <div class="reply_list">
                         <div class="reply_list_info">
-                        <img src="../resources/img/bbs/${one2.member_img}"
+                        <img src="../resources/profile_img/${one2.member_img}"
                         style="width: 50px; height: 50px;">
                         <div class="reply_list_first_line">
                         <div class="reply_list_first_line_item1" style="align-items: bottom;">
@@ -105,7 +105,7 @@
 
             <div class="reply_box" style="border-top: 1px solid #999; padding-top: 10px;">
                 <div class="replyt_writer_profile" style="padding-left: 10px; display: flex;">
-                    <img src="../resources/img/bbs/${list4[0].member_img}" style="width: 50px; height: 50px;">
+                    <img src="../resources/profile_img/${list4[0].member_img}" style="width: 50px; height: 50px;">
                     <span style="align-self: flex-end;">${list4[0].member_knickname}</span>
                 </div>
                 <div class="reply_content">
