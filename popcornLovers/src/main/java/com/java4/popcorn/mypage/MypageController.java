@@ -55,23 +55,23 @@ public class MypageController {
 
 		// bbs
 		int bbsCount = dao.bbsCount(vo);// 작성한 bbs 몇개인지 알기
-		int bbsPages = bbsCount / 10 + 1; // bbs 10개씩 넣은 페이지 갯수
+		int bbsPages = bbsCount / 5 + 1; // bbs 10개씩 넣은 페이지 갯수
 
 		List<MypageVO> bbsAllList = dao.bbsAllList(vo);// member_id로 해당 list들 들고오기
 
 		// review
 		int reviewCount = dao.reviewCount(vo);// 작성한 review 몇개인지 알기
-		int reviewPages = reviewCount / 10 + 1; // bbs 10개씩 넣은 페이지 갯수
+		int reviewPages = reviewCount / 5 + 1; // bbs 10개씩 넣은 페이지 갯수
 		List<MypageVO> reviewAllList = dao.reviewAllList(vo);// member_id로 해당 list들 들고오기
 
 		// jjim
 		int jjimCount = dao.jjimCount(vo);
-		int jjimPages = jjimCount / 10 + 1;
+		int jjimPages = jjimCount / 5 + 1;
 		List<MypageVO> jjumAllList = dao.jjimAllList(vo);
 		
 		//grade
 				int gradeCount = dao.jjimCount(vo);
-				int gradePages = gradeCount / 10 + 1;
+				int gradePages = gradeCount / 5 + 1;
 				List<MypageVO> gradeAllList = dao.gradeAllList(vo);
 		
 		dao.viewCount(member_id); //프로필 조회수
@@ -143,19 +143,24 @@ public class MypageController {
 
 		// bbs
 		int bbsCount = dao.bbsCount(vo);// 작성한 bbs 몇개인지 알기
-		int bbsPages = bbsCount / 10 + 1; // bbs 10개씩 넣은 페이지 갯수
+		int bbsPages = bbsCount / 5 + 1; // bbs 10개씩 넣은 페이지 갯수
 
 		List<MypageVO> bbsAllList = dao.bbsAllList(vo);// member_id로 해당 list들 들고오기
 
 		// review
 		int reviewCount = dao.reviewCount(vo);// 작성한 review 몇개인지 알기
-		int reviewPages = reviewCount / 10 + 1; // bbs 10개씩 넣은 페이지 갯수
+		int reviewPages = reviewCount / 5 + 1; // bbs 10개씩 넣은 페이지 갯수
 		List<MypageVO> reviewAllList = dao.reviewAllList(vo);// member_id로 해당 list들 들고오기
 
 		// jjim
 				int jjimCount = dao.jjimCount(vo);
-				int jjimPages = jjimCount / 10 + 1;
+				int jjimPages = jjimCount / 5 + 1;
 				List<MypageVO> jjumAllList = dao.jjimAllList(vo);
+				
+		//grade
+				int gradeCount = dao.jjimCount(vo);
+				int gradePages = gradeCount / 5 + 1;
+				List<MypageVO> gradeAllList = dao.gradeAllList(vo);
 		
 		dao.viewCount(member_id); //프로필 조회수
 		
@@ -171,6 +176,8 @@ public class MypageController {
 		model.addAttribute("jjimCount", jjimCount);
 		model.addAttribute("jjimPages",  jjimPages);
 		model.addAttribute("jjimAllList", jjumAllList);
+		
+		model.addAttribute("gradeAllList", gradeAllList);
 		
 		model.addAttribute("bag", bag);
 		System.out.println("작성한 bbs 수 " + bbsAllList.size());

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -118,42 +119,28 @@ public class MemberController {
 	}
 	
 
-	// 회원 탈퇴
-//	@RequestMapping("member/remove")
-//	public String remove(MemberVO vo, String member_id, HttpSession session) {
-//		System.out.println("delete 요청됨");
-//		
-//		MemberVO bag = dao.selectOne(member_id);
-//		
-//		int result = dao.remove(vo);
-//		if(member_id != null)
-//		if(result == 1) {
-//		     session.invalidate();
-//		        return "member/removeSuccess";
-//		    } else {
-//		        // 회원 삭제가 실패한 경우
-//		        return "member/removeFail";
-//		    }
-//	}
-	
-	
+
+	//회원 탈퇴하기
 	@RequestMapping("member/remove")
-	public String remove(HttpSession session) {
-	    String member_id = (String) session.getAttribute("member_id"); // 세션에서 회원 아이디 가져오기
-	    MemberVO vo = (MemberVO) session.getAttribute("bag"); // 세션에서 회원 정보 객체 가져오기
-	    
-	    // 회원 탈퇴 처리
-	    int result = dao.remove(vo);
-	    if (result == 1) {
-	        session.invalidate();
-	        return "member/removeSuccess";
-	    } else {
-	        // 회원 탈퇴가 실패한 경우
-	        System.out.println("회원 탈퇴 실패");
-	        System.out.println("member_id 값: " + member_id);
-	        System.out.println("탈퇴 결과값: " + result);
-	        return "redirect:remove.jsp";
-	    }
+	public void remove(@RequestParam("member_pw")String pw, //jsp에서 작성한 member_pw(name)값을 parameter로 받아와서 pw에 넣어오기
+			Model model, HttpSession session) {
+		
+		int result = 0; //우선적으로 결과값을 회원의 정보 값이 있을 때로 염두 (아이디와 비밀번호가 일치하는 기본 값)
+		
+		//vo를 세션으로 잡았던 bag을 가지고 와서 로그인 한 대상의 정보 들고오기 
+		// login 할 때 memberVO를 bag의 이름으로 세션 잡아서 넣어줬음 (참고*)
+		MemberVO vo = (MemberVO)session.getAttribute("bag");
+		//세션으로 잡은 vo에서 회원의 아이디와 패스워드 정보 String 값으로 들고오기'
+		
+		String id = vo.getMember_id();
+		String pw2 = vo.getMember_pw();
+		
+		if(pw.equals(pw2)) { //input에 들어간 pw와 vo에 있는 pw가 동일하다면
+			result = dao.remove(id); //해당 일치하는 id 삭제
+			session.invalidate(); //삭제를 하면서 세션 끊어주기
+		} 
+		
+		model.addAttribute("result",result); //결과값을 result 이름의 모델값에 넣어준다. 
 	}
 
 	

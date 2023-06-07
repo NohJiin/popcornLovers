@@ -128,7 +128,7 @@ $(function(){
         <p class="login_txt"> 이메일</p>
       <input id="email"  placeholder="example@gmail.com" name="member_email" type="email"  maxlength="50"/>
       
-      <button id="login">회원가입</button>
+      <button id="mem_join">회원가입</button>
     </form>
   </div>
 </div>

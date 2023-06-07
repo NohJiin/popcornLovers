@@ -13,6 +13,7 @@ public class MypageVO {
 	  private String member_knickname;
 	  private String bbs_title;
 	  private LocalDateTime bbs_date;
+	  private int bbs_cate_num;
 	  
 	//회원이 쓴 리뷰 목록
 	  private String movieTitle;
@@ -35,6 +36,14 @@ public class MypageVO {
 	  
 	  //getter setter	  
 	 
+	 public void setBbs_cate_num(int bbs_cate_num) {
+		this.bbs_cate_num = bbs_cate_num;
+	} 
+	  
+	  public int getBbs_cate_num() {
+		return bbs_cate_num;
+	}
+	  
 	 public Integer getGrade() {
 		return grade;
 	}

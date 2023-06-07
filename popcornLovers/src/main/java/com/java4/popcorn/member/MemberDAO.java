@@ -64,8 +64,8 @@ public class MemberDAO {
 	}
     
     //회원 탈퇴 
-    public int remove(MemberVO vo) {
-    	 int result = my.delete("MemberDAO.remove",vo);
+    public int remove(String member_id) {
+    	 int result = my.update("MemberDAO.remove",member_id);
 		return result;
 	}
     

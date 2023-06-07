@@ -1,3 +1,8 @@
+.name{float:left;}
+.level_icon{ display:inline-block; margin:12px 0 0 5px;}
+
+.user_btn
+
 .slider-container {
 	width: 100%;
 	overflow: hidden;
@@ -31,6 +36,14 @@
 	position: relative;
 }
 
+.movie_gradebox {
+	width: 177px;
+	height: 255px;
+	border-radius: 9px;
+	display: inline-block;
+	position: relative;
+}
+
 .movie_jjim {
 	text-align: center;
 	position: absolute;
@@ -39,7 +52,21 @@
 	transform: translate(-50%, -50%);
 }
 
+.movie_grade {
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
 .jjim_txt {
+	font-size: 14px;
+	margin: 6px 0 0 0;
+	font-weight: 600;
+}
+
+.grade_txt {
 	font-size: 14px;
 	margin: 6px 0 0 0;
 	font-weight: 600;
@@ -364,7 +391,7 @@ h3 {
 
 /* ++++++++++++++++++++++ 테이블 디자인 ++++++++++++++++++++++ */
 
-.table_box{font-size:15px;}
+.table_box{font-size:15px; width:100%;}
 .table_box td{border-bottom:1px solid #d7d7d7; overflow:hidden; height:32px; padding:0px 15px; }
 .table_main{text-align:center; background:#dedede; heigth:5px; font-weight:600;}
 .t_no{width:10%; text-align:center;}

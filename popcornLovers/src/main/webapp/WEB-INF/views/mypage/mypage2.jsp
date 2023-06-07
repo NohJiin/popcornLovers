@@ -93,10 +93,10 @@
 				</div>
 				<div class="info">
 				<div class="info_box clearfix">
-					<p class="name">${memberVO.member_knickname}</p>
-					<div class="level_icon"><img alt="등급 이미지" src="../resources/level_img/${memberVO.member_level}.png" width="25px" height="25px"></div>
+					<p class="name">${member_knickname}</p>
+					<div class="level_icon"><img alt="등급 이미지" src="../resources/level_img/${bag.member_level}.png" width="25px" height="25px"></div>
 				</div>
-					<small class="job">#${memberVO.member_id}</small>
+					<small class="job">#${member_id}</small>
 								<hr>
 								<div class="user_btn clearfix">
 									<a href="../member/update.jsp">
@@ -112,10 +112,9 @@
 			<div class="about"></div>
 			<b>리뷰 작성 수 : </b>${reviewCount}<br> <b>게시글 작성 수 : </b>${bbsCount}<br>
 
-			<img alt="조회수 눈 이미지" src="../resources/n_img/eye.png" width="20px" height="20px">${memberVO.member_view}
-				<img alt="좋아요 하트 이미지" src="../resources/n_img/heart.png" width="20px" height="20px"> ${memberVO.member_fav}
+			<img alt="조회수 눈 이미지" src="../resources/n_img/eye.png" width="20px" height="20px">${bag.member_view}
+				<img alt="좋아요 하트 이미지" src="../resources/n_img/heart.png" width="20px" height="20px"> ${bag.member_fav}
 		</div>
-
 
 
 <!-- 회원 활동 목록 -->

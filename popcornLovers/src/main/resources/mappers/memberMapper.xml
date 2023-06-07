@@ -50,10 +50,19 @@
 	</update>
 
 	<!-- 회원 탈퇴 -->
-	<delete id="remove" parameterType="memberVO">
+	<!-- <delete id="remove" parameterType="memberVO">
 		delete from popcorn.member
 		where member_id= #{member_id} and member_pw = #{member_pw}
-	</delete>
+	</delete> -->
+	<!-- 회원 탈퇴의 경우 실제론 삭제보단 update문을 써서 회원이 탈퇴를 원할 때
+	탈퇴된 회원임을 알려주는 컬럼에 탈퇴 관련 데이터를 넣어 update로 넣어주고 구분해줌 -->
+	
+		<!-- 회원 탈퇴 (회원이 탈퇴를 요청했을 때 비밀번호에 delete 값을 넣어서 구분해준다)-->
+	<update id="remove" parameterType="String">
+		update popcorn.member 
+		set member_pw = "delete"
+		where member_id= #{member_id} and member_pw = #{member_pw}
+	</update>
 
 	<!-- 회원 전체 리스트 -->
 	<select id="all" resultType="memberVO">

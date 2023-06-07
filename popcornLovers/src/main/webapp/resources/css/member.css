@@ -3,7 +3,7 @@
 
 
 .join_maintxt{
-	color:#ea414d;
+	color:#ff9b21;
 	margin-bottom:50px;
 }
 
@@ -83,7 +83,7 @@
   text-transform: uppercase;
   outline: 0;
   background: #ff9b21;
-  width: 100%;
+  width: 47%;
   border: 0;
   padding: 20px;
   color: #FFFFFF;
@@ -133,7 +133,7 @@
   font-size: 12px;
 }
 .form .message a {
-  color: #ea414d;
+  color: #ff9b21;
   text-decoration: none;
 }
 .form .register-form {

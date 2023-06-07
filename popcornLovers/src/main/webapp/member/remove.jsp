@@ -7,9 +7,36 @@
 <title>탈퇴페이지</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<script type="text/javascript" src="resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript">
-
+	/* $(function(){
+		$('#removeBtn').click(function(){
+			//var password_input = $('#pw').val(); //input에 입력된 비밀번호 가져오기
+			
+			//비밀번호를 ajax를 통해 서버로 전송 후 탈퇴 요청
+			$.ajax({
+				url : "remove", //views밑
+				data :{
+					result : $('#result').val()
+				},
+				success:function(){
+					if(result == "1" ){
+						alert("탈퇴 되었습니다.");
+					} else {
+						alert("잘못된 비밀번호 입니다. 다시 입력해주세요.");
+						return false;
+					}
+				},
+				error:function(){
+					alert("오류@@@"); //해당 오류는 ajax success 실패 오류가 아닌 url 오류
+				}
+			});
+		});
+		
+		$('#removeBtnFail').click(function(){
+			window.history.back(); //이전 페이지로 이동
+		});
+		
+	}); */
 </script>
 </head>
 <body>

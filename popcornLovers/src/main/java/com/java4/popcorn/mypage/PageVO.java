@@ -14,11 +14,11 @@ public class PageVO {
 	}
 	
 	public void setStartEnd(int page) {
-		start = 1 + (page - 1) * 10;
-		//ë¬´ì¡°ê±? 1ë¶??„° ?‹œ?‘
+		start = 1 + (page - 1) * 5;
+		//ë¬´ì¡°ï¿½? 1ï¿½??ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½
 		//1page: 1 + 0 * 10 => start 1
 		//2page: 1 + 1 * 10 => start 11  
-		end = page * 10;
+		end = page * 5;
 		//1page: 1 * 10 => end 10
 		//2page: 2 * 10 => end 20
 	}
