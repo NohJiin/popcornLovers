@@ -50,9 +50,9 @@ th, td {
 		<td class="movie-space" colspan="3"></td>
 	</tr>
 	<tr>
-		<td>⭐ ${top2.movieGrade}</td>
-		<td>⭐ ${top1.movieGrade}</td>
-		<td>⭐ ${top3.movieGrade}</td>
+		<td>⭐ ${top2.movieGrade} ㆍ ${top2.movieGenre}</td>
+		<td>⭐ ${top1.movieGrade} ㆍ ${top1.movieGenre}</td>
+		<td>⭐ ${top3.movieGrade} ㆍ ${top3.movieGenre}</td>
 	</tr>
 	<tr>
 		<td class="movie-space" colspan="3"></td>
