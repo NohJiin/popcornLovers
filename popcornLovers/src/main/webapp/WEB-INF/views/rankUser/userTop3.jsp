@@ -42,9 +42,9 @@ th, td {
 		<td><a href="../mypage/mypageOne?member_id=${top1.member_id}"><img class="profileImg" alt="멤버 Top1 이미지" src="../resources/profile_img/${top1.member_img}" width="200" height="200"></a></td>
 	</tr>
 	<tr>
-		<td style="font-size: 20px;"><img alt="등급 이미지" src="../resources/level_img/${top2.member_level}.png" width="25px" height="25px">  <a href="../mypage/mypageOne?member_id=${top2.member_id}">${top2.member_knickname}</a></td>
-		<td style="font-size: 20px;"><img alt="등급 이미지" src="../resources/level_img/${top1.member_level}.png" width="25px" height="25px">  <a href="../mypage/mypageOne?member_id=${top1.member_id}">${top1.member_knickname}</a></td>
-		<td style="font-size: 20px;"><img alt="등급 이미지" src="../resources/level_img/${top3.member_level}.png" width="25px" height="25px">  <a href="../mypage/mypageOne?member_id=${top3.member_id}">${top3.member_knickname}</a></td>
+		<td style="font-size: 20px;"><img alt="등급 이미지" src="../resources/level_img/${top2.member_level}.png" width="28px" height="28px">  <a href="../mypage/mypageOne?member_id=${top2.member_id}">${top2.member_knickname}</a></td>
+		<td style="font-size: 20px;"><img alt="등급 이미지" src="../resources/level_img/${top1.member_level}.png" width="28px" height="28px">  <a href="../mypage/mypageOne?member_id=${top1.member_id}">${top1.member_knickname}</a></td>
+		<td style="font-size: 20px;"><img alt="등급 이미지" src="../resources/level_img/${top3.member_level}.png" width="28px" height="28px">  <a href="../mypage/mypageOne?member_id=${top3.member_id}">${top3.member_knickname}</a></td>
 	</tr>
 	<tr>
 		<td class="user-space" colspan="3"> </td>

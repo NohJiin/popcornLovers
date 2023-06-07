@@ -23,7 +23,7 @@
 		<tr>
 			<td>${bag.rank_no}</td>
 			<td><a href="../mypage/mypageOne?member_id=${bag.member_id}&page=1">${bag.member_knickname}</a></td>
-			<td><img alt="등급 이미지" src="../resources/level_img/${bag.member_level}.png" width="25px" height="25px"></td>
+			<td><img alt="등급 이미지" src="../resources/level_img/${bag.member_level}.png" width="28px" height="28px"></td>
 			<td>${bag.bbs_count}</td>
 			<td>${bag.review_count}</td>
 			<td>${bag.memberPopularity}</td>
