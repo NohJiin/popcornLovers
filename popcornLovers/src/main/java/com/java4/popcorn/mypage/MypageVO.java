@@ -1,5 +1,7 @@
 package com.java4.popcorn.mypage;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 
@@ -10,7 +12,7 @@ public class MypageVO {
 	  private String member_id;
 	  private String member_knickname;
 	  private String bbs_title;
-	  private Date bbs_date;
+	  private LocalDateTime bbs_date;
 	  
 	//회원이 쓴 리뷰 목록
 	  private String movieTitle;
@@ -125,10 +127,12 @@ public class MypageVO {
 	public void setBbs_title(String bbs_title) {
 		this.bbs_title = bbs_title;
 	}
-	public Date getBbs_date() {
-		return bbs_date;
+	public String getBbs_date() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		String formattedDate = bbs_date.format(formatter).toString().replace("T", " ");
+		return formattedDate;
 	}
-	public void setBbs_date(Date bbs_date) {
+	public void setBbs_date(LocalDateTime bbs_date) {
 		this.bbs_date = bbs_date;
 	}
 	   
