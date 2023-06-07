@@ -31,7 +31,7 @@
     <select id="myBbsAll" resultType="mypageVO" parameterType="MemberPageVO">
 	select * from (
 	select
-	row_number() over(order by member_id desc) as mybbs_no,
+	row_number() over(order by bbs_no desc) as mybbs_no,
 	b.bbs_no, m.member_id, m.member_knickname , b.bbs_title, b.bbs_date
 	from member m
 	inner join bbs b 

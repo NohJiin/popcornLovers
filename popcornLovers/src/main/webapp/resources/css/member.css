@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 
+
 .join_maintxt{
 	color:#ea414d;
 	margin-bottom:50px;
@@ -81,7 +82,7 @@
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #ea414d;
+  background: #ff9b21;
   width: 100%;
   border: 0;
   padding: 20px;
@@ -94,6 +95,38 @@
 .form button:hover,.form button:active,.form button:focus {
   background: #eb2a38;
 }
+
+.form.remove_btn{
+	  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #ff9b21;
+  width: 47%;
+  border: 0;
+  padding: 20px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+.form.remove_btn2{
+	  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: rgb(173, 173, 173);
+  width: 47%;
+  border: 0;
+  padding: 20px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+
 .form .message {
   margin: 15px 0 0;
   color: #b3b3b3;

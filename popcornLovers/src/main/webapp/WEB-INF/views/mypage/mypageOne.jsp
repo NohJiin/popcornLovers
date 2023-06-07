@@ -18,14 +18,18 @@
 </style>
 <script type="text/javascript">
 $(function(){
-
+	/* 어떤 회원의 프로필인지 index 값 찾아오기 - 컨트롤러의 model에 넣었음 */
+	// member_id로 잡아오면 로그인하면서 String member_id를 세션으로 잡았기 때문에 세션에 저장된 값이 나오고,
+	//원하는 회원의 정보를 가져오려면 모델(memberVO)에 넣은 값을 선택해서 member_id를 꺼내와야한다.
+	var member_id = "${memberVO.member_id}";
 	 
 	 /* 찜한 영화 목록 버튼*/ 
 	$('.jjimpages').click(function() {
 		$.ajax({
 			url : "../mypage/myjjim2" , //views/mybbsAll.jsp가 결과!
 			data : {
-				page : $(this).text()
+				page : $(this).text(),
+				member_id:member_id
 			},
 			success : function(result) { //결과가 담겨진 table부분코드
 				$('#myjjimResult').html(result)
@@ -41,7 +45,9 @@ $(function(){
 		$.ajax({
 			url : "../mypage/mybbs3" , //views/mybbsAll.jsp가 결과!
 			data : {
-				page : $(this).text()
+				page : $(this).text(),
+				member_id:member_id
+				
 			},
 			success : function(result) { //결과가 담겨진 table부분코드
 				$('#mybbsResult').html(result)
@@ -57,7 +63,8 @@ $(function(){
 		$.ajax({
 			url : "../mypage/myreview3" , //views/mybbsAll.jsp가 결과!
 			data : {
-				page : $(this).text()
+				page : $(this).text(),
+				member_id:member_id
 			},
 			success : function(result2) { //결과가 담겨진 table부분코드
 				$('#myreviewResult').html(result2)
