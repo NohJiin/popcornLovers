@@ -66,7 +66,7 @@ public class Scheduler {
 	// 매일 3시간에 한번 씩 추천 되도록 설정(임시로 10분마다 한번씩 추천 리스트가 변경되도록 함)
 	@Scheduled(cron = "0 */10 * * * *")
 	public void autoReco() {
-		System.out.println("==============================");
+		System.out.println("=============================");
 		System.out.println("reco_member 테이블을 업데이트합니다");
 		// reco_member 테이블 항목 모두 삭제
 		dao.recoMemberDel();
