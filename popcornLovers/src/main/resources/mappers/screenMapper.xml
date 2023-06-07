@@ -9,11 +9,13 @@
     </select>
 
     <select id="selectByMovieId" resultType="com.java4.popcorn.database.screen.ScreenVO">
-        select * from popcorn.movie_screen ms where movie_docid = #{movie_docid}
+        select * from popcorn.movie_screen ms where movie_docid = #{movie_docid} or movieCd = #{movie_docid}
     </select>
+
     <select id="selectByTheater" resultType="com.java4.popcorn.database.screen.ScreenVO">
         select * from popcorn.movie_screen ms where theater_id = #{theater_id}
     </select>
+
     <select id="selectByDate" resultType="com.java4.popcorn.database.screen.ScreenVO">
         select * from popcorn.movie_screen ms where date = #{date}
     </select>
@@ -21,44 +23,21 @@
     <select id="selectByTheaterAndDate" resultType="com.java4.popcorn.database.screen.ScreenVO">
         select * from popcorn.movie_screen ms where theater_id = #{theater_id} and date = #{date}
     </select>
+
     <select id="selectByMovieIdAndDate" resultType="com.java4.popcorn.database.screen.ScreenVO">
-        select * from popcorn.movie_screen ms where movie_docid = #{movie_docid} and date = #{date}
+        select * from popcorn.movie_screen ms where movie_docid = #{movie_docid} or movieCd = #{movie_docid} and date = #{date}
     </select>
+
     <select id="selectByMovieIdAndTheater" resultType="com.java4.popcorn.database.screen.ScreenVO">
-        select * from popcorn.movie_screen ms where movie_docid = #{movie_docid} and theater_id = #{theater_id}
+        select * from popcorn.movie_screen ms where movie_docid = #{movie_docid} or movieCd = #{movie_docid} and theater_id = #{theater_id}
     </select>
 
     <select id="selectByMovieIdAndTheaterAndDate" resultType="com.java4.popcorn.database.screen.ScreenVO">
-        select * from popcorn.movie_screen ms where movie_docid = #{movie_docid} and theater_id = #{theater_id} and date = #{date}
+        select * from popcorn.movie_screen ms where movie_docid = #{movie_docid} or movieCd = #{movie_docid} and theater_id = #{theater_id} and date = #{date}
     </select>
 
     <select id="selectDistinctMovieIdByDate" resultType="java.lang.String">
         select distinct movie_docid from popcorn.movie_screen where date = #{date}
     </select>
-
-
-
-    <insert id="insertOne">
-        insert into popcorn.movie_screen
-        values(#{title}, #{theater}, #{screen}, #{time}, #{date}, #{theater_id}, #{movie_id}, #{runtime})
-    </insert>
-
-
-
-    <update id="updateMovieIdByTitle">
-        update popcorn.movie_screen
-        set movie_id = #{movie_id}
-        where title = #{title}
-    </update>
-
-    <update id="truncateScreen">
-        truncate table popcorn.movie_screen
-    </update>
-
-<!--dont use it !!-->
-    <select id="select0513" resultType="com.java4.popcorn.database.screen.ScreenVO">
-        select * from popcorn.movie_screen ms where title like CONCAT('%', #{str1}, '%') and theater_id = #{str2}
-    </select>
-<!--dont use it !!-->
 
 </mapper>
