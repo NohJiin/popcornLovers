@@ -1,6 +1,8 @@
 package com.java4.popcorn.movieInfo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,4 +30,11 @@ public class MovieInfoDAO {
 	 public void viewCount(String movieId) {
 		my.update("MovieInfoDAO.viewCount", movieId);
 	}
+	 
+	 public List<MovieInfoVO> selectRandomTop(int count) {
+		    Map<String, Object> params = new HashMap<>();
+		    params.put("count", count);
+		    List<MovieInfoVO> topMovies = my.selectList("MovieInfoDAO.selectRandomTop", params);
+		    return topMovies;
+		}
 }

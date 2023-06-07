@@ -1,5 +1,7 @@
 package com.java4.popcorn.movieInfo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,17 +25,10 @@ public class MovieInfoController {
 	}
 	
 	@RequestMapping("movie/movieTop5")
-	public void actorSelectOne(Model model) {
-		MovieInfoVO top1 = dao.selectTop(1);
-		MovieInfoVO top2 = dao.selectTop(2);
-		MovieInfoVO top3 = dao.selectTop(3);
-		MovieInfoVO top4 = dao.selectTop(4);
-		MovieInfoVO top5 = dao.selectTop(5);
-		model.addAttribute("top1", top1);
-		model.addAttribute("top2", top2);
-		model.addAttribute("top3", top3);
-		model.addAttribute("top4", top4);
-		model.addAttribute("top5", top5);
+	public String actorSelectOne(Model model) {
+	    List<MovieInfoVO> topMovies = dao.selectRandomTop(5);
+	    model.addAttribute("topMovies", topMovies);
+	    return "movie/movieTop5";
 	}
 	
 	@RequestMapping("movie/movieDetails2")
