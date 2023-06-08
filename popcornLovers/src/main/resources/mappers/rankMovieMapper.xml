@@ -7,10 +7,10 @@
     <select id="selectTop" parameterType="int" resultType="RankMovieVO">
     	select *
 		from (
-		select 
-		row_number() over(order by moviePopularity desc) as rank_no, r.moviePopularity, m.*
-		from popcorn.rankmovie r, popcorn.movie m
-		where r.movieId = m.movieId) top
+			select 
+			row_number() over(order by moviePopularity desc) as rank_no, r.moviePopularity, m.*
+			from popcorn.rankmovie r, popcorn.movie m
+			where r.movieId = m.movieId) top
 		where rank_no = #{rank_no}
     </select>
     
@@ -48,51 +48,6 @@
     </select>
     
     
-    <!-- 상위 20개 중에서 3가지를 랜덤으로 추출하여 추천 -->
-    <select id="recoList" resultType="RankMovieVO">
-    	select *
-		from (
-			select row_number() over(order by moviePopularity desc) as rank_no, r.moviePopularity, m.*
-			from popcorn.rankmovie r, popcorn.movie m
-			where r.movieId = m.movieId) list
-		where list.rank_no between 1 and 20
-		order by rand()
-		limit 3
-    </select>
-    
-    
-    <!-- 스케줄러 업데이트 테스트 -->
-    <update id="rankUpdate2" parameterType="java.util.List">	<!-- java.util.List -->
-		<foreach collection="list" item="item" index="index">
-	    	update popcorn.rankmovie m
-			set m.moviePopularity = (
-			select (total.movieLike*0.3 + total.movieHits*0.3 + total.movieReviews*0.3) as per
-			from
-				(select r.*, m.movieLike, m.movieHits, m.movieReviews
-				from popcorn.rankmovie r, popcorn.movie m
-				where r.movieId = m.movieId
-				) total
-			where total.movieId = #{item.movieId}
-			)
-			where m.movieId = #{item.movieId}
-		</foreach>
-    </update>
-    
-    <!-- java자제에서 for문으로 저장하기 테스트 -->
-    <update id="rankUpdate3" parameterType="RankMovieVO">	<!-- java.util.List -->
-	    	update popcorn.rankmovie m
-			set m.moviePopularity = (
-			select (total.movieLike*0.3 + total.movieHits*0.3 + total.movieReviews*0.3) as per
-			from
-				(select r.*, m.movieLike, m.movieHits, m.movieReviews
-				from popcorn.rankmovie r, popcorn.movie m
-				where r.movieId = m.movieId
-				) total
-			where total.movieId = #{movieId}
-			)
-			where m.movieId = #{movieId}
-    </update>
-    
     <select id="movieIdList" resultType="RankMovieVO">
     	select movieId
     	from popcorn.movie
@@ -125,13 +80,6 @@
     </update>
     
     
-    <!-- Like한 항목이 있는 movieId만 가져오기 -->
-    <select id="likeMovieId" resultType="RankMovieVO">
-	    select movieId
-		from popcorn.moviejjim m
-		group by movieId
-    </select>
-    
     <!-- movie테이블에 movieLike 수 업데이트 -->
 	<update id="likeUpdate" parameterType="RankMovieVO">
 		update popcorn.movie m
@@ -160,13 +108,6 @@
 		where m.movieId = #{movieId}
 	</update>
 	
-	<!-- review 수가 0이 아닌 리스트 가져오기 -->
-	<select id="reviewMovieId" resultType="RankMovieVO">
-		select mr.movieId
-		from popcorn.movie_review mr
-		group by mr.movieId
-	</select>
-	
 	
 	<!-- movieGrade 평균 별점으로 업데이트 -->
 	<update id="gradeUpdate" parameterType="RankMovieVO">
@@ -179,6 +120,21 @@
 		)
 	where m.movieId = #{movieId}
 	</update>
+	
+	
+	<!-- Like한 항목이 있는 movieId만 가져오기 -->
+    <select id="likeMovieId" resultType="RankMovieVO">
+	    select movieId
+		from popcorn.moviejjim m
+		group by movieId
+    </select>
+    
+	<!-- review 수가 0이 아닌 리스트 가져오기 -->
+	<select id="reviewMovieId" resultType="RankMovieVO">
+		select mr.movieId
+		from popcorn.movie_review mr
+		group by mr.movieId
+	</select>
 	
 	<!-- 평균 별점이 매겨진 영화 리스트를 가져옴 -->
 	<select id="gradeMovieId" resultType="RankMovieVO">
@@ -197,10 +153,14 @@
 	
 	<!-- movie 테이블 상위 20개 항목중에서 3개만 가져와 reco_movie 테이블에 저장하기 -->
 	<insert id="recoMovieAdd" parameterType="RankMovieVO">
-		insert into popcorn.reco_movie (movieId, movieTitle, movieGrade, movieOpen, movieGenre, movieImg, movieLike, movieHits)
-		select list.movieId, list.movieTitle, list.movieGrade, list.movieOpen, list.movieGenre, list.movieImg, list.movieLike, list.movieHits
+		insert into popcorn.reco_movie (movieId, movieTitle, movieGrade, movieOpen, 
+										movieGenre, movieImg, movieLike, movieHits)
+		select list.movieId, list.movieTitle, list.movieGrade, list.movieOpen, 
+				list.movieGenre, list.movieImg, list.movieLike, list.movieHits
 		from (
-			select row_number() over(order by moviePopularity desc) as rank_no, m.movieId, m.movieTitle, m.movieGrade, m.movieOpen, m.movieGenre, m.movieImg, m.movieLike, m.movieHits
+			select row_number() over(order by moviePopularity desc) as rank_no, 
+					m.movieId, m.movieTitle, m.movieGrade, m.movieOpen, m.movieGenre, 
+					m.movieImg, m.movieLike, m.movieHits
 			from popcorn.rankmovie r, popcorn.movie m
 			where r.movieId = m.movieId) list
 		where list.rank_no between 1 and 20

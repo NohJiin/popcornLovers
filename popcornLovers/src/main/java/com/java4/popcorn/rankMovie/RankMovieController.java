@@ -22,22 +22,6 @@ public class RankMovieController {
 		int result = dao.movieInsert();
 		System.out.println(result + "개 추가됨");
 		
-//		// movieLike수 업데이트 후 movie의 rank_no 정하기
-//		// movieLike 업데이트할 idList를 가져옴
-//		System.out.println("movieLike를 업데이트 합니다");
-//		List<RankMovieVO> upList = dao.likeMovieId();
-//		for (int i = 0; i < upList.size(); i++) {
-//			dao.likeUpdate(upList.get(i));
-//		}
-//		
-//		// 랭킹을 업데이트할 idList를 가져옴
-//		System.out.println("movie 랭킹을 업데이트 합니다");
-//		List<RankMovieVO> idList = dao.movieIdList();
-//		System.out.println("movie rank update 실행");
-//		for (int i = 0; i < idList.size(); i++) {
-//			dao.movieUpdate2(idList.get(i));
-//		}
-		
 		vo.setStartEnd(vo.getPage());
 		System.out.println("movieRank list 실행");
 		List<RankMovieVO> list = dao.all(vo);

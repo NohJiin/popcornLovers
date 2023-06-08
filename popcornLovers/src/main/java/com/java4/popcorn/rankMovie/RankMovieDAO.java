@@ -22,16 +22,6 @@ public class RankMovieDAO {
 		return my.selectList("RankMovieDAO.movieIdList");
 	}
 
-	// movieId가 담긴 리스트를 전달받아 update시키기
-	public void movieUpdate(List<RankMovieVO> list) {
-		my.update("RankMovieDAO.rankUpdate2", list);
-	}
-
-	// for문 사용해서 update 테스트
-	public void movieUpdate2(RankMovieVO bag) {
-		my.update("RankMovieDAO.rankUpdate3", bag);
-	}
-
 	// update된 항목을 랭킹 정해진대로 가져오는지 확인
 	public List<RankMovieVO> testAll() {
 		return my.selectList("RankMovieDAO.testAll");
@@ -66,10 +56,17 @@ public class RankMovieDAO {
 	public void gradeUpdate(RankMovieVO bag) {
 		my.update("RankMovieDAO.gradeUpdate", bag);
 	}
+	
+	// rankmovie 테이블의 moviePopularity 컬럼 업데이트
+	public void rankUpdate(RankMovieVO bag) {
+		my.update("RankMovieDAO.rankUpdate", bag);
+	}
+	/* 스케줄러 끝 */
 
+	
 	// reco_movie 테이블에 랜덤 3가지 추가하기
 	public void recoMovieAdd() {
-		my.insert("RankMovieDAO.recoMovieAdd"); // return type = int(추가된 항목의 수)
+		my.insert("RankMovieDAO.recoMovieAdd");
 	}
 
 	// reco_movie 테이블에 있는 항목 가져오기
@@ -81,7 +78,7 @@ public class RankMovieDAO {
 	public void recoMovieDel() {
 		my.delete("RankMovieDAO.recoMovieDel");
 	}
-	/* 스케줄러 끝 */
+	
 
 	/* 페이징 시작 */
 	// 전체 목록 : 순위별
@@ -101,10 +98,6 @@ public class RankMovieDAO {
 	}
 	/* 페이징 끝 */
 
-	// 상위 20개 중에서 랜덤으로 3개 가져오기
-	public List<RankMovieVO> recoList() {
-		return my.selectList("RankMovieDAO.recoList");
-	}
 
 	// 하나만 검색 : rank_no = #{rank_no} 인 항목 찾아 가져옴
 	public RankMovieVO selectTop(int rank_no) {

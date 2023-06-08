@@ -10,8 +10,6 @@ import com.java4.popcorn.rankMovie.RankMovieVO;
 
 @Component
 public class RankUserDAO {
-//    @Autowired
-//    GeneralDAO<RankUserVO> dao;
     
     @Autowired
     SqlSessionTemplate my;
@@ -27,26 +25,6 @@ public class RankUserDAO {
 		RankUserVO bag = my.selectOne("RankUserDAO.selectTop", rank_no);
 		return bag;
 	}
-    
-    
-//    /* 스케줄러 시작 */
-//    
-//    // memeber_id가 담긴 리스트를 전달받아 update시키기
-//    public void memberUpdate(List<RankUserVO> list) {
-//  		my.update("RankUserDAO.rankUpdate2", list);
-//  	}
-//    
-//    // for문 사용해서 update 테스트
-//    public void memberUpdate2(RankUserVO bag) {
-//    	my.update("RankUserDAO.rankUpdate3", bag);
-//    }
-//    
-//    // update된 항목을 랭킹 정해진대로 가져오는지 확인
-//    public List<RankUserVO> testAll() {
-//		List<RankUserVO> list = my.selectList("RankUserDAO.testAll");
-//		return list;
-//	}
-//    /* 스케줄러 끝 */
     
     
     /* 페이징 시작 */
@@ -113,11 +91,6 @@ public class RankUserDAO {
     	return my.selectList("RankUserDAO.hitsIdList");
     }
     
-//    // member_point 컬럼 값 업데이트 => for문 사용해야함
-//    public void pointMemberUpdate(RankUserVO bag) {
-//		my.update("RankUserDAO.pointMemberUpdate", bag);
-//	}
-    
     // member_point 컬럼 값 업데이트
     // bbs
     public void bbsUpdate(RankUserVO bag) {
@@ -144,6 +117,7 @@ public class RankUserDAO {
     public void rankUpdate(RankUserVO bag) {
 		my.update("RankUserDAO.rankUpdate", bag);
 	}
+    /* rankuser 랭킹 값 업데이트 끝 */
     
     
     // reco_member 테이블에 랜덤 3가지 추가하기

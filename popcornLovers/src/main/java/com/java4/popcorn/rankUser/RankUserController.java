@@ -69,10 +69,4 @@ public class RankUserController {
 		model.addAttribute("top3", top3);
 	}
 	
-//	// rankuser에서 삭제가 되는지 확인
-//	@RequestMapping("rankUser/rankDel")
-//	public void rankDel(String member_id, Model model) {
-//		dao.rankDel(member_id);
-//		model.addAttribute("member_id", member_id);
-//	}
 }

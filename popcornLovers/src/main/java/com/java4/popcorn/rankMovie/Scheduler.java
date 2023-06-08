@@ -43,7 +43,7 @@ public class Scheduler {
 		// 랭킹을 업데이트할 idList를 가져옴
 		List<RankMovieVO> idList = dao.movieIdList();
 		for (int i = 0; i < idList.size(); i++) {
-			dao.movieUpdate2(idList.get(i));
+			dao.rankUpdate(idList.get(i));
 		}
 		System.out.println("moviePopularity 업데이트 성공");
 	}

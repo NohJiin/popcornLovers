@@ -25,14 +25,6 @@
 		where r.member_id is null
     </insert>
     
-<!-- 	전체 랭킹 : 순위별  
-    <select id="all" resultType="RankUserVO">
-    	select
-		row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
-		from popcorn.rankuser r, popcorn.member m 
-		where r.member_id = m.member_id 
-    </select> -->
-    
     
     <!-- 페이징하기 위함 -->
 	<!-- 전체 랭킹 : 순위별 페이징 -->
@@ -83,38 +75,6 @@
     </select>
     
     
-<!--     스케줄러 업데이트 테스트
-    <update id="rankUpdate2" parameterType="java.util.List">	java.util.List
-		<foreach collection="list" item="item" index="index">
-			update popcorn.rankuser r
-			set r.memberPopularity = (
-				select (total.member_fav*0.3 + total.member_view*0.3) as per
-				from
-				(select u.*, m.member_fav, m.member_view
-				from popcorn.rankuser u, popcorn.member m
-				where u.member_id = m.member_id
-				) total
-			where total.member_id = #{item.member_id}
-			)
-			where r.member_id = #{item.member_id}
-		</foreach>
-    </update> -->
-    
-<!--     java자제에서 for문으로 저장하기 테스트
-    <update id="rankUpdate3" parameterType="RankUserVO">	java.util.List
-	    update popcorn.rankuser r
-		set r.memberPopularity = (
-			select (total.member_fav*0.3 + total.member_view*0.3) as per
-			from
-				(select u.*, m.member_fav, m.member_view
-				from popcorn.rankuser u, popcorn.member m
-				where u.member_id = m.member_id
-			) total
-			where total.member_id = #{member_id}
-			)
-		where r.member_id = #{member_id}
-    </update> -->
-    
     <select id="memberIdList" resultType="RankUserVO">
     	select member_id
     	from popcorn.member
@@ -144,42 +104,6 @@
 		from popcorn.member m left outer join popcorn.member_point p on m.member_id = p.member_id
 		where p.member_id is null
     </insert>
-    
-<!--     member_point 컬럼 데이터 값 업데이트
-    <update id="pointMemberUpdate" parameterType="RankUserVO">
-    	update popcorn.member_point p
-		set p.bbs_count = (
-				select count(member_id) as bbscount 
-				from popcorn.bbs b
-				where b.member_id = #{member_id}
-				group by b.member_id
-			),
-			p.b_comment_count = (
-				select count(b_comment_writer_id) as count 
-				from popcorn.b_comment bc 
-				where bc.b_comment_writer_id = #{member_id}
-				group by bc.b_comment_writer_id
-			),
-			p.review_count = (
-				select count(memberId) as count 
-				from popcorn.movie_review mr
-				where mr.memberId = #{member_id}
-				group by mr.memberId
-			),
-			p.grade_count = (
-				select count(member_id) as count 
-				from popcorn.movie_grade mg
-				where mg.member_id = #{member_id}
-				group by mg.member_id
-			),
-			p.hits_count = (
-				select m.member_view
-				from popcorn.member m 
-				where m.member_id = #{member_id}
-			)
-		where p.member_id = #{member_id}
-    </update> -->
-
     
     
     <!-- rank update 항목 -->
