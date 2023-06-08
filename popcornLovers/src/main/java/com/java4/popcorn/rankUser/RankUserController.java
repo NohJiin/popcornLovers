@@ -12,7 +12,7 @@ import com.java4.popcorn.rankMovie.RankMovieVO;
 @Controller
 public class RankUserController {
 	@Autowired
-	RankUserDAO dao;
+	RankUserInter dao;
 	
 	// 영화 전체 랭크 리스트 : 순위별
 	@RequestMapping("rankUser/userRankAll")

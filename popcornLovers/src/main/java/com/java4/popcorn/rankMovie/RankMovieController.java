@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class RankMovieController {
 	@Autowired
-	RankMovieDAO dao;
+	RankMovieInter dao;
 	
 	@Autowired
 	Scheduler sd;

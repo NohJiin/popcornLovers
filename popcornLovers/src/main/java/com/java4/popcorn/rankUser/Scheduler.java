@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component("schedulerMember")	// scheduler 싱글톤 객체 생성
 public class Scheduler {
 	@Autowired
-	RankUserDAO dao;
+	RankUserInter dao;
 	
 	/* 매일 오전12시 00분 00초에 랭킹 페이지가 업데이트 되도록 설정 - 임시로 10분마다 업데이트 되도록 설정 */ 
 	// member_point 항목을 업데이트 + user랭킹 업데이트
@@ -64,7 +64,7 @@ public class Scheduler {
 	}
 	
 	// 매일 3시간에 한번 씩 추천 되도록 설정(임시로 10분마다 한번씩 추천 리스트가 변경되도록 함)
-	@Scheduled(cron = "0 */10 * * * *")
+	@Scheduled(cron = "0 */5 * * * *")
 	public void autoReco() {
 		System.out.println("=============================");
 		System.out.println("reco_member 테이블을 업데이트합니다");
