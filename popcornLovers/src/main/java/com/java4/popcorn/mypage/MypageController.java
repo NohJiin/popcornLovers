@@ -24,7 +24,7 @@ import com.java4.popcorn.movieInfo.MovieInfoVO;
 public class MypageController {
 
 	@Autowired
-	MypageDAO dao;
+	MypageInterface dao;
 
 	//회원 활동 내역 레벨 값 가져오기
 	//@RequestMapping("")

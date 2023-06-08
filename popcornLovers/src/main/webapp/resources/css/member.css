@@ -28,6 +28,13 @@
 	float:left;
 }
 
+#knickname_result{
+	margin: 10px 0;
+	font-size:13px;
+	display:inline;
+	float:left;
+}
+
 .login-page {
   width: 450px;
   padding: 25% 0 0;

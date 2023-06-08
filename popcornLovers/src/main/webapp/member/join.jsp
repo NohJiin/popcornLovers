@@ -16,6 +16,7 @@ $(function(){
 	$('#id').blur(function() {
 	    var memberId = $('#id').val();
 	    var regex = /^[a-zA-Z0-9]+$/; // 영문과 숫자로만 이루어진 정규 표현식
+	
 
 	    if (!regex.test(memberId)) {
 	        $('#id_result').text('영문과 숫자로만 입력해주세요.').css('color', 'red');
@@ -33,6 +34,32 @@ $(function(){
 	                $('#id_result').text('중복된 아이디 입니다.').css('color', 'red');
 	            } else {
 	                $('#id_result').text('사용가능한 아이디입니다.').css('color', 'blue');
+	            }
+	        }
+	    })
+	}) //#id
+	
+	<!-- 닉네임 확인 --> 
+	$('#knickname').blur(function() {
+	    var memberId = $('#knickname').val();
+	    var regex2 = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$/;
+
+	    if (!regex2.test(memberId)) {
+	        $('#knickname_result').text('한글과 영문,숫자로만 입력해주세요.').css('color', 'red');
+	        return;
+	    }
+
+	    $.ajax({
+	        url: "knicknameCheck",
+	        data: {
+	            "member_knickname": $('#knickname').val()
+	        },
+	        success: function(data) {
+	            console.log('data', data)
+	            if (data === 1) { // 아이디 사용 불가능
+	                $('#knickname_result').text('중복된 닉네임 입니다.').css('color', 'red');
+	            } else {
+	                $('#knickname_result').text('사용가능한 닉네임입니다.').css('color', 'blue');
 	            }
 	        }
 	    })
@@ -71,7 +98,8 @@ $(function(){
 	    }
 
 	    var regex = /^[a-zA-Z0-9]+$/; // 영문과 숫자로만 이루어진 정규 표현식
-
+	    var regex2 = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$/;
+	    
 	    if (!regex.test(memberId)) {
 	        alert("아이디는 영문과 숫자로만 입력해주세요.");
 	        return false;
@@ -80,6 +108,17 @@ $(function(){
 	    // 아이디 중복 체크 등 추가 검증 로직
 	    if ($('#id_result').text() === '중복된 아이디 입니다.') {
 	        alert("중복된 아이디 입니다. 다른 아이디를 입력해주세요.");
+	        return false;
+	    }
+	    
+	    if (!regex2.test(memberKnickname)) {
+	        alert("닉네임은 한글과 영문,숫자로만 입력해주세요.");
+	        return false;
+	    }
+
+	    // 아이디 중복 체크 등 추가 검증 로직
+	    if ($('#knickname_result').text() === '중복된 닉네임 입니다.') {
+	        alert("중복된 닉네임 입니다. 다른 아이디를 입력해주세요.");
 	        return false;
 	    }
 	})//#mem_join
@@ -108,7 +147,8 @@ $(function(){
       <p class="login_txt"> 이름</p>
       <input id="name"  placeholder="name" name="member_name" maxlength="10"/>
       
-          <p class="login_txt"> 닉네임</p>
+          <p class="login_txt_id"> 닉네임</p><div id="knickname_result" >
+</div>
       <input id="knickname"  placeholder="knickname" name="member_knickname" maxlength="10"/>
       
        <p class="login_txt_id"> 성별</p>

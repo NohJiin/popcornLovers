@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class MemberController {
 
 	@Autowired
-	MemberDAO dao;
+	MemberInterface dao;
 	
 	
 	// 회원가입
