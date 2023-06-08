@@ -37,11 +37,6 @@
     <!-- 페이징하기 위함 -->
 	<!-- 전체 랭킹 : 순위별 페이징 -->
     <select id="all" parameterType="RankUserPageVO" resultType="RankUserVO">
-    	<!-- select * from (
-    	select
-		row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
-		from popcorn.rankuser r, popcorn.member m 
-		where r.member_id = m.member_id) total -->
 		select *
 		from (
 			select * 
@@ -52,15 +47,10 @@
 				where r.member_id = m.member_id) total
 			) total2, popcorn.member_point p
 		where total2.member_id = p.member_id and rank_no between ${start} and ${end}
-		<!-- where total.rank_no between ${start} and ${end} -->
+		<!-- limit 100 -->
     </select>
     
     <select id="list" parameterType="RankUserPageVO" resultType="RankUserVO">
-    	<!-- select * from (
-    	select
-		row_number () over(order by memberPopularity desc) as rank_no, r.memberPopularity, m.*
-		from popcorn.rankuser r, popcorn.member m 
-		where r.member_id = m.member_id) total -->
 		select *
 		from (
 			select * 
@@ -71,7 +61,7 @@
 				where r.member_id = m.member_id) total
 			) total2, popcorn.member_point p
 		where total2.member_id = p.member_id and rank_no between ${start} and ${end}
-		<!-- where total.rank_no between ${start} and ${end} -->
+		limit 100
     </select>
     
     <select id="count" resultType="Integer">
