@@ -58,7 +58,7 @@
                         </ul>
 						</div>
 					</li><!--
-					--><li class="li_menu"><a href="링크주소"><span class="main_menu">캘린더</span></a><!--
+					--><li class="li_menu"><a href="${pageContext.request.contextPath}/mycalendar/mycalendarmain.jsp"><span class="main_menu">캘린더</span></a><!--
 					--><div class="menu_sub">
 						<ul>
 							<li><a href="${pageContext.request.contextPath}/mycalendar/mycalendarmain.jsp"><span>나의 영화일지</span></a></li><!--
