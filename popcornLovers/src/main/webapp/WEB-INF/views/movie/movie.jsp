@@ -12,7 +12,7 @@
 }
 
 .slider-container {
-	width: 100%;
+	width: 1300px;
 	overflow: hidden;
 }
 

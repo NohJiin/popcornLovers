@@ -38,7 +38,7 @@ public class MovieInfoController {
 		
 		// 영화 상세페이지를 방문할 때마다 조회수 증가
 		dao.viewCount(movieId);
-		
+		System.out.println(bag);
 		// 모델에 영화 정보 추가
 		model.addAttribute("bag", bag);
 		return "movie/movieDetails2";

@@ -102,6 +102,7 @@
 <!--영화 찜 -->
 <script type="text/javascript">
 $(function() {
+	console.log("${bag.movieId}")
 	  var movieId = '${scope=bag.movieId}';
 	  // 초기에 DB에서 찜 상태를 읽어와서 설정
 	  $.ajax({
@@ -199,6 +200,7 @@ $(function() {
   $('#reviewIn').click(function() {
     var memberId = '${scope=member_id}'; // 로그인한 회원의 ID
     var movieId = '${scope=bag.movieId}'; // 현재 영화의 ID
+    console.log("movieId");
     var review = $('#review').val(); // 작성한 리뷰 내용
 
     // 로그인 확인
@@ -206,7 +208,7 @@ $(function() {
       // 리뷰 정보 전송
       $.ajax({
         url: '../movieReview/submitReview',
-        method: 'POST',
+        method: 'GET',
         data: {
           memberId: memberId,
           movieId: movieId,
@@ -227,11 +229,19 @@ $(function() {
 });
 </script>
 
+
 <script>
+
+var movieId = '${scope=bag.movieId}';
     $.ajax({
-        url: "movieReview", // 적절한 서버 URL로 수정
-        success: function(response) {
-            $("#reviewList").append(response);
+        url: "movieReview", 
+        data: {
+        	movieId: movieId
+             },
+        success: function(x) {
+        	console.log(x);
+        	console.log($("#reviewList"));
+            $("#reviewList").append(x);
         },
         error: function() {
             alert("오류 발생");
@@ -245,7 +255,7 @@ $(function() {
 
 <h1>${bag.movieTitle}</h1>
 <div id="movieDetails">
-  <img alt="영화 이미지" src="../resources/n_img/${bag.movieImg}" width="270" height="320">
+  <img alt="영화 이미지" src="${pageContext.request.contextPath}/resources/n_img/${bag.movieImg}" width="270" height="320">
   <div class="rate">
     <input type="radio" id="rating5" name="rating" value="5">
     <label for="rating5" title="5점"></label>
@@ -261,18 +271,21 @@ $(function() {
   <button id = "grade" title="Button push orange" class="button btnPush btnOrange">평가</button>
   <button id='jjim' style='border :0; cursor:pointer'><i class='fa-sharp fa-regular fa-heart fa-heart jjim_heart' style='color: #ff3d3d;'></i></button>
   <hr style="border: solid 3px #FFF39C ">
+  
   <p>감독: ${bag.movieDirector}</p>
   <p>주연 배우: ${bag.movieActor}</p>
   <p>개봉일: ${bag.movieOpen}</p>
   <p>장르: ${bag.movieGenre}</p>
   <p>줄거리: ${bag.movieStory}</p>
+ 
   <hr style="border: solid 3px #FFF39C ">
 </div>
+
 <div id="reviewList"></div>
+<hr style="border: solid 3px #FFF39C ">
 <div style="display: flex; align-items: flex-end;">
-<form action=""></form>
-  <textarea id="review" style="font-size: 13px" placeholder="최대 500글자 입력 가능"></textarea>
-  <button id="reviewIn" title="Button push orange" class="button btnPush btnOrange">등록</button>
+    <textarea id="review" style="font-size: 13px" placeholder="최대 500글자 입력 가능"></textarea>
+    <button id="reviewIn" title="Button push orange" class="button btnPush btnOrange">등록</button>
 </div>
 
 </body>

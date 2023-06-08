@@ -3,11 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MovieReviewDAO">
-    <select id="reviewList" resultType="MovieReviewVO">
-        select memberId, reviewContent from movie_review
-        where movieId = #{movieId}
-        order by rand()
-        limit 3
+      <select id="reviewList" resultType="MovieReviewVO">
+        SELECT * FROM movie_review WHERE movieId = #{movieId}
     </select>
     
      <insert id="insertMovieReview" parameterType="MovieReviewVO">

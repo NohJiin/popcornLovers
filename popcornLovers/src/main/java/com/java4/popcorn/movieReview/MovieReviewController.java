@@ -15,22 +15,27 @@ public class MovieReviewController {
     MovieReviewDAO dao;
 
     @RequestMapping("movie/movieReview")
-    public void movieReview(Model model) {
-        List<MovieReviewVO> list = dao.reviewList();
+    public void movieReview(Model model, @RequestParam("movieId")String movieId) {
+        List<MovieReviewVO> list = dao.reviewList(movieId);
+        System.out.println(list);
         model.addAttribute("list", list);
     }
     
-    @RequestMapping(value = "/movieReview/submitReview", method = RequestMethod.POST)
+    @RequestMapping(value = "/movieReview/submitReview", method = RequestMethod.GET)
     public String submitReview(@RequestParam("memberId") String memberId,
                                @RequestParam("movieId") String movieId,
-                               @RequestParam("review") String review) {
-        MovieReviewVO reviewVO = new MovieReviewVO();
-        reviewVO.setMovieId(movieId);
-        reviewVO.setMemberId(memberId);
-        reviewVO.setReviewContent(review);
+                               @RequestParam(required = false) String review) {
+    	if (review != null) {
+    		 MovieReviewVO reviewVO = new MovieReviewVO();
+    	        reviewVO.setMovieId(movieId);
+    	        reviewVO.setMemberId(memberId);
+    	        reviewVO.setReviewContent(review);
 
-        dao.insertMovieReview(reviewVO);
+    	        dao.insertMovieReview(reviewVO);
 
-        return "redirect:/movie/movieReview";
+    	        return "redirect:/movie/movieReview" + "?memberId=" + memberId + "&movieId=" + movieId ;
+		}
+
+    		return "redirect:/movie/movieReview" + "?memberId=" + memberId + "?movieId=" + movieId;
     }
 }

@@ -11,11 +11,11 @@ public class MovieReviewDAO {
     @Autowired
     SqlSessionTemplate my;
 
-    public List<MovieReviewVO> reviewList() {
-        List<MovieReviewVO> list = my.selectList("MovieReviewDAO.reviewList");
-
+    public List<MovieReviewVO> reviewList(String movieId) {
+        List<MovieReviewVO> list = my.selectList("MovieReviewDAO.reviewList",movieId);
         return list;
     }
+    
     public void insertMovieReview(MovieReviewVO reviewVO) {
         my.insert("MovieReviewDAO.insertMovieReview", reviewVO);
     }
