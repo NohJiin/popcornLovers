@@ -18,10 +18,8 @@
         <!--노지인-->
         <typeAlias type="com.java4.popcorn.rankUser.PageVO" alias="RankUserPageVO"/>
         <typeAlias type="com.java4.popcorn.rankMovie.PageVO" alias="RankMoviePageVO"/>
-        <typeAlias type="com.java4.popcorn.rankActor.PageVO" alias="RankActorPageVO"/>
         <typeAlias type="com.java4.popcorn.rankUser.RankUserVO" alias="RankUserVO"/>
         <typeAlias type="com.java4.popcorn.rankMovie.RankMovieVO" alias="RankMovieVO"/>
-        <typeAlias type="com.java4.popcorn.rankActor.RankActorVO" alias="RankActorVO"/>
 
         <!--나유경-->
         <typeAlias type="com.java4.popcorn.bbs.BbsVO" alias="bbsVO"></typeAlias>
@@ -41,7 +39,6 @@
 
         <!--김준명-->
         <typeAlias type="com.java4.popcorn.movieInfo.MovieInfoVO" alias="MovieInfoVO"/>
-        <typeAlias type="com.java4.popcorn.actor.ActorVO" alias="ActorVO"/>
         <typeAlias type="com.java4.popcorn.movieReview.MovieReviewVO" alias="MovieReviewVO"/>
         <typeAlias type="com.java4.popcorn.movieGrade.MovieGradeVO" alias="MovieGradeVO"/>
 
@@ -57,7 +54,6 @@
         <!--노지인-->
         <mapper resource="mappers/rankUserMapper.xml"/>
         <mapper resource="mappers/rankMovieMapper.xml"/>
-        <mapper resource="mappers/rankActorMapper.xml"/>
 
         <!--나유경-->
         <mapper resource="mappers/bbsMapper.xml" />
@@ -72,7 +68,6 @@
 
         <!--김준명-->
         <mapper resource="mappers/movieMapper.xml"/>
-        <mapper resource="mappers/actorMapper.xml"/>
         <mapper resource="mappers/movieReviewMapper.xml"/>
         <mapper resource="mappers/movieGradeMapper.xml"/>
      
