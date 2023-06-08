@@ -60,20 +60,7 @@ int lastday = cal.getActualMaximum(Calendar.DATE);
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript">
-	$(function() {
-		$("#datebutton").click(function() {
-			$.ajax({
-				url : "../mycalendarview/mycalendarlist.jsp",
-				method : "GET",
-				success : function(x) {
-					$("#mycalendarlist").html(x);
-				},
-				error : function() {
-					alert("list를 불러오는데 오류발생");
-				}
-			});
-		});
-	});
+
 </script>
 </head>
 
@@ -138,7 +125,7 @@ select {
 	float: left;
 	padding-left: 4%;
 	padding-top: 4%;
-	padding-bottom: 3%;
+	padding-bottom: 1%;
 }
 
 .mycalendarlist {
@@ -146,23 +133,10 @@ select {
 	height: 100%;
 	float: left;
 	padding-left: 4%;
+	padding-top: 4%;
+	padding-bottom: 3%;
 }
 
-.joinbutton {
-	width: 36%;
-	height: 100%;
-	float: left;
-	padding-left: 4%;
-}
-
-.joinbutton button {
-	width: 425px;
-	height: 40px;
-}
-
-.all {
-	font-size: 0px;
-}
 </style>
 
 <body>
@@ -206,7 +180,7 @@ select {
 						%>
 						<td style="color:<%=color%>;">
 							<button type="submit" name="day" value="<%=d%>" id="datebutton"
-								class="datebutton" formmethod="post" formaction="mycalendarmain" style="color:<%=color%>;">
+								class="datebutton" style="color:<%=color%>;">
 								<input type="hidden" name="year" value="<%=y%>">
 								<input type="hidden" name="month" value="<%=m + 1%>">
 								<%=d%>
@@ -268,14 +242,8 @@ select {
 
 			</form>
 		</div>
-		<div class="joinbutton">
-			<form action="mycalendarmain" method="post">
-				<input type="hidden" id="year" name="year" value="<%=y%>"> <input
-					type="hidden" id="month" name="month" value="<%=m + 1%>">
-				<button type="submit" id="listbutton">조회하기</button>
-			</form>
+		<div id="mycalendarlist" class="mycalendarlist">
 		</div>
-		<div id="mycalendarlist" class="mycalendarlist"></div>
 	</div>
 
 

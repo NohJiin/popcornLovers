@@ -20,6 +20,10 @@ public class MyCalendarController {
 			 HttpSession session, Model model) {
 
 		String member_id = (String) session.getAttribute("member_id");
+		
+		if (member_id == null) {
+            return "mycalendarview/loginalert";
+        }
 
 		MyCalendarVO vo = new MyCalendarVO();
 		
@@ -39,7 +43,7 @@ public class MyCalendarController {
         return "mycalendarview/mycalendarlist";
 	}
 	
-	@RequestMapping("mycalendar") //전체 영화의 아이디와 영화제목을 리스트로 가져오기
+	@RequestMapping("mycalendar/movielist") //전체 영화의 아이디와 영화제목을 리스트로 가져오기
 	public String list2(Model model) {
 		
 		MyCalendarVO vo = new MyCalendarVO();
@@ -47,7 +51,7 @@ public class MyCalendarController {
 		List<MyCalendarVO> list2 = dao.list2(vo);
 		model.addAttribute("list2", list2);
 		System.out.println(list2+"리스트내용");
-        return "mycalendarview/movielist";
+        return "mycalendarview/movielistview";
 	}
 
 	@RequestMapping("mycalendar/mycalendarcrud") //날짜정보를 받아서, 멤버id와 영화id를 insert함
@@ -55,6 +59,10 @@ public class MyCalendarController {
 			@RequestParam("movieId") String movieId, HttpSession session, Model model) {
 
 		String member_id = (String) session.getAttribute("member_id");
+		
+		if (member_id == null) {
+            return "mycalendarview/loginalert";
+        }
 
 		MyCalendarVO vo = new MyCalendarVO();
 
@@ -84,7 +92,12 @@ public class MyCalendarController {
 	@RequestMapping("mycalendar/mycalendardelete") //날짜정보와 멤버id를 받아서 해당 날짜의 데이터를 delete함
 	public String delete(@RequestParam("year") int year, @RequestParam("month") int month, @RequestParam("day") int day,
 			HttpSession session, Model model) {
+		
 		String member_id = (String) session.getAttribute("member_id");
+		
+		if (member_id == null) {
+            return "mycalendarview/loginalert";
+        }
 
 		MyCalendarVO vo = new MyCalendarVO();
 

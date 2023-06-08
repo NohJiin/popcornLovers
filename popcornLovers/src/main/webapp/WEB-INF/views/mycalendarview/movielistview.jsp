@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <style type="text/css">
 .head, list {
 	font-size: 30px;
@@ -18,6 +17,7 @@ tr,th,td {
 	font-size: 30px;
 	text-align: center;
 	border: 1px solid #fff9ab;
+	padding: 20px;
 }
 
 .return {
@@ -26,48 +26,47 @@ tr,th,td {
 	font-size: 30px;
 	background-color: #fff9ab;
 	border: none;
+	text-align: center;
 }
 
 .title {
 	font-size: 50px;
 	text-align: center;
-	border: 1px solid #444444;
+	border: none;
 }
 
-.mycalendarlist {
-    display: flex;
+.movielist {
+	display: flex;
     justify-content: center;
     align-items: center;
-    height: 700px; /* 화면의 세로 중앙에 배치하기 위해 필요한 높이값을 조정합니다. */
-  }
+}
 
 </style>
 </head>
 <body>
-	<div class="mycalendarlist">
+	<div class="movielist">
 		<table>
 			<tr class="title">
-				<td colspan="4">일정 목록</td>
+				<td colspan="3">영화 목록</td>
 			</tr>
 			<tr class="head">
-				<th width="200px">연도</th>
-				<th width="100px">월</th>
-				<th width="100px">일</th>
-				<th width="600px">영화제목</th>
+				<th width="200">영화 ID</th>
+				<th width="1000">영화 제목 </th>
 			</tr>
-			<c:forEach items="${list1}" var="vo">
-				<tr class="list">
-					<td>${vo.year}년</td>
-					<td>${vo.month}월</td>
-					<td>${vo.day}일</td>
-					<td>${vo.movieTitle}</td>
+			<c:forEach items="${list2}" var="vo">
+				<tr>
+					<td width="200">${vo.movieId}</td>
+					<td  width="1000">${vo.movieTitle}</td>
 				</tr>
 			</c:forEach>
 			<tr>
-				<td colspan="4"><button class="return" type="button"
-						onclick="location='mycalendarmain.jsp'">돌아가기</button></td>
+				<td colspan="3"><button class="return" type="button"
+						onclick="location='mycalendarcrud.jsp'">등록하기</button></td>
 			</tr>
 		</table>
+	</div>
+	<div>
+		
 	</div>
 </body>
 </html>

@@ -8,51 +8,67 @@
 <title>Insert title here</title>
 
 <style>
-th, tr, td {
-	border: 5px solid #fbff8c;
-	width: 100px;
-	height: 60px;
+.listhead{
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+.listhead table {
+    margin-left:auto; 
+    margin-right:auto;
+    
+}
+
+.listhead tr, .listhead td {
+	border: none;
+	border-collapse: collapse;
+	padding: 10px;
+	font-size: 20px;
+	height: 40px;
+	background-color: #fdffbf;
+}
+
+
+.title {
+	width: 500px;
+	height: 200px;
 	text-align: center;
-	font-size: 30px;
+	font-size: 40px;
 }
-.movieid {
-	width : 400px;
-	height : 70px;
-}
-.movietitle {
-	width : 1000px;
-	height : 70px;
-}
-.headbutton {
-	width : 100px;
-	height : 30px;
-	font-size : 20px;
-}
-.head {
-	height : 80px;
+
+.space {
+	width: 200px;
+	height: 200px;
 	text-align: center;
-	font-size : 50px;
 }
+
+.listhead button {
+	width: 180px;
+	height: 40px;
+	font-size: 20px;
+	border: 2px solid #white;
+	background-color: #fdffbf;
+}
+
+
+
 </style>
 </head>
 <body>
 	<%@ include file="../WEB-INF/views/header.jsp"%>
-	<div>
+	<div class="listhead">
+		<form action="movielist" method="post">
 		<table>
 			<tr class="head">
-				<td colspan="2">영화 목록 조회 <button type="button" class="headbutton" onclick="location='mycalendarcrud.jsp'">등록하기</button></td>
+				<td class="title">영화 ID와 영화 제목을 조회합니다.</td>
+				<td class="space"><button name ="joinlist" type="submit" id="joinlist" class="joinlist">조회하기</button></td>
 			</tr>
-			<tr>
-				<th class="movieid">영화 아이디</th>
-				<th class="movietitle">영화 제목</th>
-			</tr>
-			<c:forEach items="${list2}" var="vo">
-				<tr>
-					<td>${vo.movieId}</td>
-					<td>${vo.movieTitle}</td>
-				</tr>
-			</c:forEach>
+			
 		</table>
+		</form>
+	</div>
+	 <div id="slideShow">
+		<iframe src="${pageContext.request.contextPath}/banner.jsp" frameborder="0" width="100%"  height="300px" scrolling=auto name=banner ></iframe>
 	</div>
 	
 </body>

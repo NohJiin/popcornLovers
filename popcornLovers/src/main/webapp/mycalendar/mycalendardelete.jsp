@@ -65,25 +65,28 @@ int lastday = cal.getActualMaximum(Calendar.DATE);
 
 
 <style>
-body {
-	font-size: 0pt;
-	color: #1e1e1f;
-	border-radius: 10px;
-}
 
 .mymoviecalendar table {
-	border-collapse: collapse;
 	padding-bottom: 100px;
-	background-color: white;
+	;
 }
 
 .mymoviecalendar tr, .mymoviecalendar td, .mymoviecalendar th {
-	border: 5px solid #fbff8c;
-	width: 100px;
-	height: 60px;
+	border: none;
+	width: 120px;
+	height: 100px;
 	text-align: center;
 	font-size: 30px;
-	background-color: #fdffbf;
+	background-color: white;
+}
+
+.mymoviecalendar button {
+	width: 80px;
+	height: 80px;
+	font-size: 40px;
+	border: none;
+	background-color: #fff9ab;
+	border-radius: 40px;
 }
 
 .mymoviecalendar caption {
@@ -148,16 +151,10 @@ select {
 	font-size: 0px;
 }
 
-.calendarinsert table {
-	border: 2px solid grey;
-	border-style: dotted;
-	border-collapse: collapse;
-	width: 100%;
-}
+
 
 .calendarinsert td, .calendarinsert tr {
-	border: 1px solid black;
-	border-style: dashed;
+	border: none;
 	border-collapse: collapse;
 	padding: 5px;
 	font-size: 20px;
@@ -173,11 +170,40 @@ select {
 	width: 420px;
 	height: 60px;
 }
-.insertinput{
+
+.insertinput {
 	width: 200px;
 	text-align: center;
 }
 
+.movielist button {
+	width: 400px;
+	height: 100px;
+}
+
+.movielistjoin tr, .movielistjoin td, .movielistjoin table {
+	border: 1px solid black;
+	border-style: dotted;
+	border-collapse: collapse;
+	padding: 5px;
+	font-size: 20px;
+	height: 40px;
+	background-color: #fdffbf;
+}
+
+.movielistjoin button {
+	width: 420px;
+	height: 60px;
+}
+
+.movielistjoin {
+	width: 36%;
+	height: 100%;
+	float: left;
+	padding-left: 4%;
+	padding-top: 4%;
+	padding-bottom: 3%;
+}
 </style>
 
 <body>
@@ -218,7 +244,12 @@ select {
 							color = "#ff1500";
 						}
 					%>
-					<td style="color:<%=color%>;"><%=d%></td>
+					<td style="color:<%=color%>;">
+						<button type="submit" name="day" value="<%=d%>" id="datebutton"
+							class="datebutton" style="color:<%=color%>;">
+							<%=d%>
+						</button>
+					</td>
 					<%
 						if (count % 7 == 0) {
 						out.print("</tr><tr>");

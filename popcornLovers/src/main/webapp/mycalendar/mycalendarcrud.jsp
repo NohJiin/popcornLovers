@@ -57,7 +57,8 @@ int lastday = cal.getActualMaximum(Calendar.DATE);
 <meta charset="UTF-8">
 <title>달력</title>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.6.4.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.6.4.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$("#listbutton").click(function() {
@@ -67,7 +68,7 @@ int lastday = cal.getActualMaximum(Calendar.DATE);
 					alert("list 불러오기 성공")
 				},
 				error : function() {
-					alert("list를 불러오는데 오류발생");
+					
 				}
 			});
 		});
@@ -77,25 +78,28 @@ int lastday = cal.getActualMaximum(Calendar.DATE);
 
 
 <style>
-body {
-	font-size: 0pt;
-	color: #1e1e1f;
-	border-radius: 10px;
-}
 
 .mymoviecalendar table {
-	border-collapse: collapse;
 	padding-bottom: 100px;
-	background-color: white;
+	;
 }
 
 .mymoviecalendar tr, .mymoviecalendar td, .mymoviecalendar th {
-	border: 5px solid #fbff8c;
-	width: 100px;
-	height: 60px;
+	border: none;
+	width: 120px;
+	height: 100px;
 	text-align: center;
 	font-size: 30px;
-	background-color: #fdffbf;
+	background-color: white;
+}
+
+.mymoviecalendar button {
+	width: 80px;
+	height: 80px;
+	font-size: 40px;
+	border: none;
+	background-color: #fff9ab;
+	border-radius: 40px;
 }
 
 .mymoviecalendar caption {
@@ -132,7 +136,7 @@ select {
 	height: 100%;
 	float: left;
 	padding-left: 4%;
-	padding-top: 1%;
+	padding-top: 4%;
 	padding-bottom: 3%;
 }
 
@@ -160,16 +164,10 @@ select {
 	font-size: 0px;
 }
 
-.calendarinsert table {
-	border: 2px solid grey;
-	border-style: dotted;
-	border-collapse: collapse;
-	width: 100%;
-}
+
 
 .calendarinsert td, .calendarinsert tr {
-	border: 1px solid black;
-	border-style: dashed;
+	border: none;
 	border-collapse: collapse;
 	padding: 5px;
 	font-size: 20px;
@@ -185,19 +183,20 @@ select {
 	width: 420px;
 	height: 60px;
 }
-.insertinput{
+
+.insertinput {
 	width: 200px;
 	text-align: center;
 }
 
-.movielist button{
+.movielist button {
 	width: 400px;
 	height: 100px;
 }
 
-.movielistjoin tr, td, table {
+.movielistjoin tr, .movielistjoin td, .movielistjoin table {
 	border: 1px solid black;
-	border-style: dashed;
+	border-style: dotted;
 	border-collapse: collapse;
 	padding: 5px;
 	font-size: 20px;
@@ -218,7 +217,6 @@ select {
 	padding-top: 4%;
 	padding-bottom: 3%;
 }
-
 </style>
 
 <body>
@@ -259,7 +257,12 @@ select {
 							color = "#ff1500";
 						}
 					%>
-					<td style="color:<%=color%>;"><%=d%></td>
+					<td style="color:<%=color%>;">
+						<button type="submit" name="day" value="<%=d%>" id="datebutton"
+							class="datebutton" style="color:<%=color%>;">
+							<%=d%>
+						</button>
+					</td>
 					<%
 						if (count % 7 == 0) {
 						out.print("</tr><tr>");
@@ -316,38 +319,41 @@ select {
 			</form>
 		</div>
 		<div class="calendarinsert">
-		
+
 			<form action="mycalendarcrud" method="post">
-			<table class="inserttable">
-			<caption  class="insertcaption">일정 추가 하기</caption>
-			<tr>
-				<td class="insert1">연도 :</td>
-				<td class="insert2"><input type="text" id="year" name="year" value="<%=y%>" class="insertinput" placeholder="년도"></td>
-			</tr>
-			<tr>
-				<td class="insert1">월 :</td>
-				<td class="insert2"><input type="text" id="month" name="month" value="<%=m + 1%>" class="insertinput" placeholder="월"></td>
-			</tr>
-			<tr>
-				<td class="insert1">일 :</td>
-				<td class="insert2"><input type="text" id="day" name="day" value="" class="insertinput" placeholder="일"></td>
-			</tr>
-			<tr>
-				<td class="insert1">영화 :</td>
-				<td class="insert2"><input type="text" id="movieId" name="movieId" value="" class="insertinput" placeholder="영화 ID"></td>
-			</tr>
-			<tr><td colspan="2" class="insert2"><button type="submit" id="insertbutton">등록하기</button></td></tr>
-			</table>
+				<table class="inserttable">
+					<caption class="insertcaption">일정 추가 하기</caption>
+					<tr>
+						<td class="insert1">연도 :</td>
+						<td class="insert2"><input type="text" id="year" name="year"
+							value="<%=y%>" class="insertinput" placeholder="년도"></td>
+					</tr>
+					<tr>
+						<td class="insert1">월 :</td>
+						<td class="insert2"><input type="text" id="month"
+							name="month" value="<%=m + 1%>" class="insertinput"
+							placeholder="월"></td>
+					</tr>
+					<tr>
+						<td class="insert1">일 :</td>
+						<td class="insert2"><input type="text" id="day" name="day"
+							value="" class="insertinput" placeholder="일"></td>
+					</tr>
+					<tr>
+						<td class="insert1">영화 :</td>
+						<td class="insert2"><input type="text" id="movieId"
+							name="movieId" value="" class="insertinput" placeholder="영화 ID"></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="insert2">
+						<button type="submit" id="insertbutton">등록하기</button></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="insert2">
+						<button type="button" id="listbutton" onclick="location='movielist.jsp'">영화ID 찾기</button></td>
+					</tr>
+				</table>
 			</form>
-		</div>
-		<div id="movielistjoin" class="movielistjoin">
-		<form action="movielistjoin" method="post">
-			<table>
-				<tr>
-					<td colspan="2" class="insert2"><button type="submit" id="listbutton">영화ID 찾기</button></td>
-				</tr>
-			</table>
-		</form>
 		</div>
 	</div>
 </body>
