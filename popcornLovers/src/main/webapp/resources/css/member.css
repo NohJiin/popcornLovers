@@ -1,6 +1,20 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+.clearfix{
+  content: "";
+  display: table;
+  clear: both;
+}
 
 
+.fa-circle-check{
+	font-size:50px;
+	color:#ff9b21;
+}
+
+.p_update{
+	color:gray;
+	margin:0  0 45px 0;
+}
 
 .join_maintxt{
 	color:#ff9b21;
@@ -26,6 +40,9 @@
   margin: auto;
 }
 
+.join-page.update{
+	padding:0px;
+}
 
 .form {
   position: relative;
@@ -36,6 +53,10 @@
   padding: 45px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15), 0 5px 5px 0 rgba(0, 0, 0, 0.09);
+}
+
+.form.update{
+	margin:0 auto 10px;
 }
 
 .join-page  .form{
@@ -88,15 +109,15 @@
   padding: 20px;
   color: #FFFFFF;
   font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
-}
-.form button:hover,.form button:active,.form button:focus {
-  background: #eb2a38;
+    cursor: pointer;
 }
 
-.form.remove_btn{
+
+.form button:hover,.form button:active,.form button:focus {
+  background: #fb8a00;
+}
+
+.form .remove_btn{
 	  font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
@@ -106,12 +127,11 @@
   padding: 20px;
   color: #FFFFFF;
   font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
   cursor: pointer;
+  float:left;
 }
 
-.form.remove_btn2{
+.form .remove_btn2{
 	  font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
@@ -126,6 +146,26 @@
   cursor: pointer;
 }
 
+.form .logingo{
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: rgb(173, 173, 173);
+  width: 47%;
+  border: 0;
+  padding: 20px;
+  color: #FFFFFF;
+  font-size: 14px;
+    cursor: pointer;
+}
+
+.form .remove_btn2:hover{
+	background: #9c9c9c;
+}
+
+.form .logingo:hover{
+	background:  #9c9c9c;
+}
 
 .form .message {
   margin: 15px 0 0;

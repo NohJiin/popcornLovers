@@ -74,8 +74,7 @@ public class MemberController {
 		if (vo2 == null) { // 같은 아이디가 없다면
 			result = 0; // 사용 가능 아이디
 		}
-	
-		System.out.println("result : "+result);
+		
 		return result;
 	}
 	
@@ -112,17 +111,18 @@ public class MemberController {
 
 	// 회원정보 수정
 	@RequestMapping("member/update")
-	public void update(MemberVO vo) {
+	public void update(MemberVO vo, HttpSession session) {
 		System.out.println("update요청");
 		dao.update(vo);
-		System.out.println(vo);
+		session.invalidate(); //삭제를 하면서 세션 끊어주기
 	}
 	
 
 
 	//회원 탈퇴하기
 	@RequestMapping("member/remove")
-	public void remove(@RequestParam("member_pw")String pw, //jsp에서 작성한 member_pw(name)값을 parameter로 받아와서 pw에 넣어오기
+	public void remove(@RequestParam("member_pw")String pw,
+			//>> jsp에서 작성한 member_pw(name)값을 parameter로 받아와서 pw에 넣어오기
 			Model model, HttpSession session) {
 		
 		int result = 0; //우선적으로 결과값을 회원의 정보 값이 있을 때로 염두 (아이디와 비밀번호가 일치하는 기본 값)

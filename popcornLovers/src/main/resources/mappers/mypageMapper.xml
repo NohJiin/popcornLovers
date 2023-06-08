@@ -55,6 +55,34 @@
 	where mr2.mr_no between #{start} and #{end}
 	</select>
 	
+		<!-- 회원 찜 목록 -->
+ <select id="myJjimAll" resultType="mypageVO" parameterType="MemberPageVO">
+	select * from (
+	select
+	row_number() over (order by member_id desc) as mj_no,
+	m3.movieid, m3.movietitle, m3.movieimg, m3.moviegrade, m2.movie_like, m.member_id
+	from member m
+	inner join moviejjim m2 on m.member_id = m2.member_id
+	inner join movie m3 on m3.movieid = m2.movieid
+	where m.member_id = #{member_id} and m2.movie_like = 1
+	) mjj
+	where mjj.mj_no between #{start} and #{end};
+	</select>
+	
+	<!-- 회원 별점 목록 -->
+	<select id="myGradeAll" resultType="mypageVO" parameterType="MemberPageVO">
+		select * from (
+		select
+		row_number() over (order by mg.member_id desc) as mj_no,
+		m3.movieid, m3.movietitle, m3.movieimg, mg.grade, mg.member_id
+		from movie_grade mg
+		inner join movie m3 on m3.movieid = mg.movieid
+		where mg.member_id = #{member_id}
+		) mjj
+		where mjj.mj_no between #{start} and #{end};
+	</select>
+	
+	
     <!-- 회원이 쓴 bbs 카운트 -->
     <select id="myBbsCount" resultType="Integer">
     select count(*)
@@ -115,32 +143,7 @@
 	where member_id = #{member_id} and movieId = #{movieId}
 	</select>
 	
-	<!-- 회원 찜 목록 -->
- <select id="myJjimAll" resultType="mypageVO" parameterType="MemberPageVO">
-	select * from (
-	select
-	row_number() over (order by member_id desc) as mj_no,
-	m3.movieid, m3.movietitle, m3.movieimg, m3.moviegrade, m2.movie_like, m.member_id
-	from member m
-	inner join moviejjim m2 on m.member_id = m2.member_id
-	inner join movie m3 on m3.movieid = m2.movieid
-	where m.member_id = #{member_id} and m2.movie_like = 1
-	) mjj
-	where mjj.mj_no between #{start} and #{end};
-	</select>
-	
-	<!-- 회원 별점 목록 -->
-	<select id="myGradeAll" resultType="mypageVO" parameterType="MemberPageVO">
-		select * from (
-		select
-		row_number() over (order by mg.member_id desc) as mj_no,
-		m3.movieid, m3.movietitle, m3.movieimg, mg.grade, mg.member_id
-		from movie_grade mg
-		inner join movie m3 on m3.movieid = mg.movieid
-		where mg.member_id = #{member_id}
-		) mjj
-		where mjj.mj_no between #{start} and #{end};
-	</select>
+
 	
 	<!-- 	<select id = "JjimCheck"  resultType="Integer" parameterType="mypageVO">
 	select count(*) from moviejjim 

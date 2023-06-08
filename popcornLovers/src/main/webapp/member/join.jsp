@@ -134,23 +134,5 @@ $(function(){
 </div>
 
 
-<!-- <form action="join" method="get">
-아이디: <input name = "member_id" id ="id"  maxlength="20">
-<div id="id_result">
-</div>
-<br>
-비밀번호: <input name = "member_pw" id="pw" value ="1234" type="password"><br>
-이름:  <input name = "member_name" id="name" value ="김사과"><br>
-닉네임: <input name = "member_knickname" id="knickname" value ="애플" ><br>
-성별: 남<input type="radio" name = "member_gender" value ="남자" checked>
-		  여<input type="radio" name = "member_gender" value ="여자" ><br>
-나이: <input name = "member_age" id="age" value ="20" ><br>
-전화번호: <input name = "member_tel" id ="tel" value ="01012341234" ><br>
-이메일: <input name = "member_email"  id="email" type="email" placeholder="example@gmail.com"><br>
-
-<br>
-<button type ="submit" id="mem_join" >회원가입</button>
-</form> -->
-
 </body>
 </html>
